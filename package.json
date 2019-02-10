@@ -1,0 +1,12 @@
+{
+  "name": "Bailonga Announce",
+  "description": "Generate the weekly announcements for Bailonga",
+  "private": true,
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Noah Brenner",
+  "license": "MIT",
+  "repository": "github:noahbrenner/bailonga-announce",
+  "homepage": "https://noahbrenner.github.io/bailonga-announce"
+}

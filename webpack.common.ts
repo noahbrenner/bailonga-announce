@@ -12,7 +12,7 @@ import * as webpack from 'webpack';
  * modifications to *this* object and to the base webpack configuration.
  */
 export const inputTests: Record<'css' | 'js', RegExp> = {
-    css: /\.css$/,
+    css: /\.scss$/,
     js: /\.js$/
 };
 
@@ -36,7 +36,8 @@ export const baseConfig: webpack.Configuration = {
         rules: [{
             test: inputTests.css,
             loaders: [
-                'css-loader'
+                'css-loader',
+                'sass-loader'
             ]
         }]
     },

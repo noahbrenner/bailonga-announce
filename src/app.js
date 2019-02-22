@@ -1,3 +1,3 @@
-import './css/styles.css';
+import './css/styles.scss';
 
 document.getElementById('output').innerText = 'Hello from script!';

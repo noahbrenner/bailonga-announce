@@ -1,4 +1,6 @@
 import * as MiniCssExtractPlugin from 'mini-css-extract-plugin';
+import * as OptimizeCssAssetsPlugin from 'optimize-css-assets-webpack-plugin';
+import * as TerserWebpackPlugin from 'terser-webpack-plugin';
 import * as merge from 'webpack-merge';
 
 import {baseConfig, inputTests} from './webpack.common';
@@ -30,5 +32,14 @@ export default smartMerge(baseConfig, {
         new MiniCssExtractPlugin({
             filename: 'styles.[contenthash:6].css'
         })
-    ]
+    ],
+
+    optimization: {
+        minimizer: [
+            new TerserWebpackPlugin({
+                parallel: true
+            }),
+            new OptimizeCssAssetsPlugin()
+        ]
+    }
 });

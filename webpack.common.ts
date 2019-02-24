@@ -1,5 +1,6 @@
 import * as path from 'path';
 
+import * as autoprefixer from 'autoprefixer';
 import * as CleanWebpackPlugin from 'clean-webpack-plugin';
 import * as HtmlWebpackPlugin from 'html-webpack-plugin';
 import * as webpack from 'webpack';
@@ -14,6 +15,17 @@ import * as webpack from 'webpack';
 export const inputTests: Record<'css' | 'js', RegExp> = {
     css: /\.scss$/,
     js: /\.js$/
+};
+
+/* === Loaders with specified options === */
+
+const postcssLoader: webpack.RuleSetLoader = {
+    loader: 'postcss-loader',
+    options: {
+        plugins: [
+            autoprefixer()
+        ]
+    }
 };
 
 /**
@@ -37,6 +49,7 @@ export const baseConfig: webpack.Configuration = {
             test: inputTests.css,
             loaders: [
                 'css-loader',
+                postcssLoader,
                 'sass-loader'
             ]
         }]

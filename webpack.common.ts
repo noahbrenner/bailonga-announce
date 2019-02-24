@@ -12,8 +12,9 @@ import * as webpack from 'webpack';
  * The benefit: Changing an input filetype (e.g. CSS -> SCSS) only requires
  * modifications to *this* object and to the base webpack configuration.
  */
-export const inputTests: Record<'css' | 'js', RegExp> = {
+export const inputTests: Record<'css' | 'html' | 'js', RegExp> = {
     css: /\.scss$/,
+    html: /\.pug/,
     js: /\.js$/
 };
 
@@ -52,6 +53,11 @@ export const baseConfig: webpack.Configuration = {
                 postcssLoader,
                 'sass-loader'
             ]
+        }, {
+            test: inputTests.html,
+            loaders: [
+                'pug-loader'
+            ]
         }]
     },
 
@@ -59,7 +65,7 @@ export const baseConfig: webpack.Configuration = {
         new CleanWebpackPlugin(['dist']),
         new HtmlWebpackPlugin({
             filename: 'index.html',
-            template: './src/index.html'
+            template: './src/index.pug'
         })
     ],
 

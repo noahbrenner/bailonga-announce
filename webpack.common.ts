@@ -15,7 +15,7 @@ import * as webpack from 'webpack';
 export const inputTests: Record<'css' | 'html' | 'js', RegExp> = {
     css: /\.scss$/,
     html: /\.pug/,
-    js: /\.js$/
+    js: /\.ts$/
 };
 
 /* === Loaders with specified options === */
@@ -38,11 +38,15 @@ const postcssLoader: webpack.RuleSetLoader = {
  */
 export const baseConfig: webpack.Configuration = {
     entry: {
-        app: './src/app.js'
+        app: './src/app.ts'
     },
 
     output: {
         path: path.resolve(__dirname, 'dist')
+    },
+
+    resolve: {
+        extensions: ['.ts', '.js']
     },
 
     module: {
@@ -57,6 +61,11 @@ export const baseConfig: webpack.Configuration = {
             test: inputTests.html,
             loaders: [
                 'pug-loader'
+            ]
+        }, {
+            test: inputTests.js,
+            loaders: [
+                'ts-loader'
             ]
         }]
     },

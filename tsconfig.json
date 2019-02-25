@@ -1,7 +1,6 @@
 {
   "compilerOptions": {
-    "module": "commonjs",
-    "noEmit": true,
+    "module": "commonjs", // Required for ts-node to execute webpack.*.ts
     "noFallthroughCasesInSwitch": true,
     "noImplicitReturns": true,
     "noUnusedLocals": true,
@@ -10,7 +9,7 @@
       "name": "typescript-tslint-plugin"
     }],
     "strict": true,
-    "target": "ESNext"
+    "target": "ES6"
   },
   "include": [
     "*",

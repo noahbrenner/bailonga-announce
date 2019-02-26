@@ -14,6 +14,7 @@
   "devDependencies": {
     "@types/autoprefixer": "^9.1.1",
     "@types/clean-webpack-plugin": "^0.1.2",
+    "@types/ejs": "^2.6.3",
     "@types/html-webpack-plugin": "^3.2.0",
     "@types/mini-css-extract-plugin": "^0.2.0",
     "@types/node": "^10.12.26",
@@ -25,6 +26,7 @@
     "autoprefixer": "^9.4.8",
     "clean-webpack-plugin": "^1.0.1",
     "css-loader": "^2.1.0",
+    "ejs": "^2.6.1",
     "html-webpack-plugin": "^3.2.0",
     "mini-css-extract-plugin": "^0.5.0",
     "node-sass": "^4.11.0",

@@ -67,6 +67,11 @@ export const baseConfig: webpack.Configuration = {
             loaders: [
                 'ts-loader'
             ]
+        }, {
+            test: /\.ejs\.(html|txt)/,
+            loaders: [
+                path.resolve('./lib/ejs-loader.ts')
+            ]
         }]
     },
 

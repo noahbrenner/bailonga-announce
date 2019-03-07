@@ -1,0 +1,18 @@
+language: node_js
+node_js:
+  - node
+cache: npm
+branches:
+  only:
+    - master
+script:
+  - npm test && npm run build
+deploy:
+  provider: pages
+  github-token: $GITHUB_TOKEN
+  skip-cleanup: true
+  keep-history: false
+  on:
+    branch: master
+  target-branch: gh-pages
+  local-dir: dist

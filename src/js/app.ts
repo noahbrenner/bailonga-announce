@@ -1,6 +1,6 @@
-import './css/styles.scss';
-import html from './templates/bar.ejs.html';
-import text from './templates/foo.ejs.txt';
+import '../css/styles.scss';
+import html from '../templates/bar.ejs.html';
+import text from '../templates/foo.ejs.txt';
 
 const templateLocals = {
     content: 'Yay!'

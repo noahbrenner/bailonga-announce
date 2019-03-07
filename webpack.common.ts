@@ -38,7 +38,7 @@ const postcssLoader: webpack.RuleSetLoader = {
  */
 export const baseConfig: webpack.Configuration = {
     entry: {
-        app: './src/app.ts'
+        app: './src/js/app.ts'
     },
 
     output: {

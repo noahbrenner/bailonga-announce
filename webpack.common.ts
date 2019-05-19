@@ -1,7 +1,7 @@
 import * as path from 'path';
 
 import * as autoprefixer from 'autoprefixer';
-import * as CleanWebpackPlugin from 'clean-webpack-plugin';
+import CleanWebpackPlugin from 'clean-webpack-plugin';
 import * as HtmlWebpackPlugin from 'html-webpack-plugin';
 import * as webpack from 'webpack';
 
@@ -76,7 +76,7 @@ export const baseConfig: webpack.Configuration = {
     },
 
     plugins: [
-        new CleanWebpackPlugin(['dist']),
+        new CleanWebpackPlugin(),
         new HtmlWebpackPlugin({
             filename: 'index.html',
             template: './src/index.pug'

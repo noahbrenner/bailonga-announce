@@ -1,15 +1,10 @@
+import * as MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import * as merge from 'webpack-merge';
 
 import {baseConfig, inputTests} from './webpack.common';
 
-/** Custom webpack merging function. */
-const smartMerge = merge.smartStrategy({
-    // Prepend new loaders so that webpack executes them last
-    'module.rules.loaders': 'prepend'
-});
-
 /** Development-mode webpack configuration. */
-export default smartMerge(baseConfig, {
+export default merge.smart(baseConfig, {
     mode: 'development',
 
     output: {
@@ -19,11 +14,20 @@ export default smartMerge(baseConfig, {
     module: {
         rules: [{
             test: inputTests.css,
-            loaders: [
-                'style-loader'
-            ]
+            loaders: [{
+                loader: MiniCssExtractPlugin.loader as string,
+                options: {
+                    hmr: true
+                }
+            }]
         }]
     },
+
+    plugins: [
+        new MiniCssExtractPlugin({
+            filename: 'styles.css'
+        })
+    ],
 
     devServer: {
         port: 8080

@@ -3,6 +3,7 @@ import * as path from 'path';
 import * as autoprefixer from 'autoprefixer';
 import CleanWebpackPlugin from 'clean-webpack-plugin';
 import * as HtmlWebpackPlugin from 'html-webpack-plugin';
+import * as MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import * as webpack from 'webpack';
 
 /**
@@ -19,6 +20,10 @@ export const inputTests: Record<'css' | 'html' | 'js', RegExp> = {
 };
 
 /* === Loaders with specified options === */
+
+const miniCssExtractPluginLoader: webpack.RuleSetLoader = {
+    loader: MiniCssExtractPlugin.loader as string
+};
 
 const postcssLoader: webpack.RuleSetLoader = {
     loader: 'postcss-loader',
@@ -53,6 +58,7 @@ export const baseConfig: webpack.Configuration = {
         rules: [{
             test: inputTests.css,
             loaders: [
+                miniCssExtractPluginLoader,
                 'css-loader',
                 postcssLoader,
                 'sass-loader'

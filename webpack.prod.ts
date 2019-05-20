@@ -3,29 +3,14 @@ import * as OptimizeCssAssetsPlugin from 'optimize-css-assets-webpack-plugin';
 import * as TerserWebpackPlugin from 'terser-webpack-plugin';
 import * as merge from 'webpack-merge';
 
-import {baseConfig, inputTests} from './webpack.common';
-
-/** Custom webpack merging function. */
-const smartMerge = merge.smartStrategy({
-    // Prepend new loaders so that webpack executes them last
-    'module.rules.loaders': 'prepend'
-});
+import {baseConfig} from './webpack.common';
 
 /** Production-mode webpack configuration. */
-export default smartMerge(baseConfig, {
+export default merge.smart(baseConfig, {
     mode: 'production',
 
     output: {
         filename: '[name].[contenthash:6].js'
-    },
-
-    module: {
-        rules: [{
-            test: inputTests.css,
-            loaders: [
-                MiniCssExtractPlugin.loader
-            ]
-        }]
     },
 
     plugins: [

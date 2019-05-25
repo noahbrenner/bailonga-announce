@@ -6,7 +6,7 @@
     "build": "webpack --config webpack.prod.ts",
     "devbuild": "webpack --config webpack.dev.ts",
     "start": "webpack-dev-server --config webpack.dev.ts --hot",
-    "test": "tsc --noEmit && tslint --project tsconfig.json"
+    "test": "tsc --noEmit && tslint --project tsconfig.json src/**/*.ts"
   },
   "browserslist": [
     "last 1 year"

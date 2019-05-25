@@ -11,6 +11,9 @@
   "browserslist": [
     "last 1 year"
   ],
+  "dependencies": {
+    "knockout": "^3.5.0"
+  },
   "devDependencies": {
     "@types/autoprefixer": "^9.5.0",
     "@types/ejs": "^2.6.3",

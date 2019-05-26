@@ -16,10 +16,52 @@ html(lang="en-us")
             type="text"
             autocomplete="off"
           )#title
+        label(for="intro") Organizer's intro
+          textarea(
+            data-bind="textInput: intro"
+            autocomplete="off"
+            spellcheck="true"
+          )#intro
+        label(for="dj") DJ
+          input(
+            data-bind="textInput: dj"
+            type="text"
+            autocomplete="off"
+            spellcheck="false"
+          )#dj
+        label(for="teacher-beginner") Beginner lesson teacher
+          input(
+            data-bind="textInput: teacherBeginner"
+            type="text"
+            autocomplete="off"
+            spellcheck="false"
+          )#teacher-beginner
+        label(for="teacher-intermediate") Intermediate lesson teacher
+          input(
+            data-bind="textInput: teacherIntermediate"
+            type="text"
+            autocomplete="off"
+            spellcheck="false"
+          )#teacher-intermediate
+        label(for="topic-intermediate") Intermediate lesson topic
+          input(
+            data-bind="textInput: topicIntermediate"
+            type="text"
+            autocomplete="off"
+            spellcheck="false"
+          )#topic-intermediate
+        label(for="cost") Cost
+          input(
+            data-bind="textInput: cost"
+            type="text"
+            autocomplete="off"
+            spellcheck="false"
+          )#cost
     section
       h2 Copy the results below
+      h3 Facebook Event
       textarea(
-        data-bind="textInput: text"
+        data-bind="textInput: facebook"
         readonly
         spellcheck="false"
       )

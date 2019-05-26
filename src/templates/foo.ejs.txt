@@ -1,5 +1,0 @@
-<%_ if (true) { _%>
-Text test is true. <%= locals.content %>
-<%_ } else { _%>
-Text test is false.
-<%_ } _%>

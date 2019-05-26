@@ -1,0 +1,30 @@
+<%= locals.intro %>
+
+This Week’s Event
+
+Tuesday, March 5th<%# TODO %>
+
+Schedule:
+	• 7:00PM - Beginning and Intermediate lessons
+	• 7:45–10PM - DJ <%= locals.dj %>
+
+Intermediate teacher: <%= locals.teacherIntermediate %>
+Lesson topic: <%= locals.topicIntermediate %>
+Beginner teacher: <%= locals.teacherBeginner %>
+Lesson topic: Week 1: From zero, the very basics.<%# TODO %>
+
+DJ: <%= locals.dj %>
+Music: 50/50 alternative and traditional<%# TODO %>
+
+Cost: <%= locals.cost %> (Cash or check only)
+Volunteer: 30-minute desk shift gets you in free!
+
+Parking: To the left of Vet’s club building or nearby street parking
+Accessibility: The Vet’s club’s ramp is on the front-right corner of the building. There is an elevator directly to the right once inside the main entrance.
+
+—————————
+Upcoming Events:
+<%#_ TODO _%>
+	• March 12th<%# TODO %> - LIVE MUSIC with Mood Area 52<%# TODO %>
+	• April 30th - LIVE MUSIC with Megan Yvonne & Andrew Oliver
+	• May 7th - Guest Instructor Cecilia Gonzalez

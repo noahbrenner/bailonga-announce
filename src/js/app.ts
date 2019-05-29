@@ -36,9 +36,9 @@ class ViewModel {
 }
 
 if (document.readyState === 'loading') {
-    ko.applyBindings(new ViewModel());
-} else {
     document.addEventListener('DOMContentLoaded', () => {
         ko.applyBindings(new ViewModel());
     });
+} else {
+    ko.applyBindings(new ViewModel());
 }

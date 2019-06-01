@@ -9,52 +9,46 @@ html(lang="en-us")
     h1 Bailonga Templates
     section
       h2 Enter values for this week's event
-      form
+      form(autocomplete="off")
         label(for="title") Event Title
           input(
             data-bind="textInput: title"
             type="text"
-            autocomplete="off"
+            spellcheck="true"
           )#title
         label(for="intro") Organizer's intro
           textarea(
             data-bind="textInput: intro"
-            autocomplete="off"
             spellcheck="true"
           )#intro
         label(for="dj") DJ
           input(
             data-bind="textInput: dj"
             type="text"
-            autocomplete="off"
             spellcheck="false"
           )#dj
         label(for="teacher-beginner") Beginner lesson teacher
           input(
             data-bind="textInput: teacherBeginner"
             type="text"
-            autocomplete="off"
             spellcheck="false"
           )#teacher-beginner
         label(for="teacher-intermediate") Intermediate lesson teacher
           input(
             data-bind="textInput: teacherIntermediate"
             type="text"
-            autocomplete="off"
             spellcheck="false"
           )#teacher-intermediate
         label(for="topic-intermediate") Intermediate lesson topic
           input(
             data-bind="textInput: topicIntermediate"
             type="text"
-            autocomplete="off"
             spellcheck="false"
           )#topic-intermediate
         label(for="cost") Cost
           input(
             data-bind="textInput: cost"
             type="text"
-            autocomplete="off"
             spellcheck="false"
           )#cost
     section

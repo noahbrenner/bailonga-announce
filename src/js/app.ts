@@ -3,14 +3,21 @@ import * as ko from 'knockout';
 import '../css/styles.scss';
 import facebook from '../templates/facebook.ejs.txt';
 
+type ObservablePropertyNames<T> = {
+    [K in keyof T]: T[K] extends ko.Observable ? K : never
+}[keyof T];
+
+type InputProperty = ObservablePropertyNames<ViewModel>;
+type InputValueMap = Record<InputProperty, string>;
+
 class ViewModel {
-    public title: ko.Observable<string>;
-    public intro: ko.Observable<string>;
-    public dj: ko.Observable<string>;
-    public teacherBeginner: ko.Observable<string>;
-    public teacherIntermediate: ko.Observable<string>;
-    public topicIntermediate: ko.Observable<string>;
-    public cost: ko.Observable<string>;
+    public title = ko.observable('');
+    public intro = ko.observable('');
+    public dj = ko.observable('');
+    public teacherBeginner = ko.observable('');
+    public teacherIntermediate = ko.observable('');
+    public topicIntermediate = ko.observable('');
+    public cost = ko.observable('');
 
     public facebook = ko.pureComputed(() => facebook(this.templateLocals()));
 
@@ -25,13 +32,15 @@ class ViewModel {
     }));
 
     constructor() {
-        this.title = ko.observable('');
-        this.intro = ko.observable('');
-        this.dj = ko.observable('');
-        this.teacherBeginner = ko.observable('');
-        this.teacherIntermediate = ko.observable('');
-        this.topicIntermediate = ko.observable('TBD');
-        this.cost = ko.observable('$7 – $10');
+        Object.entries(this.getDefaultValues())
+            .forEach(([key, val]) => this[key as InputProperty](val));
+    }
+
+    private getDefaultValues() {
+        return {
+            topicIntermediate: 'TBD',
+            cost: '$7 – $10'
+        } as Pick<InputValueMap, 'topicIntermediate' | 'cost'>;
     }
 }
 

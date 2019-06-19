@@ -2,6 +2,7 @@ import * as ko from 'knockout';
 
 import '../css/styles.scss';
 import facebook from '../templates/facebook.ejs.txt';
+import {formatUTCDate, getNextTuesdayDateString} from './dates';
 
 type ObservablePropertyNames<T> = {
     [K in keyof T]: T[K] extends ko.Observable ? K : never
@@ -12,6 +13,7 @@ type InputValueMap = Record<InputProperty, string>;
 
 class ViewModel {
     public title = ko.observable('');
+    public date = ko.observable('');
     public intro = ko.observable('');
     public dj = ko.observable('');
     public teacherBeginner = ko.observable('');
@@ -23,6 +25,7 @@ class ViewModel {
 
     private templateLocals = ko.pureComputed(() => ({
         title: this.title().trim(),
+        date: formatUTCDate(new Date(this.date())),
         intro: this.intro().trim(),
         dj: this.dj().trim(),
         teacherBeginner: this.teacherBeginner().trim(),
@@ -38,9 +41,10 @@ class ViewModel {
 
     private getDefaultValues() {
         return {
+            date: getNextTuesdayDateString(),
             topicIntermediate: 'TBD',
             cost: '$7 – $10'
-        } as Pick<InputValueMap, 'topicIntermediate' | 'cost'>;
+        } as Pick<InputValueMap, 'date' | 'topicIntermediate' | 'cost'>;
     }
 }
 

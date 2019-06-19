@@ -16,6 +16,13 @@ html(lang="en-us")
             type="text"
             spellcheck="true"
           )#title
+        label(for="date") Event Date
+          input(
+            data-bind="textInput: date"
+            type="date"
+            min="2015-01-06"
+            step="7"
+          )#date
         label(for="intro") Organizer's intro
           textarea(
             data-bind="textInput: intro"

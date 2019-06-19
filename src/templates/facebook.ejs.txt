@@ -2,7 +2,7 @@
 
 This Week’s Event
 
-Tuesday, March 5th<%# TODO %>
+Tuesday, <%= locals.date %>
 
 Schedule:
 	• 7:00PM - Beginning and Intermediate lessons

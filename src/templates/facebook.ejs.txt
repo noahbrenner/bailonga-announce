@@ -11,10 +11,10 @@ Schedule:
 Intermediate teacher: <%= locals.teacherIntermediate %>
 Lesson topic: <%= locals.topicIntermediate %>
 Beginner teacher: <%= locals.teacherBeginner %>
-Lesson topic: Week 1: From zero, the very basics.<%# TODO %>
+Lesson topic: <%= locals.topicBeginner %>
 
 DJ: <%= locals.dj %>
-Music: 50/50 alternative and traditional<%# TODO %>
+Music: <%= locals.musicType %>
 
 Cost: <%= locals.cost %> (Cash or check only)
 Volunteer: 30-minute desk shift gets you in free!

@@ -34,12 +34,20 @@ html(lang="en-us")
             type="text"
             spellcheck="false"
           )#dj
+        label(for="music-type") Music type
+          select(
+            data-bind="options: musicTypeOptions, value: musicType"
+          )#music-type
         label(for="teacher-beginner") Beginner lesson teacher
           input(
             data-bind="textInput: teacherBeginner"
             type="text"
             spellcheck="false"
           )#teacher-beginner
+        label(for="topic-beginner") Beginner lesson topic
+          select(
+            data-bind="options: topicBeginnerOptions, value: topicBeginner"
+          )#topic-beginner
         label(for="teacher-intermediate") Intermediate lesson teacher
           input(
             data-bind="textInput: teacherIntermediate"

@@ -28,18 +28,34 @@ export function formatUTCDate(date: Date) {
 }
 
 /**
- * Return the ISO date for the soonest Tuesday (maybe today), e.g. '2015-01-06'
+ * Return the ISO date string for the Tuesday after `refDate`
+ *
+ * > getNextTuesdayISOString('2015-01-05'); // => '2015-01-06'
+ * > getNextTuesdayISOString('2015-01-06'); // => '2015-01-13'
+ * > getNextTuesdayISOString(new Date(2015, 0, 6)); // => '2015-01-13'
+ * > getNextTuesdayISOString(new Date()); // The first Tuesday after today
+ *
+ * @param refDate - The reference date from which to search
+ * If a `string`: An ISO string in *UTC* time, e.g. `'2015-01-06'`
+ * If a `Date`: A Date object in *local* time, e.g. `new Date()`
  */
-export function getNextTuesdayDateString() {
+export function getNextTuesdayISOString(refDate: string | Date) {
+    const WEEK = 7;
     const TUESDAY = 2;
-    const now = new Date();
-    const utcDate = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-    const currentDay = utcDate.getUTCDay();
 
-    if (currentDay !== TUESDAY) {
-        const dateOffset = 7 - ((utcDate.getDay() - TUESDAY + 7) % 7);
-        utcDate.setUTCDate(utcDate.getUTCDate() + dateOffset);
-    }
+    const utcRef = typeof refDate === 'string'
+        ? new Date(refDate)
+        : new Date(Date.UTC(
+            refDate.getFullYear(), refDate.getMonth(), refDate.getDate()
+        ));
 
-    return utcDate.toISOString().slice(0, 10);
+    const dateOffset = (WEEK - (utcRef.getUTCDay() - TUESDAY)) % WEEK || WEEK;
+
+    const utcResult = new Date(Date.UTC(
+        utcRef.getUTCFullYear(),
+        utcRef.getUTCMonth(),
+        utcRef.getUTCDate() + dateOffset
+    ));
+
+    return utcResult.toISOString().slice(0, 10);
 }

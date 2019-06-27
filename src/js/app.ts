@@ -2,7 +2,7 @@ import * as ko from 'knockout';
 
 import '../css/styles.scss';
 import facebook from '../templates/facebook.ejs.txt';
-import {formatUTCDate, getNextTuesdayDateString} from './dates';
+import {formatUTCDate, getNextTuesdayISOString} from './dates';
 
 type ObservablePropertyNames<T> = {
     [K in keyof T]: T[K] extends ko.Observable ? K : never
@@ -44,7 +44,7 @@ class ViewModel {
 
     private templateLocals = ko.pureComputed(() => ({
         title: this.title().trim(),
-        date: formatUTCDate(new Date(this.date())),
+        date: this.date() === '' ? '' : formatUTCDate(new Date(this.date())),
         intro: this.intro().trim(),
         dj: this.dj().trim(),
         musicType: this.musicType(),
@@ -58,9 +58,11 @@ class ViewModel {
     constructor() {
         // Update the default beginner topic whenever the event date changes
         this.date.subscribe((newDateString) => {
-            const selectedDate = new Date(newDateString);
-            const weekIndex = Math.floor((selectedDate.getUTCDate() - 1) / 7);
-            this.topicBeginner(this.topicBeginnerOptions[weekIndex]);
+            if (newDateString !== '') {
+                const utcDate = new Date(newDateString);
+                const weekIndex = Math.floor((utcDate.getUTCDate() - 1) / 7);
+                this.topicBeginner(this.topicBeginnerOptions[weekIndex]);
+            }
         });
 
         // Initialize default values
@@ -70,7 +72,7 @@ class ViewModel {
 
     private getDefaultValues() {
         return {
-            date: getNextTuesdayDateString(),
+            date: getNextTuesdayISOString(new Date()),
             topicIntermediate: 'TBD',
             cost: '$7 – $10'
         } as Pick<InputValueMap, 'date' | 'topicIntermediate' | 'cost'>;

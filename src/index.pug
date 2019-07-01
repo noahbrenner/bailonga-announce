@@ -18,7 +18,7 @@ html(lang="en-us")
           )#title
         label(for="date") Event Date
           input(
-            data-bind="textInput: date"
+            data-bind="value: date"
             type="date"
             min="2015-01-06"
             step="7"
@@ -66,6 +66,28 @@ html(lang="en-us")
             type="text"
             spellcheck="false"
           )#cost
+        fieldset
+          legend Upcoming Events
+          ul(data-bind="foreach: upcomingEvents")
+            li
+              label(data-bind="attr: {for: 'date' + $index()}") Date
+                input(
+                  data-bind="value: date, attr: {id: 'date' + $index()}"
+                  type="date"
+                  min="2015-01-06"
+                  step="7"
+                )
+              label(data-bind="attr: {for: 'title' + $index()}") Title
+                input(
+                  data-bind="textInput: title, attr: {id: 'title' + $index()}"
+                  type="text"
+                  spellcheck="true"
+                )#title
+              button(data-bind="click: remove") Delete
+          button(
+            data-bind="click: addUpcomingEvent"
+            type="button"
+          ) Add upcoming event
     section
       h2 Copy the results below
       h3 Facebook Event

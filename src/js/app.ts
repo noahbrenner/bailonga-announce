@@ -3,6 +3,7 @@ import * as ko from 'knockout';
 import '../css/styles.scss';
 import facebook from '../templates/facebook.ejs.txt';
 import {formatUTCDate, getNextTuesdayISOString} from './dates';
+import {getEventObservableArray} from './upcoming-events';
 
 type ObservablePropertyNames<T> = {
     [K in keyof T]: T[K] extends ko.Observable ? K : never
@@ -22,6 +23,7 @@ class ViewModel {
     public teacherIntermediate = ko.observable('');
     public topicIntermediate = ko.observable('');
     public cost = ko.observable('');
+    public upcomingEvents = getEventObservableArray(this.date);
 
     public musicTypeOptions: readonly string[] = [
         '50/50 Alternative and Traditional',
@@ -52,7 +54,13 @@ class ViewModel {
         topicBeginner: this.topicBeginner(),
         teacherIntermediate: this.teacherIntermediate().trim(),
         topicIntermediate: this.topicIntermediate().trim(),
-        cost: this.cost().trim()
+        cost: this.cost().trim(),
+        upcomingEvents: this.upcomingEvents().map((event) => ({
+            date: event.date() === ''
+                ? ''
+                : formatUTCDate(new Date(event.date())),
+            title: event.title().trim()
+        }))
     }));
 
     constructor() {
@@ -68,6 +76,10 @@ class ViewModel {
         // Initialize default values
         Object.entries(this.getDefaultValues())
             .forEach(([key, val]) => this[key as InputProperty](val));
+    }
+
+    public addUpcomingEvent() {
+        this.upcomingEvents.add();
     }
 
     private getDefaultValues() {

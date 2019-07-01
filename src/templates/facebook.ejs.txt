@@ -23,8 +23,9 @@ Parking: To the left of Vet’s club building or nearby street parking
 Accessibility: The Vet’s club’s ramp is on the front-right corner of the building. There is an elevator directly to the right once inside the main entrance.
 
 —————————
+<%_ if (locals.upcomingEvents.length !== 0) { _%>
 Upcoming Events:
-<%#_ TODO _%>
-	• March 12th<%# TODO %> - LIVE MUSIC with Mood Area 52<%# TODO %>
-	• April 30th - LIVE MUSIC with Megan Yvonne & Andrew Oliver
-	• May 7th - Guest Instructor Cecilia Gonzalez
+<%_ for (const event of locals.upcomingEvents) { _%>
+	• <%= event.date %> - <%= event.title %>
+<%_ } _%>
+<%_ } _%>

@@ -5,12 +5,13 @@ import facebook from '../templates/facebook.ejs.txt';
 import {formatUTCDate, getNextTuesdayISOString} from './dates';
 import {getEventObservableArray} from './upcoming-events';
 
-type ObservablePropertyNames<T> = {
-    [K in keyof T]: T[K] extends ko.Observable ? K : never
-}[keyof T];
-
-type InputProperty = ObservablePropertyNames<ViewModel>;
-type InputValueMap = Record<InputProperty, string>;
+type InputProperty = Extract<keyof ViewModel,
+    'title' | 'date' | 'intro' |
+    'dj' | 'musicType' |
+    'teacherBeginner' | 'topicBeginner' |
+    'teacherIntermediate' | 'topicIntermediate' |
+    'cost'
+>;
 
 class ViewModel {
     public title = ko.observable('');
@@ -83,11 +84,15 @@ class ViewModel {
     }
 
     private getDefaultValues() {
-        return {
+        const result = {
             date: getNextTuesdayISOString(new Date()),
             topicIntermediate: 'TBD',
             cost: '$7 – $10'
-        } as Pick<InputValueMap, 'date' | 'topicIntermediate' | 'cost'>;
+        };
+
+        return result as (
+            Pick<Record<InputProperty, string>, keyof typeof result>
+        ) as typeof result;
     }
 }
 

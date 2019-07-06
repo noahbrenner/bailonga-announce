@@ -43,13 +43,7 @@ export function getEventObservableArray(fallbackDate: ko.Observable<string>) {
 
     function sortByDate(this: EventObservableArray) {
         this.sort((left, right) => {
-            if (left.date() < right.date()) {
-                return -1;
-            } else if (left.date > right.date) {
-                return 1;
-            } else {
-                return 0;
-            }
+            return Date.parse(left.date()) - Date.parse(right.date());
         });
     }
 

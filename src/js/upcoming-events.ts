@@ -1,13 +1,13 @@
 import * as ko from 'knockout';
 
+import {observableDateString, ObservableDateString} from './date-observable';
 import {getNextTuesdayISOString} from './dates';
 
 class UpcomingEvent {
-    public date = ko.observable('');
+    public date = observableDateString('');
     public title = ko.observable('');
 
     constructor(public parent: EventObservableArray, date: string) {
-        // TODO If date is '', reset to default, then sort
         this.date.subscribe(() => this.parent.sortByDate());
         this.date(date);
     }
@@ -19,7 +19,7 @@ class UpcomingEvent {
 
 type EventObservableArray = ReturnType<typeof getEventObservableArray>;
 
-export function getEventObservableArray(fallbackDate: ko.Observable<string>) {
+export function getEventObservableArray(fallbackDate: ObservableDateString) {
     const baseObservable = ko.observableArray([] as UpcomingEvent[]);
 
     function add(this: EventObservableArray) {
@@ -28,14 +28,10 @@ export function getEventObservableArray(fallbackDate: ko.Observable<string>) {
     }
 
     function getLatestDate(this: EventObservableArray) {
-        if (this().length > 0) {
-            const lastUpcomingEvent = this()[this().length - 1];
-            return lastUpcomingEvent.date();
-        } else if (fallbackDate() !== '') {
-            return fallbackDate();
-        } else {
-            return getNextTuesdayISOString(new Date());
-        }
+        const events = this();
+        return events.length > 0
+            ? events[events.length - 1].date()
+            : fallbackDate();
     }
 
     function sortByDate(this: EventObservableArray) {

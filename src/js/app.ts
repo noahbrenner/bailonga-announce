@@ -2,6 +2,7 @@ import * as ko from 'knockout';
 
 import '../css/styles.scss';
 import facebook from '../templates/facebook.ejs.txt';
+import {observableDateString} from './date-observable';
 import {formatUTCDate, getNextTuesdayISOString} from './dates';
 import {getEventObservableArray} from './upcoming-events';
 
@@ -15,7 +16,7 @@ type InputProperty = Extract<keyof ViewModel,
 
 class ViewModel {
     public title = ko.observable('');
-    public date = ko.observable('');
+    public date = observableDateString('');
     public intro = ko.observable('');
     public dj = ko.observable('');
     public musicType = ko.observable('');
@@ -47,7 +48,7 @@ class ViewModel {
 
     private templateLocals = ko.pureComputed(() => ({
         title: this.title().trim(),
-        date: this.date() === '' ? '' : formatUTCDate(new Date(this.date())),
+        date: formatUTCDate(new Date(this.date())),
         intro: this.intro().trim(),
         dj: this.dj().trim(),
         musicType: this.musicType(),
@@ -57,9 +58,7 @@ class ViewModel {
         topicIntermediate: this.topicIntermediate().trim(),
         cost: this.cost().trim(),
         upcomingEvents: this.upcomingEvents().map((event) => ({
-            date: event.date() === ''
-                ? ''
-                : formatUTCDate(new Date(event.date())),
+            date: formatUTCDate(new Date(event.date())),
             title: event.title().trim()
         }))
     }));
@@ -67,11 +66,9 @@ class ViewModel {
     constructor() {
         // Update the default beginner topic whenever the event date changes
         this.date.subscribe((newDateString) => {
-            if (newDateString !== '') {
-                const utcDate = new Date(newDateString);
-                const weekIndex = Math.floor((utcDate.getUTCDate() - 1) / 7);
-                this.topicBeginner(this.topicBeginnerOptions[weekIndex]);
-            }
+            const utcDate = new Date(newDateString);
+            const weekIndex = Math.floor((utcDate.getUTCDate() - 1) / 7);
+            this.topicBeginner(this.topicBeginnerOptions[weekIndex]);
         });
 
         // Initialize default values

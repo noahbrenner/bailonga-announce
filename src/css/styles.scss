@@ -1,3 +1,22 @@
 h1 {
   color: brown;
 }
+
+label {
+  font-weight: bold;
+}
+
+input {
+  display: block;
+}
+
+select {
+  display: block;
+}
+
+textarea {
+  display: block;
+  resize: none;
+  width: 90%;
+  height: 10em;
+}

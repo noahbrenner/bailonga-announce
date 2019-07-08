@@ -86,7 +86,7 @@ export const baseConfig: webpack.Configuration = {
         new HtmlWebpackPlugin({
             filename: 'index.html',
             inject: 'head',
-            template: './src/index.pug'
+            template: './src/html/index.pug'
         })
     ],
 

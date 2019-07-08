@@ -1,3 +1,5 @@
+include mixins/input.pug
+
 doctype html
 html(lang="en-us")
   head
@@ -10,12 +12,7 @@ html(lang="en-us")
     section
       h2 Enter values for this week's event
       form(autocomplete="off")
-        label(for="title") Event Title
-          input(
-            data-bind="textInput: title"
-            type="text"
-            spellcheck="true"
-          )#title
+        +inputText('title')(spellcheck="true") Event Title
         label(for="date") Event Date
           input(
             data-bind="value: date"
@@ -23,49 +20,20 @@ html(lang="en-us")
             min="2015-01-06"
             step="7"
           )#date
-        label(for="intro") Organizer's intro
-          textarea(
-            data-bind="textInput: intro"
-            spellcheck="true"
-          )#intro
-        label(for="dj") DJ
-          input(
-            data-bind="textInput: dj"
-            type="text"
-            spellcheck="false"
-          )#dj
+        +inputTextarea('intro')(spellcheck="true") Organizer's intro
+        +inputText('dj') DJ
         label(for="music-type") Music type
           select(
             data-bind="options: musicTypeOptions, value: musicType"
           )#music-type
-        label(for="teacher-beginner") Beginner lesson teacher
-          input(
-            data-bind="textInput: teacherBeginner"
-            type="text"
-            spellcheck="false"
-          )#teacher-beginner
+        +inputText('teacherBeginner') Beginner lesson teacher
         label(for="topic-beginner") Beginner lesson topic
           select(
             data-bind="options: topicBeginnerOptions, value: topicBeginner"
           )#topic-beginner
-        label(for="teacher-intermediate") Intermediate lesson teacher
-          input(
-            data-bind="textInput: teacherIntermediate"
-            type="text"
-            spellcheck="false"
-          )#teacher-intermediate
-        label(for="topic-intermediate") Intermediate lesson topic
-          input(
-            data-bind="textInput: topicIntermediate"
-            type="text"
-            spellcheck="false"
-          )#topic-intermediate
-        label(for="cost") Cost
-          input(
-            data-bind="textInput: cost"
-            type="text"
-            spellcheck="false"
-          )#cost
+        +inputText('teacherIntermediate') Intermediate lesson teacher
+        +inputText('topicIntermediate') Intermediate lesson topic
+        +inputText('cost') Cost
         fieldset
           legend Upcoming Events
           ul(data-bind="foreach: upcomingEvents")
@@ -77,12 +45,7 @@ html(lang="en-us")
                   min="2015-01-06"
                   step="7"
                 )
-              label(data-bind="attr: {for: 'title' + $index()}") Title
-                input(
-                  data-bind="textInput: title, attr: {id: 'title' + $index()}"
-                  type="text"
-                  spellcheck="true"
-                )#title
+              +inputText('title', true)(spellcheck="true") Title
               button(data-bind="click: remove") Delete
           button(
             data-bind="click: addUpcomingEvent"

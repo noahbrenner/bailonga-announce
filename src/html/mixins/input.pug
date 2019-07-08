@@ -1,0 +1,22 @@
+mixin inputText(koPropName, isForeach=false)
+  label(
+    for=isForeach ? undefined : koPropName
+    data-bind=isForeach ? `attr: {for: '${koPropName}' + $index()}` : undefined
+  )
+    block
+    input(
+      data-bind=`textInput: ${koPropName}`
+        + (isForeach ? `, attr: {id: '${koPropName}' + $index()}` : '')
+      id=isForeach ? undefined : koPropName
+      type="text"
+      spellcheck="false"
+    )&attributes(attributes)
+
+mixin inputTextarea(koPropName)
+  label(for=koPropName)
+    block
+    textarea(
+      data-bind=`textInput: ${koPropName}`
+      id=koPropName
+      spellcheck="false"
+    )&attributes(attributes)

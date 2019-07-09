@@ -1,0 +1,6 @@
+mixin outputText(koPropName)
+  textarea(
+    data-bind=`value: ${koPropName}`
+    readonly
+    spellcheck="false"
+  )&attributes(attributes)

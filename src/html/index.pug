@@ -13,13 +13,7 @@ html(lang="en-us")
       h2 Enter values for this week's event
       form(autocomplete="off")
         +inputText('title')(spellcheck="true") Event Title
-        label(for="date") Event Date
-          input(
-            data-bind="value: date"
-            type="date"
-            min="2015-01-06"
-            step="7"
-          )#date
+        +inputDate('date') Event Date
         +inputTextarea('intro')(spellcheck="true") Organizer's intro
         +inputText('dj') DJ
         label(for="music-type") Music type
@@ -38,13 +32,7 @@ html(lang="en-us")
           legend Upcoming Events
           ul(data-bind="foreach: upcomingEvents")
             li
-              label(data-bind="attr: {for: 'date' + $index()}") Date
-                input(
-                  data-bind="value: date, attr: {id: 'date' + $index()}"
-                  type="date"
-                  min="2015-01-06"
-                  step="7"
-                )
+              +inputDate('date', true) Date
               +inputText('title', true)(spellcheck="true") Title
               button(data-bind="click: remove") Delete
           button(

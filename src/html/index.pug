@@ -16,15 +16,9 @@ html(lang="en-us")
         +inputDate('date') Event Date
         +inputTextarea('intro')(spellcheck="true") Organizer's intro
         +inputText('dj') DJ
-        label(for="music-type") Music type
-          select(
-            data-bind="options: musicTypeOptions, value: musicType"
-          )#music-type
+        +inputSelect('musicType', 'musicTypeOptions') Music type
         +inputText('teacherBeginner') Beginner lesson teacher
-        label(for="topic-beginner") Beginner lesson topic
-          select(
-            data-bind="options: topicBeginnerOptions, value: topicBeginner"
-          )#topic-beginner
+        +inputSelect('topicBeginner', 'topicBeginnerOptions') Beginner lesson topic
         +inputText('teacherIntermediate') Intermediate lesson teacher
         +inputText('topicIntermediate') Intermediate lesson topic
         +inputText('cost') Cost

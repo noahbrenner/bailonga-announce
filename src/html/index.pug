@@ -1,0 +1,40 @@
+include mixins/input.pug
+include mixins/output.pug
+
+doctype html
+html(lang="en-us")
+  head
+    title Bailonga Templates
+    meta(charset="utf-8")
+    meta(http-equiv="X-UA-Compatible", content="IE=edge")
+    meta(name="viewport", content="initial-scale=1")
+  body
+    h1 Bailonga Templates
+    section
+      h2 Enter values for this week's event
+      form(autocomplete="off")
+        +inputText('title')(spellcheck="true") Event Title
+        +inputDate('date') Event Date
+        +inputTextarea('intro')(spellcheck="true") Organizer's intro
+        +inputText('dj') DJ
+        +inputSelect('musicType', 'musicTypeOptions') Music type
+        +inputText('teacherBeginner') Beginner lesson teacher
+        +inputSelect('topicBeginner', 'topicBeginnerOptions') Beginner lesson topic
+        +inputText('teacherIntermediate') Intermediate lesson teacher
+        +inputText('topicIntermediate') Intermediate lesson topic
+        +inputText('cost') Cost
+        fieldset
+          legend Upcoming Events
+          ul(data-bind="foreach: upcomingEvents")
+            li
+              +inputDate('date', true) Date
+              +inputText('title', true)(spellcheck="true") Title
+              button(data-bind="click: remove") Delete
+          button(
+            data-bind="click: addUpcomingEvent"
+            type="button"
+          ) Add upcoming event
+    section
+      h2 Copy the results below
+      h3 Facebook Event
+      +outputText('facebook')

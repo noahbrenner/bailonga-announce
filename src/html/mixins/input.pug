@@ -21,6 +21,17 @@ mixin inputTextarea(koPropName)
       spellcheck="false"
     )&attributes(attributes)
 
+mixin inputUrl(koPropName, urlPattern)
+  label(for=koPropName)
+    block
+    input(
+      data-bind=`textInput: ${koPropName}`
+      id=koPropName
+      type="url"
+      pattern=urlPattern
+      spellcheck="false"
+    )
+
 mixin inputDate(koPropName, isForeach=false)
   label(
     for=isForeach ? undefined : koPropName

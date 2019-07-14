@@ -4,3 +4,8 @@ mixin outputText(koPropName)
     readonly
     spellcheck="false"
   )&attributes(attributes)
+
+mixin outputHtml(koPropName)
+  div(
+    data-bind=`html: ${koPropName}`
+  ).output-html&attributes(attributes)

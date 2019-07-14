@@ -23,6 +23,7 @@ html(lang="en-us")
         +inputText('teacherIntermediate') Intermediate lesson teacher
         +inputText('topicIntermediate') Intermediate lesson topic
         +inputText('cost') Cost
+        +inputUrl('facebookEventUrl') Facebook event URL
         fieldset
           legend Upcoming Events
           ul(data-bind="foreach: upcomingEvents")
@@ -38,3 +39,7 @@ html(lang="en-us")
       h2 Copy the results below
       h3 Facebook Event
       +outputText('facebook')
+      h3 EugeneTango.com event
+      div.output-pair
+        +outputText('eugeneTango')
+        +outputHtml('eugeneTango')

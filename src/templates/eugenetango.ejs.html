@@ -1,0 +1,47 @@
+<div style="margin-left: 1em;">
+  <h1>Tuesday Bailonga</h1>
+  <div style="margin: 1em 0; font-weight: bold;">
+    <div>Every Tuesday</div>
+    <div>Alternative and Traditional Tango Music</div>
+    <div>Beginner and Intermediate class every week</div>
+  </div>
+  <p>Visit our website for more info: <a href="http://www.bailonga.org/">www.bailonga.org</a></p>
+  <hr style="width: 50%; margin: 1em auto;" />
+  <h2 style="margin: 0.8em 0;">This Week&rsquo;s Event</h2>
+  <h3 style="margin: 1em 0;">Tuesday, <%= locals.date %></h3>
+  <h3 style="margin: 1em 0;">Schedule:</h3>
+  <ul>
+    <li>7:00PM - Beginning and Intermediate Lessons</li>
+    <li>7:45-10:00PM - DJ <%= locals.dj %></li>
+  </ul>
+  <div style="margin: 1em 0;">
+    <div><strong>Intermediate teacher:</strong> <%= locals.teacherIntermediate %></div>
+    <div><strong>Lesson topic:</strong> <%= locals.topicIntermediate %></div>
+    <div><strong>Beginner teacher:</strong> <%= locals.teacherBeginner %></div>
+    <div><strong>Lesson topic:</strong> <%= locals.topicBeginner %></div>
+  </div>
+  <div style="margin: 1em 0;">
+    <div><strong>DJ:</strong> <%= locals.dj %></div>
+    <div><strong>Music:</strong> <%= locals.musicType %></div>
+    <div><strong>Confirm on Facebook:</strong> <a href="<%= locals.facebookEventUrl %>"><%= locals.facebookEventUrl %></a></div>
+  </div>
+  <div style="margin: 1em 0;">
+    <div><strong>Location:</strong> Upstairs Ballroom at the Vet&rsquo;s Club, 1626 Willamette Street Eugene, Oregon</div>
+    <div><strong>Cost:</strong> <%= locals.cost %> (Cash or check only)</div>
+    <div><strong>Volunteer:</strong> 30-minute desk shift gets you in free!</div>
+  </div>
+  <div style="margin: 1em 0;">
+    <div><strong>Parking:</strong> To the left of Vet&rsquo;s club building or nearby street parking.</div>
+    <div><strong>Accessibility:</strong> The Vet&rsquo;s club&rsquo;s ramp is on the front-right corner of the building. There is an elevator directly to the right once inside the main entrance.</div>
+  </div>
+  <%_ if (locals.upcomingEvents.length !== 0) { _%>
+  <hr style="width: 50%; margin: 1em auto;" />
+  <h2 style="margin: 0.8em 0;">Upcoming Events:</h2>
+  <ul>
+    <%_ for (const event of locals.upcomingEvents) { _%>
+    <li><%= event.date %> - <%= event.title %></li>
+    <%_ } _%>
+  </ul>
+  <%_ } _%>
+  <p><a href="http://bailonga.org/bailonga-payment-policies/">Click here to read Bailonga&rsquo;s payment policies</a></p>
+</div>

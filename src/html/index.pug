@@ -15,6 +15,8 @@ html(lang="en-us")
       form(autocomplete="off")
         +inputText('title')(spellcheck="true") Event Title
         +inputDate('date') Event Date
+        +inputText('cost') Cost
+        +inputUrl('facebookEventUrl') Facebook event URL
         +inputTextarea('intro')(spellcheck="true") Organizer's intro
         +inputText('dj') DJ
         +inputSelect('musicType', 'musicTypeOptions') Music type
@@ -22,8 +24,6 @@ html(lang="en-us")
         +inputSelect('topicBeginner', 'topicBeginnerOptions') Beginner lesson topic
         +inputText('teacherIntermediate') Intermediate lesson teacher
         +inputText('topicIntermediate') Intermediate lesson topic
-        +inputText('cost') Cost
-        +inputUrl('facebookEventUrl') Facebook event URL
         fieldset
           legend Upcoming Events
           ul(data-bind="foreach: upcomingEvents")

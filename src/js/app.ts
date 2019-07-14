@@ -1,6 +1,7 @@
 import * as ko from 'knockout';
 
 import '../css/styles.scss';
+import eugeneTango from '../templates/eugenetango.ejs.html';
 import facebook from '../templates/facebook.ejs.txt';
 import {observableDateString} from './date-observable';
 import {formatUTCDate, getNextTuesdayISOString} from './dates';
@@ -17,6 +18,8 @@ type InputProperty = Extract<keyof ViewModel,
 class ViewModel {
     public title = ko.observable('');
     public date = observableDateString('');
+    public cost = ko.observable('');
+    public facebookEventUrl = ko.observable('');
     public intro = ko.observable('');
     public dj = ko.observable('');
     public musicType = ko.observable('');
@@ -24,7 +27,6 @@ class ViewModel {
     public topicBeginner = ko.observable('');
     public teacherIntermediate = ko.observable('');
     public topicIntermediate = ko.observable('');
-    public cost = ko.observable('');
     public upcomingEvents = getEventObservableArray(this.date);
 
     public musicTypeOptions: readonly string[] = [
@@ -44,11 +46,18 @@ class ViewModel {
         'Week 5: Bonus Topic TBA'
     ];
 
-    public facebook = ko.pureComputed(() => facebook(this.templateLocals()));
+    public eugeneTango = ko.pureComputed(() => {
+        return eugeneTango(this.templateLocals());
+    });
+    public facebook = ko.pureComputed(() => {
+        return facebook(this.templateLocals());
+    });
 
     private templateLocals = ko.pureComputed(() => ({
         title: this.title().trim(),
         date: formatUTCDate(new Date(this.date())),
+        cost: this.cost().trim(),
+        facebookEventUrl: this.facebookEventUrl().trim(),
         intro: this.intro().trim(),
         dj: this.dj().trim(),
         musicType: this.musicType(),
@@ -56,7 +65,6 @@ class ViewModel {
         topicBeginner: this.topicBeginner(),
         teacherIntermediate: this.teacherIntermediate().trim(),
         topicIntermediate: this.topicIntermediate().trim(),
-        cost: this.cost().trim(),
         upcomingEvents: this.upcomingEvents().map((event) => ({
             date: formatUTCDate(new Date(event.date())),
             title: event.title().trim()
@@ -83,8 +91,8 @@ class ViewModel {
     private getDefaultValues() {
         const result = {
             date: getNextTuesdayISOString(new Date()),
-            topicIntermediate: 'TBD',
-            cost: '$7 – $10'
+            cost: '$7 – $10',
+            topicIntermediate: 'TBD'
         };
 
         return result as (

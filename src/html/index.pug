@@ -9,12 +9,14 @@ html(lang="en-us")
     meta(http-equiv="X-UA-Compatible", content="IE=edge")
     meta(name="viewport", content="initial-scale=1")
   body
-    h1 Bailonga Templates
+    h1.main-heading Bailonga Templates
     section
       h2 Enter values for this week's event
       form(autocomplete="off")
         +inputText('title')(spellcheck="true") Event Title
         +inputDate('date') Event Date
+        +inputText('cost') Cost
+        +inputUrl('facebookEventUrl') Facebook event URL
         +inputTextarea('intro')(spellcheck="true") Organizer's intro
         +inputText('dj') DJ
         +inputSelect('musicType', 'musicTypeOptions') Music type
@@ -22,7 +24,6 @@ html(lang="en-us")
         +inputSelect('topicBeginner', 'topicBeginnerOptions') Beginner lesson topic
         +inputText('teacherIntermediate') Intermediate lesson teacher
         +inputText('topicIntermediate') Intermediate lesson topic
-        +inputText('cost') Cost
         fieldset
           legend Upcoming Events
           ul(data-bind="foreach: upcomingEvents")
@@ -38,3 +39,7 @@ html(lang="en-us")
       h2 Copy the results below
       h3 Facebook Event
       +outputText('facebook')
+      h3 EugeneTango.com event
+      div.output-pair
+        +outputText('eugeneTango')
+        +outputHtml('eugeneTango')

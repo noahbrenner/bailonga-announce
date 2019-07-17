@@ -37,8 +37,13 @@ html(lang="en-us")
           ) Add upcoming event
     section
       h2 Copy the results below
+
       h3 Facebook Event
       +outputText('facebook')
+
+      h3 etango email
+      +outputHtml('etango').etango
+
       h3 EugeneTango.com event
       div.output-pair
         +outputText('eugeneTango')

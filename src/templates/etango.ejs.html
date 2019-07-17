@@ -1,0 +1,41 @@
+<h1><%= locals.title %></h1>
+<%#_ This is a quick, bad hack -- we need to parse markdown instead _%>
+<%_ for (const paragraph of locals.intro.split(/\n{2,}/)) { _%>
+<p><%= paragraph %></p>
+<%_ } _%>
+<h2>This Week’s Event</h2>
+<h3>Tuesday, <%= locals.date %></h3>
+<h3>Schedule:</h3>
+<ul>
+  <li>7:00PM - Beginning and Intermediate Lessons</li>
+  <li>7:45–10pm - DJ <%= locals.dj %></li>
+</ul>
+<div>
+  <p><strong>Intermediate teacher:</strong> <%= locals.teacherIntermediate %></p>
+  <p><strong>Lesson topic:</strong> <%= locals.topicIntermediate %></p>
+  <p><strong>Beginner teacher:</strong> <%= locals.teacherBeginner %></p>
+  <p><strong>Lesson topic:</strong> <%= locals.topicBeginner %></p>
+</div>
+<div>
+  <p><strong>DJ:</strong> <%= locals.dj %></p>
+  <p><strong>Music:</strong> <%= locals.musicType %></p>
+  <p><strong>Confirm on Facebook:</strong> <%= locals.facebookEventUrl %></p>
+</div>
+<div>
+  <p><strong>Location:</strong> Upstairs Ballroom at the Vet’s Club, 1626 Willamette Street Eugene, Oregon</p>
+  <p><strong>Cost:</strong> <%= locals.cost %> (Cash or check only)</p>
+  <p><strong>Volunteer:</strong> 30-minute desk shift gets you in free!</p>
+</div>
+<div>
+  <p><strong>Parking:</strong> To the left of Vet’s club building or nearby street parking.</p>
+  <p><strong>Accessibility:</strong> The Vet’s club’s ramp is on the front-right corner of the building. There is an elevator directly to the right once inside the main entrance.</p>
+</div>
+<%_ if (locals.upcomingEvents.length !== 0) { _%>
+<hr>
+<h2>Upcoming Events:</h2>
+<ul>
+  <%_ for (const event of locals.upcomingEvents) { _%>
+  <li><%= event.date %> - <%= event.title %></li>
+  <%_ } _%>
+</ul>
+<%_ } _%>

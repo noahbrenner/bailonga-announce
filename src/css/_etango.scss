@@ -1,0 +1,40 @@
+.etango {
+  box-sizing: initial;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 14px;
+
+  h1,
+  h2,
+  h3,
+  div {
+    margin: 14px 0;
+  }
+
+  h1, h2 {
+    font-size: 18px;
+  }
+
+  h3 {
+    font-size: 14px;
+    color: #444;
+  }
+
+  hr {
+    margin: 20px auto;
+    border: none;
+    width: 25%;
+    height: 1px;
+    background: #000;
+  }
+
+  div {
+
+    p {
+      margin: 0;
+    }
+
+    strong {
+      color: #444;
+    }
+  }
+}

@@ -1,6 +1,7 @@
 import * as ko from 'knockout';
 
 import '../css/styles.scss';
+import etango from '../templates/etango.ejs.html';
 import eugeneTango from '../templates/eugenetango.ejs.html';
 import facebook from '../templates/facebook.ejs.txt';
 import {observableDateString} from './date-observable';
@@ -46,6 +47,9 @@ class ViewModel {
         'Week 5: Bonus Topic TBA'
     ];
 
+    public etango = ko.pureComputed(() => {
+        return etango(this.templateLocals());
+    });
     public eugeneTango = ko.pureComputed(() => {
         return eugeneTango(this.templateLocals());
     });
@@ -90,6 +94,7 @@ class ViewModel {
 
     private getDefaultValues() {
         const result = {
+            title: 'Tuesday Bailonga',
             date: getNextTuesdayISOString(new Date()),
             cost: '$7 – $10',
             topicIntermediate: 'TBD'

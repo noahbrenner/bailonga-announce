@@ -1,5 +1,7 @@
+<%_ if (locals.intro !== '') { _%>
 <%= locals.intro %>
 
+<%_ } _%>
 This Week’s Event
 
 Tuesday, <%= locals.date %>

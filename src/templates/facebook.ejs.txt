@@ -27,6 +27,7 @@ Accessibility: The Vet’s club’s ramp is on the front-right corner of the bui
 
 —————————
 Upcoming Events:
+
 <%_ for (const event of locals.upcomingEvents) { _%>
 	• <%- event.date %> - <%- event.title %>
 <%_ } _%>

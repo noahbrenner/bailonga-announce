@@ -5,6 +5,14 @@ mixin outputText(koPropName)
     spellcheck="false"
   )&attributes(attributes)
 
+mixin outputTextLine(koPropName)
+  input(
+    data-bind=`value: ${koPropName}`
+    type="text"
+    readonly
+    spellcheck="false"
+  )&attributes(attributes)
+
 mixin outputHtml(koPropName)
   div(
     data-bind=`html: ${koPropName}`

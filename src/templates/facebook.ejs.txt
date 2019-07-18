@@ -1,24 +1,24 @@
 <%_ if (locals.intro !== '') { _%>
-<%= locals.intro %>
+<%- locals.intro %>
 
 <%_ } _%>
 This Week’s Event
 
-Tuesday, <%= locals.date %>
+Tuesday, <%- locals.date %>
 
 Schedule:
 	• 7:00PM - Beginning and Intermediate lessons
-	• 7:45–10PM - DJ <%= locals.dj %>
+	• 7:45–10PM - DJ <%- locals.dj %>
 
-Intermediate teacher: <%= locals.teacherIntermediate %>
-Lesson topic: <%= locals.topicIntermediate %>
-Beginner teacher: <%= locals.teacherBeginner %>
-Lesson topic: <%= locals.topicBeginner %>
+Intermediate teacher: <%- locals.teacherIntermediate %>
+Lesson topic: <%- locals.topicIntermediate %>
+Beginner teacher: <%- locals.teacherBeginner %>
+Lesson topic: <%- locals.topicBeginner %>
 
-DJ: <%= locals.dj %>
-Music: <%= locals.musicType %>
+DJ: <%- locals.dj %>
+Music: <%- locals.musicType %>
 
-Cost: <%= locals.cost %> (Cash or check only)
+Cost: <%- locals.cost %> (Cash or check only)
 Volunteer: 30-minute desk shift gets you in free!
 
 Parking: To the left of Vet’s club building or nearby street parking
@@ -27,7 +27,8 @@ Accessibility: The Vet’s club’s ramp is on the front-right corner of the bui
 
 —————————
 Upcoming Events:
+
 <%_ for (const event of locals.upcomingEvents) { _%>
-	• <%= event.date %> - <%= event.title %>
+	• <%- event.date %> - <%- event.title %>
 <%_ } _%>
 <%_ } _%>

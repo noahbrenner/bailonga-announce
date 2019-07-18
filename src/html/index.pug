@@ -16,7 +16,6 @@ html(lang="en-us")
         +inputText('title')(spellcheck="true") Event Title
         +inputDate('date') Event Date
         +inputText('cost') Cost
-        +inputUrl('facebookEventUrl') Facebook event URL
         +inputTextarea('intro')(spellcheck="true") Organizer's intro
         +inputText('dj') DJ
         +inputSelect('musicType', 'musicTypeOptions') Music type
@@ -35,6 +34,7 @@ html(lang="en-us")
             data-bind="click: addUpcomingEvent"
             type="button"
           ) Add upcoming event
+        +inputUrl('facebookEventUrl') Facebook event URL
     section
       h2 Copy the results below
 

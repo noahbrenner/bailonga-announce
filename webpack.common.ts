@@ -1,7 +1,7 @@
 import * as path from 'path';
 
 import * as autoprefixer from 'autoprefixer';
-import CleanWebpackPlugin from 'clean-webpack-plugin';
+import {CleanWebpackPlugin} from 'clean-webpack-plugin';
 import * as HtmlWebpackPlugin from 'html-webpack-plugin';
 import * as MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import * as webpack from 'webpack';

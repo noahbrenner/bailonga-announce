@@ -10,7 +10,7 @@ import {loader} from 'webpack';
 
 /** Output JavaScript source code for a compiled EJS template. */
 const ejsLoader: loader.Loader = function (source) {
-    const isDevMode = this._compilation.options.mode === 'development';
+    const isDevMode = this.mode === 'development';
 
     if (typeof source !== 'string') {
         source = source.toString();

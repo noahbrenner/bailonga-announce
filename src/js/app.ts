@@ -9,18 +9,17 @@ import {formatUTCDate, getNextTuesdayISOString} from './dates';
 import {getEventObservableArray} from './upcoming-events';
 
 type InputProperty = Extract<keyof ViewModel,
-    'title' | 'date' | 'intro' |
+    'title' | 'date' | 'cost' | 'intro' |
     'dj' | 'musicType' |
     'teacherBeginner' | 'topicBeginner' |
     'teacherIntermediate' | 'topicIntermediate' |
-    'cost'
+    'facebookEventUrl'
 >;
 
 class ViewModel {
     public title = ko.observable('');
     public date = observableDateString('');
     public cost = ko.observable('');
-    public facebookEventUrl = ko.observable('');
     public intro = ko.observable('');
     public dj = ko.observable('');
     public musicType = ko.observable('');
@@ -29,6 +28,7 @@ class ViewModel {
     public teacherIntermediate = ko.observable('');
     public topicIntermediate = ko.observable('');
     public upcomingEvents = getEventObservableArray(this.date);
+    public facebookEventUrl = ko.observable('');
 
     public musicTypeOptions: readonly string[] = [
         '50/50 Alternative and Traditional',
@@ -61,7 +61,6 @@ class ViewModel {
         title: this.title().trim(),
         date: formatUTCDate(new Date(this.date())),
         cost: this.cost().trim(),
-        facebookEventUrl: this.facebookEventUrl().trim(),
         intro: this.intro().trim(),
         dj: this.dj().trim(),
         musicType: this.musicType(),
@@ -72,7 +71,8 @@ class ViewModel {
         upcomingEvents: this.upcomingEvents().map((event) => ({
             date: formatUTCDate(new Date(event.date())),
             title: event.title().trim()
-        }))
+        })),
+        facebookEventUrl: this.facebookEventUrl().trim()
     }));
 
     constructor() {

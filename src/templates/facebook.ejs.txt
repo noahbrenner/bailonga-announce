@@ -32,3 +32,5 @@ Upcoming Events:
 	• <%- event.date %> - <%- event.title %>
 <%_ } _%>
 <%_ } _%>
+
+Photo Credit: <%= locals.photoCredit %>

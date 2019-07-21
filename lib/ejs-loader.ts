@@ -16,6 +16,11 @@ const ejsLoader: loader.Loader = function (source) {
         source = source.toString();
     }
 
+    // Remove trailing newline
+    if (source.length && source[source.length - 1] === '\n') {
+        source = source.slice(0, -1);
+    }
+
     const templateFunction = ejs.compile(source, {
         client: true, // Generate a standalone function
         _with: false, // Do not use the `with` JavaScript keyword

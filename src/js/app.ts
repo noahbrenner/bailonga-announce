@@ -13,7 +13,7 @@ type InputProperty = Extract<keyof ViewModel,
     'dj' | 'musicType' |
     'teacherBeginner' | 'topicBeginner' |
     'teacherIntermediate' | 'topicIntermediate' |
-    'facebookEventUrl'
+    'photoCredit' | 'facebookEventUrl'
 >;
 
 class ViewModel {
@@ -28,6 +28,7 @@ class ViewModel {
     public teacherIntermediate = ko.observable('');
     public topicIntermediate = ko.observable('');
     public upcomingEvents = getEventObservableArray(this.date);
+    public photoCredit = ko.observable('');
     public facebookEventUrl = ko.observable('');
 
     public musicTypeOptions: readonly string[] = [
@@ -72,6 +73,7 @@ class ViewModel {
             date: formatUTCDate(new Date(event.date())),
             title: event.title().trim()
         })),
+        photoCredit: this.photoCredit().trim(),
         facebookEventUrl: this.facebookEventUrl().trim()
     }));
 

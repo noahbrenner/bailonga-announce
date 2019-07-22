@@ -8,6 +8,18 @@ import {observableDateString} from './date-observable';
 import {formatUTCDate, getNextTuesdayISOString} from './dates';
 import {getEventObservableArray} from './upcoming-events';
 
+/**
+ * Return a string of first name(s) extracted from a string of full name(s)
+ *
+ * @param fullNameStr - One or more full names separated by `&`
+ * @return One or more first names separated by `&`
+ */
+function getFirstName(fullNameStr: string) {
+    const fullNames = fullNameStr.split(/\s*[&]\s*/);
+    const firstNames = fullNames.map((name) => name.split(/\s+/)[0]);
+    return firstNames.join(' & ');
+}
+
 type InputProperty = Extract<keyof ViewModel,
     'title' | 'date' | 'cost' | 'intro' |
     'dj' | 'musicType' |
@@ -64,6 +76,7 @@ class ViewModel {
         cost: this.cost().trim(),
         intro: this.intro().trim(),
         dj: this.dj().trim(),
+        djFirstName: getFirstName(this.dj().trim()),
         musicType: this.musicType(),
         teacherBeginner: this.teacherBeginner().trim(),
         topicBeginner: this.topicBeginner(),

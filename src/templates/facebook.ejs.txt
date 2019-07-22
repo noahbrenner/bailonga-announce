@@ -8,7 +8,7 @@ Tuesday, <%- locals.date %>
 
 Schedule:
 	• 7:00PM - Beginning and Intermediate lessons
-	• 7:45–10PM - DJ <%- locals.dj %>
+	• 7:45–10PM - DJ <%- locals.djFirstName %>
 
 Intermediate teacher: <%- locals.teacherIntermediate %>
 Lesson topic: <%- locals.topicIntermediate %>

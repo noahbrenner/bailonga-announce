@@ -85,7 +85,7 @@ export const baseConfig: webpack.Configuration = {
         new CleanWebpackPlugin(),
         new HtmlWebpackPlugin({
             filename: 'index.html',
-            inject: 'head',
+            inject: false,
             template: './src/html/index.pug'
         })
     ],
@@ -93,7 +93,10 @@ export const baseConfig: webpack.Configuration = {
     devServer: {
         // This is a hack to enable automatic reloading of HTML
         // See: https://github.com/webpack/webpack-dev-server/issues/1271
-        contentBase: path.resolve(__dirname, 'src'),
+        contentBase: [
+            path.resolve(__dirname, 'src', 'html'),
+            path.resolve(__dirname, 'src', 'html', 'mixins')
+        ],
         watchContentBase: true
     }
 };

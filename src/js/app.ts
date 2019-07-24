@@ -65,22 +65,22 @@ class ViewModel {
     ];
 
     public etango = ko.pureComputed(() => {
-        return etango(this.templateLocals());
+        return etango(this.templateLocals()).trim();
     });
     public eugeneTango = ko.pureComputed(() => {
-        return eugeneTango(this.templateLocals());
+        return eugeneTango(this.templateLocals()).trim();
     });
     public facebook = ko.pureComputed(() => {
-        return facebook(this.templateLocals());
+        return facebook(this.templateLocals()).trim();
     });
     public mailchimp1 = ko.pureComputed(() => {
-        return mailchimp1(this.templateLocals());
+        return mailchimp1(this.templateLocals()).trim();
     });
     public mailchimp2 = ko.pureComputed(() => {
-        return mailchimp2(this.templateLocals());
+        return mailchimp2(this.templateLocals()).trim();
     });
     public mailchimp3 = ko.pureComputed(() => {
-        return mailchimp3(this.templateLocals());
+        return mailchimp3(this.templateLocals()).trim();
     });
 
     private templateLocals = ko.pureComputed(() => ({

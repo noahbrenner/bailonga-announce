@@ -4,6 +4,9 @@ import '../css/styles.scss';
 import etango from '../templates/etango.ejs.html';
 import eugeneTango from '../templates/eugenetango.ejs.html';
 import facebook from '../templates/facebook.ejs.txt';
+import mailchimp1 from '../templates/mailchimp-1.ejs.html';
+import mailchimp2 from '../templates/mailchimp-2.ejs.html';
+import mailchimp3 from '../templates/mailchimp-3.ejs.html';
 import {observableDateString} from './date-observable';
 import {formatUTCDate, getNextTuesdayISOString} from './dates';
 import {getEventObservableArray} from './upcoming-events';
@@ -25,7 +28,7 @@ type InputProperty = Extract<keyof ViewModel,
     'dj' | 'musicType' |
     'teacherBeginner' | 'topicBeginner' |
     'teacherIntermediate' | 'topicIntermediate' |
-    'photoCredit' | 'facebookEventUrl'
+    'photoCredit' | 'photoCreditMailchimp' | 'facebookEventUrl'
 >;
 
 class ViewModel {
@@ -41,6 +44,7 @@ class ViewModel {
     public topicIntermediate = ko.observable('');
     public upcomingEvents = getEventObservableArray(this.date);
     public photoCredit = ko.observable('');
+    public photoCreditMailchimp = ko.observable('');
     public facebookEventUrl = ko.observable('');
 
     public musicTypeOptions: readonly string[] = [
@@ -61,13 +65,22 @@ class ViewModel {
     ];
 
     public etango = ko.pureComputed(() => {
-        return etango(this.templateLocals());
+        return etango(this.templateLocals()).trim();
     });
     public eugeneTango = ko.pureComputed(() => {
-        return eugeneTango(this.templateLocals());
+        return eugeneTango(this.templateLocals()).trim();
     });
     public facebook = ko.pureComputed(() => {
-        return facebook(this.templateLocals());
+        return facebook(this.templateLocals()).trim();
+    });
+    public mailchimp1 = ko.pureComputed(() => {
+        return mailchimp1(this.templateLocals()).trim();
+    });
+    public mailchimp2 = ko.pureComputed(() => {
+        return mailchimp2(this.templateLocals()).trim();
+    });
+    public mailchimp3 = ko.pureComputed(() => {
+        return mailchimp3(this.templateLocals()).trim();
     });
 
     private templateLocals = ko.pureComputed(() => ({
@@ -87,6 +100,10 @@ class ViewModel {
             title: event.title().trim()
         })),
         photoCredit: this.photoCredit().trim(),
+        photoCreditMailchimp: [...new Set([
+            this.photoCreditMailchimp().trim(),
+            this.photoCredit().trim()
+        ])].filter((name) => name !== '').join(', '),
         facebookEventUrl: this.facebookEventUrl().trim()
     }));
 
@@ -112,7 +129,8 @@ class ViewModel {
             title: 'Tuesday Bailonga',
             date: getNextTuesdayISOString(new Date()),
             cost: '$7 – $10',
-            topicIntermediate: 'TBD'
+            topicIntermediate: 'TBD',
+            photoCreditMailchimp: 'Dave Musgrove'
         };
 
         return result as (

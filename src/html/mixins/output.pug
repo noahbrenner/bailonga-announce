@@ -17,3 +17,8 @@ mixin outputHtml(koPropName)
   div(
     data-bind=`html: ${koPropName}`
   ).output-html&attributes(attributes)
+
+mixin outputHtmlSource(koPropName)
+  div.output-pair
+    +outputText(koPropName)&attributes(attributes)
+    +outputHtml(koPropName)&attributes(attributes)

@@ -1,14 +1,14 @@
 <h1><%= locals.title %></h1>
 <%#_ This is a quick, bad hack -- we need to parse markdown instead _%>
 <%_ for (const paragraph of locals.intro.split(/\n{2,}/)) { _%>
-<p><%= paragraph %></p>
+<p><%= paragraph.trim() %></p>
 <%_ } _%>
 <h2>This Week’s Event</h2>
 <h3>Tuesday, <%= locals.date %></h3>
 <h3>Schedule:</h3>
 <ul>
   <li>7:00PM - Beginning and Intermediate Lessons</li>
-  <li>7:45–10pm - DJ <%= locals.djFirstName %></li>
+  <li>7:45–10PM - DJ <%= locals.djFirstName %></li>
 </ul>
 <div>
   <p><strong>Intermediate teacher:</strong> <%= locals.teacherIntermediate %></p>

@@ -1,0 +1,10 @@
+<%_ if (locals.upcomingEvents.length !== 0) { _%>
+<h3 style="font-size: 18px">Upcoming Events:</h3>
+<ul>
+  <%_ for (const event of locals.upcomingEvents) { _%>
+  <li style="font-size: 14px"><%= event.date %> <%= event.title %></li>
+  <%_ } _%>
+</ul>
+<%_ } _%>
+
+<p>Photo Credit: <%= locals.photoCreditMailchimp %></p>

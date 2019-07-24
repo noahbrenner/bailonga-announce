@@ -42,6 +42,7 @@ html(lang="en-us")
             type="button"
           ) Add upcoming event
         +inputText('photoCredit') Photo credit
+        +inputText('photoCreditMailchimp') Mailchimp photo credit
         +inputUrl('facebookEventUrl') Facebook event URL
     section
       h2 Copy the results below
@@ -57,3 +58,14 @@ html(lang="en-us")
       div.output-pair
         +outputText('eugeneTango')
         +outputHtml('eugeneTango')
+
+      h3 Mailchimp email
+      div.output-pair
+        +outputText('mailchimp1')
+        +outputHtml('mailchimp1')
+      div.output-pair
+        +outputText('mailchimp2')
+        +outputHtml('mailchimp2')
+      div.output-pair
+        +outputText('mailchimp3')
+        +outputHtml('mailchimp3')

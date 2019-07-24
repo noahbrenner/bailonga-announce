@@ -1,0 +1,5 @@
+<h1 style="font-family: lato, helvetica neue, helvetica, arial, sans-serif"><%= locals.title %></h1>
+<%#_ This is a quick, bad hack -- we need to parse markdown instead _%>
+<%_ for (const paragraph of locals.intro.split(/\n{2,}/).filter((str) => str)) { _%>
+<p style="color: #444444; font-family: open sans, helvetica neue, helvetica, arial, sans-serif"><%= paragraph.trim() %></p>
+<%_ } _%>

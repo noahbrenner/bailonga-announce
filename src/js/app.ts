@@ -1,6 +1,7 @@
 import * as ko from 'knockout';
 
 import '../css/styles.scss';
+import bailonga from '../templates/bailonga.ejs.html';
 import etango from '../templates/etango.ejs.html';
 import eugeneTango from '../templates/eugenetango.ejs.html';
 import facebook from '../templates/facebook.ejs.txt';
@@ -64,6 +65,9 @@ class ViewModel {
         'Week 5: Bonus Topic TBA'
     ];
 
+    public bailonga = ko.pureComputed(() => {
+        return bailonga(this.templateLocals()).trim();
+    });
     public etango = ko.pureComputed(() => {
         return etango(this.templateLocals()).trim();
     });

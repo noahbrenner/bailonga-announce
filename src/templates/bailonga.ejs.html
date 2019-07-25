@@ -1,0 +1,27 @@
+<h2 id="this-weeks-event"><strong>This Week’s Event</strong></h2>
+<h3 style="font-size: 14pt;">This Tuesday: <%= locals.date %></h3>
+
+<h3 style="font-size: 14pt;"><strong>Schedule:</strong></h3>
+<ul style="font-size: 14pt">
+ 	<li>7:00PM - Beginning and Intermediate Lessons</li>
+  <li>7:45–10PM - DJ <%= locals.djFirstName %></li>
+</ul>
+<span style="font-size: 14pt;"><strong>Intermediate teacher:</strong> <%= locals.teacherIntermediate %></span>
+<span style="font-size: 14pt;"><strong>Lesson topic:</strong> <%= locals.topicIntermediate %></span>
+
+<span style="font-size: 14pt;"><strong>Beginner teacher:</strong> <%= locals.teacherBeginner %></span>
+<span style="font-size: 14pt;"><strong>Lesson topic:</strong> <%= locals.topicBeginner %></span>
+
+<span style="font-size: 14pt;"><strong>DJ:</strong> <%= locals.dj %></span>
+<span style="font-size: 14pt;"><strong>Music:</strong> <%= locals.musicType %></span>
+<span style="font-size: 14pt;"><strong>Confirm on Facebook:</strong> <a href="<%= locals.facebookEventUrl %>"><%= locals.facebookEventUrl %></a></span>
+<%_ if (locals.upcomingEvents.length !== 0) { _%>
+
+<hr />
+
+<h2><strong>Upcoming Events</strong></h2>
+
+<%_ for (const event of locals.upcomingEvents) { _%>
+<span style="font-size: 14pt;"><%= event.date %> - <%= event.title %></span>
+<%_ } _%>
+<%_ } _%>

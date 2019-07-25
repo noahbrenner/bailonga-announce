@@ -65,27 +65,13 @@ class ViewModel {
         'Week 5: Bonus Topic TBA'
     ];
 
-    public bailonga = ko.pureComputed(() => {
-        return bailonga(this.templateLocals()).trim();
-    });
-    public etango = ko.pureComputed(() => {
-        return etango(this.templateLocals()).trim();
-    });
-    public eugeneTango = ko.pureComputed(() => {
-        return eugeneTango(this.templateLocals()).trim();
-    });
-    public facebook = ko.pureComputed(() => {
-        return facebook(this.templateLocals()).trim();
-    });
-    public mailchimp1 = ko.pureComputed(() => {
-        return mailchimp1(this.templateLocals()).trim();
-    });
-    public mailchimp2 = ko.pureComputed(() => {
-        return mailchimp2(this.templateLocals()).trim();
-    });
-    public mailchimp3 = ko.pureComputed(() => {
-        return mailchimp3(this.templateLocals()).trim();
-    });
+    public bailonga = this.pureComputedTemplate(bailonga);
+    public etango = this.pureComputedTemplate(etango);
+    public eugeneTango = this.pureComputedTemplate(eugeneTango);
+    public facebook = this.pureComputedTemplate(facebook);
+    public mailchimp1 = this.pureComputedTemplate(mailchimp1);
+    public mailchimp2 = this.pureComputedTemplate(mailchimp2);
+    public mailchimp3 = this.pureComputedTemplate(mailchimp3);
 
     private templateLocals = ko.pureComputed(() => ({
         title: this.title().trim(),
@@ -140,6 +126,12 @@ class ViewModel {
         return result as (
             Pick<Record<InputProperty, string>, keyof typeof result>
         ) as typeof result;
+    }
+
+    private pureComputedTemplate(templateFunction: (data: object) => string) {
+        return ko.pureComputed(() => {
+            return templateFunction(this.templateLocals()).trim();
+        });
     }
 }
 

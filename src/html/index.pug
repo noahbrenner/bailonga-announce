@@ -26,10 +26,10 @@ html(lang="en-us")
         +inputTextarea('intro')(spellcheck="true") Organizer's intro
         +inputText('dj') DJ
         +inputSelect('musicType', 'musicTypeOptions') Music type
-        +inputText('teacherBeginner') Beginner lesson teacher
-        +inputSelect('topicBeginner', 'topicBeginnerOptions') Beginner lesson topic
         +inputText('teacherIntermediate') Intermediate lesson teacher
         +inputText('topicIntermediate') Intermediate lesson topic
+        +inputText('teacherBeginner') Beginner lesson teacher
+        +inputSelect('topicBeginner', 'topicBeginnerOptions') Beginner lesson topic
         fieldset
           legend Upcoming Events
           ul(data-bind="foreach: upcomingEvents")

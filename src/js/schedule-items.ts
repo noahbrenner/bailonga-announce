@@ -17,7 +17,7 @@ class ScheduleItem {
         this.description(description);
     }
 
-    public getStartTimeInSeconds() {
+    public getSortingValue() {
         // `Number` also returns 0 for the empty string, which is what we want
         return Number(this.start().split(':').join(''));
     }
@@ -39,7 +39,7 @@ export function getScheduleObservableArray() {
 
     function sortByStartTime(this: ScheduleObservableArray) {
         this.sort((left, right) => {
-            return left.getStartTimeInSeconds() - right.getStartTimeInSeconds();
+            return left.getSortingValue() - right.getSortingValue();
         });
     }
 

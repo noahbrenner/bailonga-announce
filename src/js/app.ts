@@ -10,6 +10,7 @@ import mailchimp2 from '../templates/mailchimp-2.ejs.html';
 import mailchimp3 from '../templates/mailchimp-3.ejs.html';
 import {observableDateString} from './date-observable';
 import {formatUTCDate, getNextTuesdayISOString} from './dates';
+import {getScheduleObservableArray} from './schedule-items';
 import {getEventObservableArray} from './upcoming-events';
 
 /**
@@ -24,8 +25,18 @@ function getFirstName(fullNameStr: string) {
     return firstNames.join(' & ');
 }
 
+function getTwelveHourTime(time: string) {
+    if (time === '') {
+        return '';
+    }
+
+    const [rawHour, minute] = time.split(':');
+    const hour = (Number(rawHour) % 12) || 12;
+    return `${hour}:${minute}`;
+}
+
 type InputProperty = Extract<keyof ViewModel,
-    'title' | 'date' | 'cost' | 'intro' |
+    'title' | 'date' | 'cost' | 'scheduleItems' | 'intro' |
     'dj' | 'musicType' |
     'teacherBeginner' | 'topicBeginner' |
     'teacherIntermediate' | 'topicIntermediate' |
@@ -36,6 +47,7 @@ class ViewModel {
     public title = ko.observable('');
     public date = observableDateString('');
     public cost = ko.observable('');
+    public scheduleItems = getScheduleObservableArray();
     public intro = ko.observable('');
     public dj = ko.observable('');
     public musicType = ko.observable('');
@@ -77,9 +89,16 @@ class ViewModel {
         title: this.title().trim(),
         date: formatUTCDate(new Date(this.date())),
         cost: this.cost().trim(),
+        scheduleItems: this.scheduleItems().map((item) => ({
+            time: [item.start(), item.end()]
+                .filter((time) => time !== '')
+                .map(getTwelveHourTime)
+                .join('–') + 'PM', // We're assuming PM for now
+            description: item.description().trim()
+                .replace('{dj}', getFirstName(this.dj().trim()))
+        })),
         intro: this.intro().trim(),
         dj: this.dj().trim(),
-        djFirstName: getFirstName(this.dj().trim()),
         musicType: this.musicType(),
         teacherBeginner: this.teacherBeginner().trim(),
         topicBeginner: this.topicBeginner(),
@@ -106,8 +125,15 @@ class ViewModel {
         });
 
         // Initialize default values
-        Object.entries(this.getDefaultValues())
-            .forEach(([key, val]) => this[key as InputProperty](val));
+        Object.entries(this.getDefaultValues()).forEach(([key, val]) => {
+            if (typeof val === 'string') {
+                this[key as InputProperty](val);
+            } else if (key === 'scheduleItems') {
+                val.forEach(({start, end, description}) => {
+                    this.scheduleItems.add(start, end, description);
+                });
+            }
+        });
     }
 
     public addUpcomingEvent() {
@@ -115,17 +141,35 @@ class ViewModel {
     }
 
     private getDefaultValues() {
+        interface IScheduleItem {
+            start: string;
+            end: string;
+            description: string;
+        }
+
+        const scheduleItems: IScheduleItem[] = [{
+            start: '19:00',
+            end: '',
+            description: 'Beginning and Intermediate lessons'
+        }, {
+            start: '19:45',
+            end: '22:00',
+            description: 'DJ {dj}'
+        }];
+
         const result = {
             title: 'Tuesday Bailonga',
             date: getNextTuesdayISOString(new Date()),
             cost: '$7 – $10',
+            scheduleItems,
             topicIntermediate: 'TBD',
             photoCreditMailchimp: 'Dave Musgrove'
         };
 
-        return result as (
-            Pick<Record<InputProperty, string>, keyof typeof result>
-        ) as typeof result;
+        return result as Pick<
+            Record<InputProperty, string | IScheduleItem[]>,
+            keyof typeof result
+        > as typeof result;
     }
 
     private pureComputedTemplate(templateFunction: (data: object) => string) {

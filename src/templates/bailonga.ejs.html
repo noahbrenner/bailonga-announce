@@ -3,8 +3,9 @@
 
 <h3 style="font-size: 14pt;"><strong>Schedule:</strong></h3>
 <ul style="font-size: 14pt">
- 	<li>7:00PM - Beginning and Intermediate Lessons</li>
-  <li>7:45–10PM - DJ <%= locals.djFirstName %></li>
+  <%_ for (const item of locals.scheduleItems) { _%>
+  <li><%= item.time %> - <%= item.description %></li>
+  <%_ } _%>
 </ul>
 <span style="font-size: 14pt;"><strong>Intermediate teacher:</strong> <%= locals.teacherIntermediate %></span>
 <span style="font-size: 14pt;"><strong>Lesson topic:</strong> <%= locals.topicIntermediate %></span>

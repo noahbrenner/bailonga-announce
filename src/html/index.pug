@@ -30,6 +30,11 @@ html(lang="en-us")
               +inputTime('start', true) Start time
               +inputTime('end', true) End time (optional)
               +inputText('description', true) Description
+              button(data-bind="click: remove") Delete
+          button(
+            data-bind="click: addScheduleItem"
+            type="button"
+          ) Add schedule item
         +inputTextarea('intro')(spellcheck="true") Organizer's intro
         +inputText('dj') DJ
         +inputSelect('musicType', 'musicTypeOptions') Music type

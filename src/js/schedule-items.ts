@@ -21,6 +21,10 @@ class ScheduleItem {
         // `Number` also returns 0 for the empty string, which is what we want
         return Number(this.start().split(':').join(''));
     }
+
+    public remove() {
+        this.parent.remove(this);
+    }
 }
 
 type ScheduleObservableArray = ReturnType<typeof getScheduleObservableArray>;
@@ -34,7 +38,31 @@ export function getScheduleObservableArray() {
         end = '',
         description = ''
     ) {
+        if (start === '') {
+            start = this.getDefaultStartTime();
+        }
+
         this.push(new ScheduleItem(this, start, end, description));
+    }
+
+    function getDefaultStartTime(this: ScheduleObservableArray) {
+        const items = this();
+        const latestTime = items.length > 0
+            ? items[items.length - 1].start() // Items are sorted by start time
+            : '18:45'; // 15 till 7PM because we'll be adding 15 minutes
+
+        let [hour, minute] = latestTime.split(':').map(Number);
+
+        if (minute < 45) {
+            minute += 15;
+        } else {
+            hour += 1;
+            minute = 0;
+        }
+
+        const minuteStr = (minute < 10 ? '0' : '') + minute;
+
+        return `${hour}:${minuteStr}`;
     }
 
     function sortByStartTime(this: ScheduleObservableArray) {
@@ -45,6 +73,7 @@ export function getScheduleObservableArray() {
 
     const extensions = {
         add,
+        getDefaultStartTime,
         sortByStartTime
     };
 

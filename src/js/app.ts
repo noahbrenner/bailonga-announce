@@ -136,6 +136,10 @@ class ViewModel {
         });
     }
 
+    public addScheduleItem() {
+        this.scheduleItems.add();
+    }
+
     public addUpcomingEvent() {
         this.upcomingEvents.add();
     }

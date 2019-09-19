@@ -47,6 +47,22 @@ mixin inputDate(koPropName, isForeach=false)
       step="7"
     )&attributes(attributes)
 
+mixin inputTime(koPropName, isForeach=false)
+  label(
+    for=isForeach ? undefined : koPropName
+    data-bind=isForeach ? `attr: {for: '${koPropName}' + $index()}` : undefined
+  )
+    block
+    input(
+      data-bind=`value: ${koPropName}`
+        + (isForeach ? `, attr: {id: '${koPropName}' + $index()}` : '')
+      id=isForeach ? undefined : koPropName
+      type="time"
+      min="19:00"
+      max="23:00"
+      step="900"
+    )&attributes(attributes)
+
 mixin inputSelect(koPropName, koOptionsName)
   label(for=koPropName)
     block

@@ -11,8 +11,9 @@
   <h3 style="margin: 1em 0;">Tuesday, <%= locals.date %></h3>
   <h3 style="margin: 1em 0;">Schedule:</h3>
   <ul>
-    <li>7:00PM - Beginning and Intermediate Lessons</li>
-    <li>7:45&ndash;10:00PM - DJ <%= locals.djFirstName %></li>
+    <%_ for (const item of locals.scheduleItems) { _%>
+    <li><%= item.time %> - <%= item.description %></li>
+    <%_ } _%>
   </ul>
   <div style="margin: 1em 0;">
     <div><strong>Intermediate teacher:</strong> <%= locals.teacherIntermediate %></div>

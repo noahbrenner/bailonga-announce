@@ -28,9 +28,11 @@ const miniCssExtractPluginLoader: webpack.RuleSetLoader = {
 const postcssLoader: webpack.RuleSetLoader = {
     loader: 'postcss-loader',
     options: {
-        plugins: [
-            autoprefixer()
-        ]
+        postcssOptions: {
+            plugins: [
+                autoprefixer()
+            ]
+        }
     }
 };
 

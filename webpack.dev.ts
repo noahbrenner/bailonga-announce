@@ -1,10 +1,10 @@
 import * as MiniCssExtractPlugin from 'mini-css-extract-plugin';
-import * as merge from 'webpack-merge';
+import {Configuration} from 'webpack';
 
-import {baseConfig, inputTests} from './webpack.common';
+import {baseConfig, inputTests, merge} from './webpack.common';
 
 /** Development-mode webpack configuration. */
-export default merge.smart(baseConfig, {
+export default merge(baseConfig, {
     mode: 'development',
 
     output: {
@@ -15,7 +15,7 @@ export default merge.smart(baseConfig, {
         rules: [{
             test: inputTests.css,
             loaders: [{
-                loader: MiniCssExtractPlugin.loader as string,
+                loader: MiniCssExtractPlugin.loader,
                 options: {
                     hmr: true
                 }
@@ -32,4 +32,4 @@ export default merge.smart(baseConfig, {
     devServer: {
         port: 8080
     }
-});
+} as Configuration);

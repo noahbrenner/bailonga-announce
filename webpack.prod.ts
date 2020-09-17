@@ -1,16 +1,23 @@
 import * as MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import * as OptimizeCssAssetsPlugin from 'optimize-css-assets-webpack-plugin';
 import * as TerserWebpackPlugin from 'terser-webpack-plugin';
-import * as merge from 'webpack-merge';
+import {Configuration} from 'webpack';
 
-import {baseConfig} from './webpack.common';
+import {baseConfig, inputTests, merge} from './webpack.common';
 
 /** Production-mode webpack configuration. */
-export default merge.smart(baseConfig, {
+export default merge(baseConfig, {
     mode: 'production',
 
     output: {
         filename: '[name].[contenthash:6].js'
+    },
+
+    module: {
+        rules: [{
+            test: inputTests.css,
+            loaders: [MiniCssExtractPlugin.loader]
+        }]
     },
 
     plugins: [
@@ -27,4 +34,4 @@ export default merge.smart(baseConfig, {
             new OptimizeCssAssetsPlugin()
         ]
     }
-});
+} as Configuration);

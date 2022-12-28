@@ -20,41 +20,48 @@ html(lang="en-us")
     section
       h2 Enter values for this week's event
       form(autocomplete="off")
-        +inputText('title')(spellcheck="true") Event Title
-        +inputDate('date') Event Date
-        +inputText('cost') Cost
+        div.flex-row
+          +inputText('title')(spellcheck="true") Event Title
+          +inputDate('date') Event Date
+          +inputText('cost') Cost
         fieldset
           legend Schedule
           ul(data-bind="foreach: scheduleItems")
             li
-              +inputTime('start', true) Start time
-              +inputTime('end', true) End time (optional)
-              +inputText('description', true) Description
-              button(data-bind="click: remove") Delete
+              div.flex-row
+                +inputText('description', true).flex-grow Description
+                +inputTime('start', true) Start time
+                +inputTime('end', true) End time (optional)
+                button(data-bind="click: remove") Delete
           button(
             data-bind="click: addScheduleItem"
             type="button"
           ) Add schedule item
         +inputTextarea('intro')(spellcheck="true") Organizer's intro
-        +inputText('dj') DJ
-        +inputSelect('musicType', 'musicTypeOptions') Music type
-        +inputText('teacherIntermediate') Intermediate lesson teacher
-        +inputText('topicIntermediate') Intermediate lesson topic
-        +inputText('teacherBeginner') Beginner lesson teacher
-        +inputSelect('topicBeginner', 'topicBeginnerOptions') Beginner lesson topic
+        div.flex-row
+          +inputText('dj').w-1-3 DJ
+          +inputSelect('musicType', 'musicTypeOptions') Music type
+        div.flex-row
+          +inputText('teacherIntermediate').w-1-3 Intermediate lesson teacher
+          +inputText('topicIntermediate') Intermediate lesson topic
+        div.flex-row
+          +inputText('teacherBeginner').w-1-3 Beginner lesson teacher
+          +inputSelect('topicBeginner', 'topicBeginnerOptions') Beginner lesson topic
         fieldset
           legend Upcoming Events
           ul(data-bind="foreach: upcomingEvents")
             li
-              +inputDate('date', true) Date
-              +inputText('title', true)(spellcheck="true") Title
-              button(data-bind="click: remove") Delete
+              div.flex-row
+                +inputDate('date', true) Date
+                +inputText('title', true)(spellcheck="true").flex-grow Title
+                button(data-bind="click: remove") Delete
           button(
             data-bind="click: addUpcomingEvent"
             type="button"
           ) Add upcoming event
-        +inputText('photoCredit') Photo credit
-        +inputText('photoCreditMailchimp') Mailchimp photo credit
+        div.flex-row
+          +inputText('photoCredit') Photo credit
+          +inputText('photoCreditMailchimp') Mailchimp photo credit
         +inputUrl('facebookEventUrl') Facebook event URL
     section
       h2 Copy the results below

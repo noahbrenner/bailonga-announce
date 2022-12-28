@@ -1,7 +1,9 @@
 mixin inputText(koPropName, isForeach=false)
+  - const { class: labelClass, ...otherAttributes } = attributes
   label(
     for=isForeach ? undefined : koPropName
     data-bind=isForeach ? `attr: {for: '${koPropName}' + $index()}` : undefined
+    class=labelClass
   )
     block
     input(
@@ -10,19 +12,21 @@ mixin inputText(koPropName, isForeach=false)
       id=isForeach ? undefined : koPropName
       type="text"
       spellcheck="false"
-    )&attributes(attributes)
+    )&attributes(otherAttributes)
 
 mixin inputTextarea(koPropName)
-  label(for=koPropName)
+  - const { class: labelClass, ...otherAttributes } = attributes
+  label(for=koPropName, class=labelClass)
     block
     textarea(
       data-bind=`textInput: ${koPropName}`
       id=koPropName
       spellcheck="false"
-    )&attributes(attributes)
+    )&attributes(otherAttributes)
 
 mixin inputUrl(koPropName, urlPattern)
-  label(for=koPropName)
+  - const { class: labelClass, ...otherAttributes } = attributes
+  label(for=koPropName, class=labelClass)
     block
     input(
       data-bind=`textInput: ${koPropName}`
@@ -30,12 +34,14 @@ mixin inputUrl(koPropName, urlPattern)
       type="url"
       pattern=urlPattern
       spellcheck="false"
-    )
+    )&attributes(otherAttributes)
 
 mixin inputDate(koPropName, isForeach=false)
+  - const { class: labelClass, ...otherAttributes } = attributes
   label(
     for=isForeach ? undefined : koPropName
     data-bind=isForeach ? `attr: {for: '${koPropName}' + $index()}` : undefined
+    class=labelClass
   )
     block
     input(
@@ -45,12 +51,14 @@ mixin inputDate(koPropName, isForeach=false)
       type="date"
       min="2015-01-06"
       step="7"
-    )&attributes(attributes)
+    )&attributes(otherAttributes)
 
 mixin inputTime(koPropName, isForeach=false)
+  - const { class: labelClass, ...otherAttributes } = attributes
   label(
     for=isForeach ? undefined : koPropName
     data-bind=isForeach ? `attr: {for: '${koPropName}' + $index()}` : undefined
+    class=labelClass
   )
     block
     input(
@@ -61,12 +69,13 @@ mixin inputTime(koPropName, isForeach=false)
       min="19:00"
       max="23:00"
       step="900"
-    )&attributes(attributes)
+    )&attributes(otherAttributes)
 
 mixin inputSelect(koPropName, koOptionsName)
-  label(for=koPropName)
+  - const { class: labelClass, ...otherAttributes } = attributes
+  label(for=koPropName, class=labelClass)
     block
     select(
       data-bind=`value: ${koPropName}, options: ${koOptionsName}`
       id=koPropName
-    )&attributes(attributes)
+    )&attributes(otherAttributes)

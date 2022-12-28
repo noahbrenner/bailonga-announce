@@ -4,6 +4,17 @@
   box-sizing: border-box;
 }
 
+html {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  max-width: 1000px;
+  margin: auto;
+  padding: 0 3em 3em;
+}
+
 .main-heading {
   color: brown;
 }

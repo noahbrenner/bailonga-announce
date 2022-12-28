@@ -4,6 +4,17 @@
   box-sizing: border-box;
 }
 
+html {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  max-width: 1000px;
+  margin: auto;
+  padding: 0 3em 3em;
+}
+
 .main-heading {
   color: brown;
 }
@@ -30,6 +41,7 @@ textarea {
   resize: none;
   width: 100%;
   height: 150px;
+  overscroll-behavior-y: none;
 }
 
 .output-pair {
@@ -45,6 +57,22 @@ textarea {
   padding: 5px;
   height: 150px;
   overflow-y: scroll;
+}
+
+// Utility classes
+
+.flex-row {
+  display: flex;
+  align-items: end;
+  column-gap: 1em;
+}
+
+.flex-grow {
+  flex-grow: 1;
+}
+
+.w-1-3 {
+  width: 33%;
 }
 
 @import '_etango'

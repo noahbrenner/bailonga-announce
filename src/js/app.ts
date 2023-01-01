@@ -10,9 +10,9 @@ import mailchimp2 from '../templates/mailchimp-2.ejs.html';
 import mailchimp3 from '../templates/mailchimp-3.ejs.html';
 import { IScheduleItem, IState } from '../types/state';
 import {observableDateString} from './date-observable';
-import {formatUTCDate, getNextTuesdayISOString} from './dates';
 import {getScheduleObservableArray} from './schedule-items';
 import {getEventObservableArray} from './upcoming-events';
+import {formatUTCDate, getNextTuesdayISOString} from './utils/dates';
 
 /**
  * Return a string of first name(s) extracted from a string of full name(s)

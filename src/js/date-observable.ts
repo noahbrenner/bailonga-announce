@@ -1,6 +1,6 @@
 import * as ko from 'knockout';
 
-import {getDaysTillTuesday, getISOStringWithOffset} from './dates';
+import {getDaysTillTuesday, getISOStringWithOffset} from './utils/dates';
 
 export type ObservableDateString = ReturnType<typeof observableDateString>;
 

@@ -1,7 +1,7 @@
 import * as ko from 'knockout';
 
 import {observableDateString, ObservableDateString} from './date-observable';
-import {getNextTuesdayISOString} from './dates';
+import {getNextTuesdayISOString} from './utils/dates';
 
 class UpcomingEvent {
     public date = observableDateString('');

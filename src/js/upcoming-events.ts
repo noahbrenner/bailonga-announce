@@ -7,9 +7,14 @@ class UpcomingEvent {
     public date = observableDateString('');
     public title = ko.observable('');
 
-    constructor(public parent: EventObservableArray, date: string) {
+    constructor(
+        public parent: EventObservableArray,
+        date: string,
+        title: string
+    ) {
         this.date.subscribe(() => this.parent.sortByDate());
         this.date(date);
+        this.title(title);
     }
 
     public remove() {
@@ -22,9 +27,12 @@ type EventObservableArray = ReturnType<typeof getEventObservableArray>;
 export function getEventObservableArray(fallbackDate: ObservableDateString) {
     const baseObservable = ko.observableArray<UpcomingEvent>([]);
 
-    function add(this: EventObservableArray) {
-        const defaultDate = getNextTuesdayISOString(this.getLatestDate());
-        this.push(new UpcomingEvent(this, defaultDate));
+    function add(
+        this: EventObservableArray,
+        date = getNextTuesdayISOString(this.getLatestDate()),
+        title = ''
+    ) {
+        this.push(new UpcomingEvent(this, date, title));
     }
 
     function getLatestDate(this: EventObservableArray) {

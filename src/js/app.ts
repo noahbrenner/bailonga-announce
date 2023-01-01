@@ -8,6 +8,7 @@ import facebook from '../templates/facebook.ejs.txt';
 import mailchimp1 from '../templates/mailchimp-1.ejs.html';
 import mailchimp2 from '../templates/mailchimp-2.ejs.html';
 import mailchimp3 from '../templates/mailchimp-3.ejs.html';
+import { IScheduleItem, IState } from '../types/state';
 import {observableDateString} from './date-observable';
 import {formatUTCDate, getNextTuesdayISOString} from './dates';
 import {getScheduleObservableArray} from './schedule-items';
@@ -35,13 +36,13 @@ function getTwelveHourTime(time: string) {
     return `${hour}:${minute}`;
 }
 
-type InputProperty = Extract<keyof ViewModel,
-    'title' | 'date' | 'cost' | 'scheduleItems' | 'intro' |
-    'dj' | 'musicType' |
-    'teacherBeginner' | 'topicBeginner' |
-    'teacherIntermediate' | 'topicIntermediate' |
-    'photoCredit' | 'photoCreditMailchimp' | 'facebookEventUrl'
->;
+interface ITemplateScheduleItem extends Omit<IScheduleItem, 'start' | 'end'> {
+    time: string;
+}
+
+interface ITemplateLocals extends Omit<IState, 'scheduleItems'> {
+    scheduleItems: ITemplateScheduleItem[];
+}
 
 class ViewModel {
     public title = ko.observable('');
@@ -85,7 +86,7 @@ class ViewModel {
     public mailchimp2 = this.pureComputedTemplate(mailchimp2);
     public mailchimp3 = this.pureComputedTemplate(mailchimp3);
 
-    private templateLocals = ko.pureComputed(() => ({
+    private templateLocals = ko.pureComputed((): ITemplateLocals => ({
         title: this.title().trim(),
         date: formatUTCDate(new Date(this.date())),
         cost: this.cost().trim(),
@@ -125,15 +126,7 @@ class ViewModel {
         });
 
         // Initialize default values
-        Object.entries(this.getDefaultValues()).forEach(([key, val]) => {
-            if (typeof val === 'string') {
-                this[key as InputProperty](val);
-            } else if (key === 'scheduleItems') {
-                val.forEach(({start, end, description}) => {
-                    this.scheduleItems.add(start, end, description);
-                });
-            }
-        });
+        this.setState(this.getDefaultValues());
     }
 
     public addScheduleItem() {
@@ -144,36 +137,53 @@ class ViewModel {
         this.upcomingEvents.add();
     }
 
-    private getDefaultValues() {
-        interface IScheduleItem {
-            start: string;
-            end: string;
-            description: string;
-        }
-
-        const scheduleItems: IScheduleItem[] = [{
-            start: '19:00',
-            end: '',
-            description: 'Beginning and Intermediate lessons'
-        }, {
-            start: '19:45',
-            end: '22:00',
-            description: 'DJ {dj}'
-        }];
-
-        const result = {
+    private getDefaultValues(): IState {
+        return {
             title: 'Tuesday Bailonga',
             date: getNextTuesdayISOString(new Date()),
             cost: '$7 – $10',
-            scheduleItems,
+            scheduleItems: [
+                {
+                    start: '19:00',
+                    end: '',
+                    description: 'Beginning and Intermediate lessons'
+                },
+                {
+                    start: '19:45',
+                    end: '22:00',
+                    description: 'DJ {dj}'
+                },
+            ],
+            intro: '',
+            dj: '',
+            musicType: '',
+            teacherBeginner: '',
+            topicBeginner: '',
+            teacherIntermediate: '',
             topicIntermediate: 'TBD',
-            photoCreditMailchimp: 'Dave Musgrove'
+            upcomingEvents: [],
+            photoCredit: '',
+            photoCreditMailchimp: 'Dave Musgrove',
+            facebookEventUrl: '',
         };
+    }
 
-        return result as Pick<
-            Record<InputProperty, string | IScheduleItem[]>,
-            keyof typeof result
-        > as typeof result;
+    private setState(newState: IState) {
+        (Object.keys(newState) as Array<keyof IState>).forEach((key) => {
+            if (key === 'scheduleItems') {
+                this.scheduleItems([]);
+                newState[key].forEach(({ start, end, description }) => {
+                    this.scheduleItems.add(start, end, description);
+                });
+            } else if (key === 'upcomingEvents') {
+                this.upcomingEvents([]);
+                newState[key].forEach(({ date, title }) => {
+                    this.upcomingEvents.add(date, title);
+                });
+            } else {
+                this[key](newState[key]);
+            }
+        });
     }
 
     private pureComputedTemplate(templateFunction: (data: object) => string) {

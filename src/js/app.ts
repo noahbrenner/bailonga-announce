@@ -86,17 +86,14 @@ class ViewModel {
     public mailchimp2 = this.pureComputedTemplate(mailchimp2);
     public mailchimp3 = this.pureComputedTemplate(mailchimp3);
 
-    private templateLocals = ko.pureComputed((): ITemplateLocals => ({
+    private serializedState = ko.pureComputed((): IState => ({
         title: this.title().trim(),
-        date: formatUTCDate(new Date(this.date())),
+        date: this.date(),
         cost: this.cost().trim(),
         scheduleItems: this.scheduleItems().map((item) => ({
-            time: [item.start(), item.end()]
-                .filter((time) => time !== '')
-                .map(getTwelveHourTime)
-                .join('–') + 'PM', // We're assuming PM for now
+            start: item.start(),
+            end: item.end(),
             description: item.description().trim()
-                .replace('{dj}', getFirstName(this.dj().trim()))
         })),
         intro: this.intro().trim(),
         dj: this.dj().trim(),
@@ -106,16 +103,46 @@ class ViewModel {
         teacherIntermediate: this.teacherIntermediate().trim(),
         topicIntermediate: this.topicIntermediate().trim(),
         upcomingEvents: this.upcomingEvents().map((event) => ({
-            date: formatUTCDate(new Date(event.date())),
+            date: event.date(),
             title: event.title().trim()
         })),
         photoCredit: this.photoCredit().trim(),
-        photoCreditMailchimp: [...new Set([
-            this.photoCreditMailchimp().trim(),
-            this.photoCredit().trim()
-        ])].filter((name) => name !== '').join(', '),
+        photoCreditMailchimp: this.photoCreditMailchimp().trim(),
         facebookEventUrl: this.facebookEventUrl().trim()
     }));
+
+    private templateLocals = ko.pureComputed((): ITemplateLocals => {
+        const state = this.serializedState();
+        const {
+            date,
+            dj,
+            scheduleItems,
+            upcomingEvents,
+            photoCredit,
+            photoCreditMailchimp,
+        } = state;
+
+        return {
+            ...state,
+            date: formatUTCDate(new Date(date)),
+            scheduleItems: scheduleItems.map(({ start, end, description }) => ({
+                description: description.replace('{dj}', getFirstName(dj)),
+                time: [start, end]
+                    .filter((time) => time !== '')
+                    .map(getTwelveHourTime)
+                    .join('–') + 'PM', // We're assuming PM for now
+            })),
+            upcomingEvents: upcomingEvents.map((event) => ({
+                date: formatUTCDate(new Date(event.date)),
+                title: event.title,
+            })),
+            photoCreditMailchimp: photoCredit === photoCreditMailchimp
+                ? photoCreditMailchimp
+                : [photoCredit, photoCreditMailchimp]
+                    .filter((name) => name !== '')
+                    .join(', '),
+        };
+    });
 
     constructor() {
         // Update the default beginner topic whenever the event date changes

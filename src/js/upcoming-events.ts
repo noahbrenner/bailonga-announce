@@ -20,7 +20,7 @@ class UpcomingEvent {
 type EventObservableArray = ReturnType<typeof getEventObservableArray>;
 
 export function getEventObservableArray(fallbackDate: ObservableDateString) {
-    const baseObservable = ko.observableArray([] as UpcomingEvent[]);
+    const baseObservable = ko.observableArray<UpcomingEvent>([]);
 
     function add(this: EventObservableArray) {
         const defaultDate = getNextTuesdayISOString(this.getLatestDate());
@@ -46,7 +46,5 @@ export function getEventObservableArray(fallbackDate: ObservableDateString) {
         sortByDate
     };
 
-    return Object.assign(baseObservable, extensions) as (
-        typeof baseObservable & typeof extensions
-    );
+    return Object.assign(baseObservable, extensions);
 }

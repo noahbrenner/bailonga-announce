@@ -30,7 +30,7 @@ class ScheduleItem {
 type ScheduleObservableArray = ReturnType<typeof getScheduleObservableArray>;
 
 export function getScheduleObservableArray() {
-    const baseObservable = ko.observableArray([] as ScheduleItem[]);
+    const baseObservable = ko.observableArray<ScheduleItem>([]);
 
     function add(
         this: ScheduleObservableArray,
@@ -77,7 +77,5 @@ export function getScheduleObservableArray() {
         sortByStartTime
     };
 
-    return Object.assign(baseObservable, extensions) as (
-        typeof baseObservable & typeof extensions
-    );
+    return Object.assign(baseObservable, extensions);
 }

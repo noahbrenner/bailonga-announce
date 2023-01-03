@@ -8,11 +8,19 @@ import facebook from '../templates/facebook.ejs.txt';
 import mailchimp1 from '../templates/mailchimp-1.ejs.html';
 import mailchimp2 from '../templates/mailchimp-2.ejs.html';
 import mailchimp3 from '../templates/mailchimp-3.ejs.html';
-import { IScheduleItem, IState } from '../types/state';
+import { IScheduleItem, IState, IUpcomingEvent } from '../types/state';
 import {observableDateString} from './date-observable';
 import {getScheduleObservableArray} from './schedule-items';
 import {getEventObservableArray} from './upcoming-events';
-import {formatUTCDate, getNextTuesdayISOString} from './utils/dates';
+import {formatUTCDate, getNextTuesdayISOString, isValidISODate} from './utils/dates';
+import {
+    getArrayMember,
+    getISODate,
+    getString,
+    getTimeString,
+    isObject,
+    isTimeString,
+} from './utils/validation';
 
 /**
  * Return a string of first name(s) extracted from a string of full name(s)
@@ -45,6 +53,8 @@ interface ITemplateLocals extends Omit<IState, 'scheduleItems'> {
 }
 
 class ViewModel {
+    private static LOCAL_STORAGE_KEY = 'bailonga-announce';
+
     public title = ko.observable('');
     public date = observableDateString('');
     public cost = ko.observable('');
@@ -153,7 +163,18 @@ class ViewModel {
         });
 
         // Initialize default values
-        this.setState(this.getDefaultValues());
+        this.setState(this.loadState());
+
+        // Save the current state in localStorage any time there are changes to
+        // the state and 1 second has passed with no further changes.
+        let debounceTimeout: number | undefined;
+        this.serializedState.subscribe((state) => {
+            window.clearTimeout(debounceTimeout);
+            debounceTimeout = window.setTimeout(
+                () => this.storeState(state),
+                1000
+            );
+        });
     }
 
     public addScheduleItem() {
@@ -211,6 +232,107 @@ class ViewModel {
                 this[key](newState[key]);
             }
         });
+    }
+
+    /** Save state in localStorage */
+    private storeState(state: IState) {
+        try {
+            const stateString = JSON.stringify(state);
+            localStorage.setItem(ViewModel.LOCAL_STORAGE_KEY, stateString);
+        } catch (error) {
+            console.error('Error saving state to localStorage:', error.message);
+        }
+    }
+
+    /** Retrieve and validate state from localStorage */
+    private loadState(): IState {
+        const fallback = this.getDefaultValues();
+        try {
+            const storageItem = localStorage.getItem(
+                ViewModel.LOCAL_STORAGE_KEY
+            );
+            if (!storageItem) {
+                return fallback;
+            }
+
+            const stored: unknown = JSON.parse(storageItem);
+            if (!isObject(stored)) {
+                return fallback;
+            }
+
+            return {
+                title: getString(stored.title, fallback.title),
+                date: getISODate(stored.date, fallback.date),
+                cost: getString(stored.cost, fallback.cost),
+                scheduleItems:
+                    Array.isArray(stored.scheduleItems) &&
+                    stored.scheduleItems.every(
+                        (item): item is {
+                            start: string;
+                            end: unknown;
+                            description: string
+                        } =>
+                            isObject(item) &&
+                            isTimeString(item.start) &&
+                            typeof item.description === 'string'
+                    )
+                        ? stored.scheduleItems.map((item) => ({
+                                start: getTimeString(item.start, ''),
+                                end: getTimeString(item.end, ''),
+                                description: item.description,
+                            }))
+                        : fallback.scheduleItems,
+                intro: getString(stored.intro, fallback.intro),
+                dj: getString(stored.dj, fallback.dj),
+                musicType: getArrayMember(
+                    this.musicTypeOptions,
+                    stored.musicType,
+                    fallback.musicType
+                ),
+                teacherBeginner: getString(
+                    stored.teacherBeginner,
+                    fallback.teacherBeginner
+                ),
+                topicBeginner: getArrayMember(
+                    this.topicBeginnerOptions,
+                    stored.topicBeginner,
+                    fallback.topicBeginner
+                ),
+                teacherIntermediate: getString(
+                    stored.teacherIntermediate,
+                    fallback.teacherIntermediate
+                ),
+                topicIntermediate: getString(
+                    stored.topicIntermediate,
+                    fallback.topicIntermediate
+                ),
+                upcomingEvents: Array.isArray(stored.upcomingEvents)
+                    ? stored.upcomingEvents
+                        .filter(
+                            (event): event is IUpcomingEvent =>
+                                isObject(event) &&
+                                typeof event.date === 'string' &&
+                                isValidISODate(event.date) &&
+                                typeof event.title === 'string'
+                        )
+                    : fallback.upcomingEvents,
+                photoCredit: getString(
+                    stored.photoCredit,
+                    fallback.photoCredit
+                ),
+                photoCreditMailchimp: getString(
+                    stored.photoCreditMailchimp,
+                    fallback.photoCreditMailchimp
+                ),
+                facebookEventUrl: getString(
+                    stored.facebookEventUrl,
+                    fallback.facebookEventUrl
+                ),
+            };
+        } catch (error) {
+            console.error(error.message);
+            return fallback;
+        }
     }
 
     private pureComputedTemplate(templateFunction: (data: object) => string) {

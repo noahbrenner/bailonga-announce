@@ -19,6 +19,18 @@ body {
   color: brown;
 }
 
+.reset-button {
+  margin-bottom: 1em;
+  padding: 0.3em 0.5em;
+  border: 2px solid red;
+  border-radius: 5px;
+}
+
+.past-event-message {
+  margin: 0 0 1em;
+  color: #a00;
+}
+
 label {
   font-weight: bold;
 }
@@ -63,7 +75,7 @@ textarea {
 
 .flex-row {
   display: flex;
-  align-items: end;
+  align-items: flex-end;
   column-gap: 1em;
 }
 

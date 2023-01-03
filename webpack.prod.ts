@@ -1,7 +1,6 @@
 import * as MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import * as OptimizeCssAssetsPlugin from 'optimize-css-assets-webpack-plugin';
 import * as TerserWebpackPlugin from 'terser-webpack-plugin';
-import {Configuration} from 'webpack';
 
 import {baseConfig, inputTests, merge} from './webpack.common';
 
@@ -34,4 +33,4 @@ export default merge(baseConfig, {
             new OptimizeCssAssetsPlugin()
         ]
     }
-} as Configuration);
+});

@@ -1,5 +1,4 @@
 import * as MiniCssExtractPlugin from 'mini-css-extract-plugin';
-import {Configuration} from 'webpack';
 
 import {baseConfig, inputTests, merge} from './webpack.common';
 
@@ -32,4 +31,4 @@ export default merge(baseConfig, {
     devServer: {
         port: 8080
     }
-} as Configuration);
+});

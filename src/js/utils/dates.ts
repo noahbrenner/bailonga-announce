@@ -36,6 +36,14 @@ function localDateToUTCDate(localDate: Date) {
     ));
 }
 
+function getISOString(date: Date) {
+    return date.toISOString().slice(0, 10);
+}
+
+export function isValidISODate(isoDate: string) {
+    return isoDate.length === 10 && getISOString(new Date(isoDate)) === isoDate;
+}
+
 /**
  * Return the number of days between `utcDate` and the nearest Tuesday
  * When `utcDate` is itself a Tuesday, 0 is returned
@@ -87,4 +95,8 @@ export function getNextTuesdayISOString(refDate: string | Date) {
     const offset = getDaysTillTuesday(utcDate) || 7;
 
     return getISOStringWithOffset(utcDate, offset);
+}
+
+export function getTodayISOString(now = new Date()) {
+    return getISOString(localDateToUTCDate(now));
 }

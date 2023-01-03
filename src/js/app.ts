@@ -12,7 +12,12 @@ import { IScheduleItem, IState, IUpcomingEvent } from '../types/state';
 import {observableDateString} from './date-observable';
 import {getScheduleObservableArray} from './schedule-items';
 import {getEventObservableArray} from './upcoming-events';
-import {formatUTCDate, getNextTuesdayISOString, isValidISODate} from './utils/dates';
+import {
+    formatUTCDate,
+    getNextTuesdayISOString,
+    getTodayISOString,
+    isValidISODate,
+} from './utils/dates';
 import {
     getArrayMember,
     getISODate,
@@ -95,6 +100,10 @@ class ViewModel {
     public mailchimp1 = this.pureComputedTemplate(mailchimp1);
     public mailchimp2 = this.pureComputedTemplate(mailchimp2);
     public mailchimp3 = this.pureComputedTemplate(mailchimp3);
+
+    public isPastEventDate = ko.computed(() => {
+        return this.date() !== '' && this.date() < getTodayISOString();
+    });
 
     private serializedState = ko.pureComputed((): IState => ({
         title: this.title().trim(),

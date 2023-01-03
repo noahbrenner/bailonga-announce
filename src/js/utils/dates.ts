@@ -96,3 +96,7 @@ export function getNextTuesdayISOString(refDate: string | Date) {
 
     return getISOStringWithOffset(utcDate, offset);
 }
+
+export function getTodayISOString(now = new Date()) {
+    return getISOString(localDateToUTCDate(now));
+}

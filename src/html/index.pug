@@ -19,10 +19,10 @@ html(lang="en-us")
     h1.main-heading Bailonga Templates
     section
       h2 Enter values for this week's event
-      button(
-        data-bind="click: resetForm"
-        type="button"
-      ).reset-button Reset form
+      button(data-bind="click: resetForm" type="button").reset-button Reset form
+      p(data-bind="visible: isPastEventDate").past-event-message
+        | This event date is in the past. To clear the form and set default
+        | values fort the next event, click "Reset form" above.
       form(autocomplete="off")
         div.flex-row
           +inputText('title')(spellcheck="true") Event Title

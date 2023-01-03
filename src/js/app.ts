@@ -185,6 +185,12 @@ class ViewModel {
         this.upcomingEvents.add();
     }
 
+    public resetForm() {
+        if (window.confirm('Are you sure you want to reset the form?')) {
+            this.setState(this.getDefaultValues());
+        }
+    }
+
     private getDefaultValues(): IState {
         return {
             title: 'Tuesday Bailonga',

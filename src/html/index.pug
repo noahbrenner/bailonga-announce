@@ -19,6 +19,10 @@ html(lang="en-us")
     h1.main-heading Bailonga Templates
     section
       h2 Enter values for this week's event
+      button(
+        data-bind="click: resetForm"
+        type="button"
+      ).reset-button Reset form
       form(autocomplete="off")
         div.flex-row
           +inputText('title')(spellcheck="true") Event Title

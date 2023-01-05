@@ -1,7 +1,7 @@
 import * as ko from 'knockout';
 
 import {observableDateString, ObservableDateString} from './date-observable';
-import {getNextTuesdayISOString} from './utils/dates';
+import {getNextEventISOString} from './utils/dates';
 
 class UpcomingEvent {
     public date = observableDateString('');
@@ -29,7 +29,7 @@ export function getEventObservableArray(fallbackDate: ObservableDateString) {
 
     function add(
         this: EventObservableArray,
-        date = getNextTuesdayISOString(this.getLatestDate()),
+        date = getNextEventISOString(this.getLatestDate()),
         title = ''
     ) {
         this.push(new UpcomingEvent(this, date, title));

@@ -14,9 +14,10 @@ import {getScheduleObservableArray} from './schedule-items';
 import {getEventObservableArray} from './upcoming-events';
 import {
     formatUTCDate,
-    getNextTuesdayISOString,
+    getNextEventISOString,
     getTodayISOString,
     isValidISODate,
+    WEEKDAY,
 } from './utils/dates';
 import {
     getArrayMember,
@@ -55,6 +56,7 @@ interface ITemplateScheduleItem extends Omit<IScheduleItem, 'start' | 'end'> {
 
 interface ITemplateLocals extends Omit<IState, 'scheduleItems'> {
     scheduleItems: ITemplateScheduleItem[];
+    weekday: string;
 }
 
 class ViewModel {
@@ -144,6 +146,7 @@ class ViewModel {
         return {
             ...state,
             date: formatUTCDate(new Date(date)),
+            weekday: WEEKDAY,
             scheduleItems: scheduleItems.map(({ start, end, description }) => ({
                 description: description.replace('{dj}', getFirstName(dj)),
                 time: [start, end]
@@ -202,8 +205,8 @@ class ViewModel {
 
     private getDefaultValues(): IState {
         return {
-            title: 'Tuesday Bailonga',
-            date: getNextTuesdayISOString(new Date()),
+            title: `${WEEKDAY} Bailonga`,
+            date: getNextEventISOString(new Date()),
             cost: '$7 – $10',
             scheduleItems: [
                 {

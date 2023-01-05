@@ -1,6 +1,6 @@
 import * as ko from 'knockout';
 
-import {getDaysTillTuesday, getISOStringWithOffset} from './utils/dates';
+import {getDaysTillEvent, getISOStringWithOffset} from './utils/dates';
 
 export type ObservableDateString = ReturnType<typeof observableDateString>;
 
@@ -19,13 +19,13 @@ export function observableDateString(initialValue = '') {
                 // Don't allow setting an empty string
                 self.notifySubscribers(currentValue);
             } else {
-                // Set to the nearest Tuesday in the direction of the change
+                // Set to the nearest event date in the direction of the change
                 const newDate = new Date(newValue);
                 const isFuture = newValue > currentValue;
-                const newTuesdayValue = getISOStringWithOffset(
-                    newDate, getDaysTillTuesday(newDate, isFuture)
+                const newISOString = getISOStringWithOffset(
+                    newDate, getDaysTillEvent(newDate, isFuture)
                 );
-                date(newTuesdayValue);
+                date(newISOString);
             }
         }
     });

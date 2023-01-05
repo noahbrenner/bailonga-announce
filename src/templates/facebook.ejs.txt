@@ -4,7 +4,7 @@
 <%_ } _%>
 This Week’s Event
 
-Tuesday, <%- locals.date %>
+<%- locals.weekday %>, <%- locals.date %>
 
 Schedule:
 <%_ for (const item of locals.scheduleItems) { _%>

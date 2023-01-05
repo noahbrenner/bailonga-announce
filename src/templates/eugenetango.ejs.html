@@ -1,14 +1,14 @@
 <div style="margin-left: 1em;">
-  <h1>Tuesday Bailonga</h1>
+  <h1><%= locals.weekday %> Bailonga</h1>
   <div style="margin: 1em 0; font-weight: bold;">
-    <div>Every Tuesday</div>
+    <div>Every <%= locals.weekday %></div>
     <div>Alternative and Traditional Tango Music</div>
     <div>Beginner and Intermediate class every week</div>
   </div>
   <p>Visit our website for more info: <a href="http://www.bailonga.org/">www.bailonga.org</a></p>
   <hr style="width: 50%; margin: 1em auto;" />
   <h2 style="margin: 0.8em 0;">This Week&rsquo;s Event</h2>
-  <h3 style="margin: 1em 0;">Tuesday, <%= locals.date %></h3>
+  <h3 style="margin: 1em 0;"><%= locals.weekday %>, <%= locals.date %></h3>
   <h3 style="margin: 1em 0;">Schedule:</h3>
   <ul>
     <%_ for (const item of locals.scheduleItems) { _%>

@@ -4,7 +4,7 @@
 <p><%= paragraph.trim() %></p>
 <%_ } _%>
 <h2>This Week’s Event</h2>
-<h3>Tuesday, <%= locals.date %></h3>
+<h3><%= locals.weekday %>, <%= locals.date %></h3>
 <h3>Schedule:</h3>
 <ul>
   <%_ for (const item of locals.scheduleItems) { _%>

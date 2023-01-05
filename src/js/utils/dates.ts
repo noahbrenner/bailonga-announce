@@ -1,3 +1,14 @@
+const WEEKDAY_INDEX = 3;
+export const WEEKDAY = ([
+    'Sunday',
+    'Monday',
+    'Tuesday',
+    'Wednesday',
+    'Thursday',
+    'Friday',
+    'Saturday',
+] as const)[WEEKDAY_INDEX];
+
 const dateFormatter = new Intl.DateTimeFormat('en-us', {
     month: 'long',
     day: 'numeric',
@@ -45,17 +56,16 @@ export function isValidISODate(isoDate: string) {
 }
 
 /**
- * Return the number of days between `utcDate` and the nearest Tuesday
- * When `utcDate` is itself a Tuesday, 0 is returned
+ * Return the number of days between `utcDate` and the nearest event date.
+ * Returns 0 when `utcDate` is the weekday of the event,
  *
  * @param future - Search forward if true, backward if false
  * When searching backward, the return value is negative or 0
  */
-export function getDaysTillTuesday(utcDate: Date, future = true) {
-    const TUESDAY = 2;
+export function getDaysTillEvent(utcDate: Date, future = true) {
     const weekOffset = future ? 7 : -7;
 
-    return (weekOffset + TUESDAY - utcDate.getUTCDay()) % weekOffset;
+    return (weekOffset + WEEKDAY_INDEX - utcDate.getUTCDay()) % weekOffset;
 }
 
 /**
@@ -65,34 +75,32 @@ export function getDaysTillTuesday(utcDate: Date, future = true) {
  * > getISOStringWithOffset(new Date('2015-01-06'), -1); // => '2015-01-05'
  */
 export function getISOStringWithOffset(utcDate: Date, offset: number) {
-    const utcResult = new Date(Date.UTC(
+    return getISOString(new Date(Date.UTC(
         utcDate.getUTCFullYear(),
         utcDate.getUTCMonth(),
         utcDate.getUTCDate() + offset
-    ));
-
-    return utcResult.toISOString().slice(0, 10);
+    )));
 }
 
 /**
- * Return the ISO date string for the Tuesday after `refDate`
+ * Return the ISO date string for the event date after `refDate`
  *
- * > getNextTuesdayISOString('2015-01-05'); // => '2015-01-06'
- * > getNextTuesdayISOString('2015-01-06'); // => '2015-01-13'
- * > getNextTuesdayISOString(new Date(2015, 0, 6)); // => '2015-01-13'
- * > getNextTuesdayISOString(new Date()); // The first Tuesday after today
+ * > getNextEventISOString('2015-01-05'); // => '2015-01-06'
+ * > getNextEventISOString('2015-01-06'); // => '2015-01-13'
+ * > getNextEventISOString(new Date(2015, 0, 6)); // => '2015-01-13'
+ * > getNextEventISOString(new Date()); // The first event date after today
  *
  * @param refDate - The reference date from which to search
  * If a `string`: An ISO string in *UTC* time, e.g. `'2015-01-06'`
  * If a `Date`: A Date object in *local* time, e.g. `new Date()`
  */
-export function getNextTuesdayISOString(refDate: string | Date) {
+export function getNextEventISOString(refDate: string | Date) {
     const utcDate = refDate instanceof Date
         ? localDateToUTCDate(refDate)
         : new Date(refDate);
 
-    // If refDate is a Tuesday itself, we want the *next* Tuesday
-    const offset = getDaysTillTuesday(utcDate) || 7;
+    // If refDate is itself the weekday of the event, we want the *next* week
+    const offset = getDaysTillEvent(utcDate) || 7;
 
     return getISOStringWithOffset(utcDate, offset);
 }

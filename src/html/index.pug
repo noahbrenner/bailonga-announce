@@ -20,7 +20,7 @@ html(lang="en-us")
     section
       h2 Enter values for this week's event
       button(data-bind="click: resetForm" type="button").reset-button Reset form
-      p(data-bind="visible: isPastEventDate").past-event-message
+      p(data-bind="visible: isPastEventDate").warning
         | This event date is in the past. To clear the form and set default
         | values fort the next event, click "Reset form" above.
       form(autocomplete="off")
@@ -67,6 +67,9 @@ html(lang="en-us")
           +inputText('photoCredit') Photo credit
           +inputText('photoCreditMailchimp') Mailchimp photo credit
         +inputUrl('facebookEventUrl') Facebook event URL
+        p(data-bind="hidden: isFacebookEventUrlValid").warning
+          | This event URL may not be correct. An event URL usually starts with
+          |  #[span(data-bind="text: facebookEventUrlRequiredPrefix")]
     section
       h2 Copy the results below
 

@@ -77,6 +77,13 @@ class ViewModel {
     public photoCredit = ko.observable('');
     public photoCreditMailchimp = ko.observable('');
     public facebookEventUrl = ko.observable('');
+    public facebookEventUrlRequiredPrefix = 'https://www.facebook.com/events/';
+    public isFacebookEventUrlValid = ko.pureComputed(() => {
+        const url = this.facebookEventUrl().trim();
+        const requiredPrefix = this.facebookEventUrlRequiredPrefix;
+        const minLength = Math.min(url.length, requiredPrefix.length);
+        return url.slice(0, minLength) === requiredPrefix.slice(0, minLength);
+    });
 
     public musicTypeOptions: readonly string[] = [
         '50/50 Alternative and Traditional',
@@ -107,30 +114,35 @@ class ViewModel {
         return this.date() !== '' && this.date() < getTodayISOString();
     });
 
-    private serializedState = ko.pureComputed((): IState => ({
-        title: this.title().trim(),
-        date: this.date(),
-        cost: this.cost().trim(),
-        scheduleItems: this.scheduleItems().map((item) => ({
-            start: item.start(),
-            end: item.end(),
-            description: item.description().trim()
-        })),
-        intro: this.intro().trim(),
-        dj: this.dj().trim(),
-        musicType: this.musicType(),
-        teacherBeginner: this.teacherBeginner().trim(),
-        topicBeginner: this.topicBeginner(),
-        teacherIntermediate: this.teacherIntermediate().trim(),
-        topicIntermediate: this.topicIntermediate().trim(),
-        upcomingEvents: this.upcomingEvents().map((event) => ({
-            date: event.date(),
-            title: event.title().trim()
-        })),
-        photoCredit: this.photoCredit().trim(),
-        photoCreditMailchimp: this.photoCreditMailchimp().trim(),
-        facebookEventUrl: this.facebookEventUrl().trim()
-    }));
+    private serializedState = ko.pureComputed((): IState => {
+        const facebookEventUrl = this.facebookEventUrl().trim();
+        return {
+            title: this.title().trim(),
+            date: this.date(),
+            cost: this.cost().trim(),
+            scheduleItems: this.scheduleItems().map((item) => ({
+                start: item.start(),
+                end: item.end(),
+                description: item.description().trim()
+            })),
+            intro: this.intro().trim(),
+            dj: this.dj().trim(),
+            musicType: this.musicType(),
+            teacherBeginner: this.teacherBeginner().trim(),
+            topicBeginner: this.topicBeginner(),
+            teacherIntermediate: this.teacherIntermediate().trim(),
+            topicIntermediate: this.topicIntermediate().trim(),
+            upcomingEvents: this.upcomingEvents().map((event) => ({
+                date: event.date(),
+                title: event.title().trim()
+            })),
+            photoCredit: this.photoCredit().trim(),
+            photoCreditMailchimp: this.photoCreditMailchimp().trim(),
+            facebookEventUrl: facebookEventUrl.includes('?')
+                ? facebookEventUrl.slice(0, facebookEventUrl.indexOf('?'))
+                : facebookEventUrl,
+        };
+    });
 
     private templateLocals = ko.pureComputed((): ITemplateLocals => {
         const state = this.serializedState();

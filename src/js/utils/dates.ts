@@ -108,3 +108,7 @@ export function getNextEventISOString(refDate: string | Date) {
 export function getTodayISOString(now = new Date()) {
     return getISOString(localDateToUTCDate(now));
 }
+
+export function nthWeekdayOfMonth(date: Date) {
+    return Math.ceil(date.getUTCDate() / 7);
+}

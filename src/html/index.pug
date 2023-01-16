@@ -28,6 +28,7 @@ html(lang="en-us")
           +inputText('title')(spellcheck="true") Event Title
           +inputDate('date') Event Date
           +inputText('cost') Cost
+          +inputSelect('venue', 'venueOptions') Venue
         fieldset
           legend Schedule
           ul(data-bind="foreach: scheduleItems")

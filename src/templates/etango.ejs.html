@@ -23,13 +23,13 @@
   <p><strong>Confirm on Facebook:</strong> <%= locals.facebookEventUrl %></p>
 </div>
 <div>
-  <p><strong>Location:</strong> Upstairs Ballroom at the Vet’s Club, 1626 Willamette Street Eugene, Oregon</p>
+  <p><strong>Location:</strong> <%= locals.venue %>, 1626 Willamette Street Eugene, Oregon</p>
   <p><strong>Cost:</strong> <%= locals.cost %> (Cash or check only)</p>
   <p><strong>Volunteer:</strong> 30-minute desk shift gets you in free!</p>
 </div>
 <div>
   <p><strong>Parking:</strong> To the left of Vet’s club building or nearby street parking.</p>
-  <p><strong>Accessibility:</strong> The Vet’s club’s ramp is on the front-right corner of the building. There is an elevator directly to the right once inside the main entrance.</p>
+  <p><strong>Accessibility:</strong> <%= locals.venueAccessibility %></p>
 </div>
 <%_ if (locals.upcomingEvents.length !== 0) { _%>
 <hr>

@@ -90,7 +90,10 @@ export const baseConfig: webpack.Configuration = {
         new HtmlWebpackPlugin({
             filename: 'index.html',
             inject: false,
-            template: './src/html/index.pug'
+            template: './src/html/index.pug',
+            minify: {
+                removeRedundantAttributes: false,
+            },
         })
     ],
 

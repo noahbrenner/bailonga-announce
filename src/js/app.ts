@@ -8,7 +8,7 @@ import facebook from '../templates/facebook.ejs.txt';
 import mailchimp1 from '../templates/mailchimp-1.ejs.html';
 import mailchimp2 from '../templates/mailchimp-2.ejs.html';
 import mailchimp3 from '../templates/mailchimp-3.ejs.html';
-import { IScheduleItem, IState, IUpcomingEvent } from '../types/state';
+import { IScheduleItem, IState, IUpcomingEvent, Venue } from '../types/state';
 import {observableDateString} from './date-observable';
 import {getScheduleObservableArray} from './schedule-items';
 import {getEventObservableArray} from './upcoming-events';
@@ -17,6 +17,7 @@ import {
     getNextEventISOString,
     getTodayISOString,
     isValidISODate,
+    nthWeekdayOfMonth,
     WEEKDAY,
 } from './utils/dates';
 import {
@@ -54,7 +55,9 @@ interface ITemplateScheduleItem extends Omit<IScheduleItem, 'start' | 'end'> {
     time: string;
 }
 
-interface ITemplateLocals extends Omit<IState, 'scheduleItems'> {
+interface ITemplateLocals extends Omit<IState, 'venue' | 'scheduleItems'> {
+    venue: string;
+    venueAccessibility: string;
     scheduleItems: ITemplateScheduleItem[];
     weekday: string;
 }
@@ -65,6 +68,7 @@ class ViewModel {
     public title = ko.observable('');
     public date = observableDateString('');
     public cost = ko.observable('');
+    public venue = ko.observable<Venue>('Ballroom');
     public scheduleItems = getScheduleObservableArray();
     public intro = ko.observable('');
     public dj = ko.observable('');
@@ -84,6 +88,8 @@ class ViewModel {
         const minLength = Math.min(url.length, requiredPrefix.length);
         return url.slice(0, minLength) === requiredPrefix.slice(0, minLength);
     });
+
+    public venueOptions: readonly Venue[] = ['Ballroom', 'Colonial Room'];
 
     public musicTypeOptions: readonly string[] = [
         '50/50 Alternative and Traditional',
@@ -120,6 +126,7 @@ class ViewModel {
             title: this.title().trim(),
             date: this.date(),
             cost: this.cost().trim(),
+            venue: this.venue(),
             scheduleItems: this.scheduleItems().map((item) => ({
                 start: item.start(),
                 end: item.end(),
@@ -148,6 +155,7 @@ class ViewModel {
         const state = this.serializedState();
         const {
             date,
+            venue,
             dj,
             scheduleItems,
             upcomingEvents,
@@ -155,10 +163,21 @@ class ViewModel {
             photoCreditMailchimp,
         } = state;
 
+        const venueAccessibility =
+            'The Vet’s club’s ramp is on the front-right corner of the building.';
+        const ballroomAcessibility =
+            'There is an elevator directly to the right once inside the main entrance.';
+
         return {
             ...state,
             date: formatUTCDate(new Date(date)),
             weekday: WEEKDAY,
+            venue: venue === 'Ballroom'
+                ? 'Upstairs Ballroom at the Vet’s Club'
+                : 'Colonial Room at the Vet’s Club',
+            venueAccessibility: venue === 'Colonial Room'
+                ? venueAccessibility
+                : [venueAccessibility, ballroomAcessibility].join(' '),
             scheduleItems: scheduleItems.map(({ start, end, description }) => ({
                 description: description.replace('{dj}', getFirstName(dj)),
                 time: [start, end]
@@ -179,11 +198,12 @@ class ViewModel {
     });
 
     constructor() {
-        // Update the default beginner topic whenever the event date changes
+        // Update week-based default values when the event date changes
         this.date.subscribe((newDateString) => {
-            const utcDate = new Date(newDateString);
-            const weekIndex = Math.floor((utcDate.getUTCDate() - 1) / 7);
+            const eventDate = new Date(newDateString);
+            const weekIndex = nthWeekdayOfMonth(eventDate) - 1;
             this.topicBeginner(this.topicBeginnerOptions[weekIndex]);
+            this.venue(this.getDefaultVenue(eventDate));
         });
 
         // Initialize default values
@@ -216,10 +236,12 @@ class ViewModel {
     }
 
     private getDefaultValues(): IState {
+        const eventDate = getNextEventISOString(new Date());
         return {
             title: `${WEEKDAY} Bailonga`,
-            date: getNextEventISOString(new Date()),
+            date: eventDate,
             cost: '$7 – $10',
+            venue: this.getDefaultVenue(new Date(eventDate)),
             scheduleItems: [
                 {
                     start: '19:00',
@@ -290,10 +312,17 @@ class ViewModel {
                 return fallback;
             }
 
+            const eventDate = getISODate(stored.date, fallback.date);
+
             return {
                 title: getString(stored.title, fallback.title),
-                date: getISODate(stored.date, fallback.date),
+                date: eventDate,
                 cost: getString(stored.cost, fallback.cost),
+                venue: getArrayMember(
+                    this.venueOptions,
+                    stored.venue,
+                    this.getDefaultVenue(new Date(eventDate))
+                ),
                 scheduleItems:
                     Array.isArray(stored.scheduleItems) &&
                     stored.scheduleItems.every(
@@ -363,6 +392,12 @@ class ViewModel {
             console.error(error.message);
             return fallback;
         }
+    }
+
+    private getDefaultVenue(eventDate: Date): Venue {
+        return nthWeekdayOfMonth(eventDate) === 2
+            ? 'Colonial Room'
+            : 'Ballroom';
     }
 
     private pureComputedTemplate(templateFunction: (data: object) => string) {

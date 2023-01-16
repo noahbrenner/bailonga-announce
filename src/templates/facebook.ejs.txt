@@ -22,8 +22,8 @@ Music: <%- locals.musicType %>
 Cost: <%- locals.cost %> (Cash or check only)
 Volunteer: 30-minute desk shift gets you in free!
 
-Parking: To the left of Vet’s club building or nearby street parking
-Accessibility: The Vet’s club’s ramp is on the front-right corner of the building. There is an elevator directly to the right once inside the main entrance.
+Parking: To the left of Vet’s club building or nearby street parking.
+Accessibility: <%- locals.venueAccessibility %>
 <%_ if (locals.upcomingEvents.length !== 0) { _%>
 
 —————————

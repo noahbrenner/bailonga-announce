@@ -1,3 +1,5 @@
+export type Venue = 'Ballroom' | 'Colonial Room';
+
 export interface IScheduleItem {
     start: string;
     end: string;
@@ -13,6 +15,7 @@ export interface IState {
     title: string;
     date: string;
     cost: string;
+    venue: Venue;
     scheduleItems: IScheduleItem[];
     intro: string;
     dj: string;

@@ -25,7 +25,7 @@ html(lang="en-us")
         | values fort the next event, click "Reset form" above.
       form(autocomplete="off")
         div.flex-row
-          +inputText('title')(spellcheck="true") Event Title
+          +inputText('title')(spellcheck="true").flex-grow Event Title
           +inputDate('date') Event Date
           +inputText('cost') Cost
           +inputSelect('venue', 'venueOptions') Venue

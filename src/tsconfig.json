@@ -1,6 +1,0 @@
-{
-  "compilerOptions": {
-    "module": "ESNext" // Enable webpack to create smaller output
-  },
-  "extends": "../tsconfig.json"
-}

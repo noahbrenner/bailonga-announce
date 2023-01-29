@@ -10,5 +10,4 @@ Only recent browsers are supported. Since this website is built to be used mostl
 
 * `package.json`: `browserslist`
 * `tsconfig.json`: `compilerOptions.target`
-* `webpack.prod.ts`: Options for `TerserWebpackPlugin` under `optimization.minimizer` of the exported config
 * Add any necessary polyfills, such as `Promise`

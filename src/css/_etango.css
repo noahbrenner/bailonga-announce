@@ -3,23 +3,28 @@
   font-family: Arial, Helvetica, sans-serif;
   font-size: 14px;
 
-  h1,
-  h2,
-  h3,
-  div {
+  @nest
+  & h1,
+  & h2,
+  & h3,
+  & div {
     margin: 14px 0;
   }
 
-  h1, h2 {
+  @nest
+  & h1,
+  & h2 {
     font-size: 18px;
   }
 
-  h3 {
+  @nest
+  & h3 {
     font-size: 14px;
     color: #444;
   }
 
-  hr {
+  @nest
+  & hr {
     margin: 20px auto;
     border: none;
     width: 25%;
@@ -27,13 +32,16 @@
     background: #000;
   }
 
-  div {
+  @nest
+  & div {
 
-    p {
+    @nest
+    & p {
       margin: 0;
     }
 
-    strong {
+    @nest
+    & strong {
       color: #444;
     }
   }

@@ -7,6 +7,9 @@
     "start": "vite",
     "test": "tsc --noEmit && tslint --project tsconfig.json src/**/*.ts"
   },
+  "engines": {
+    "node": "18.x.x"
+  },
   "browserslist": [
     "last 1 year"
   ],

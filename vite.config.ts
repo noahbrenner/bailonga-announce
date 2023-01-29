@@ -1,9 +1,10 @@
 import autoprefixer from "autoprefixer"
 import { compile as compileEjs } from "ejs";
+import { minify } from "html-minifier-terser";
 import postcssNesting from "postcss-nesting";
-import { createFilter, defineConfig, PluginOption } from "vite";
+import { createFilter, defineConfig, Plugin } from "vite";
 
-function ejsTransformer({ debug }: { debug: boolean }): PluginOption {
+function ejsTransformer({ debug }: { debug: boolean }): Plugin {
     return {
         name: "ejs-transformer",
         transform(src, id) {
@@ -24,6 +25,19 @@ function ejsTransformer({ debug }: { debug: boolean }): PluginOption {
     };
 }
 
+function indexHtmlMinifier(): Plugin {
+    return {
+        name: "html-minifier",
+        transformIndexHtml(html) {
+            return minify(html, {
+                removeComments: true,
+                collapseWhitespace: true,
+                collapseBooleanAttributes: true,
+            });
+        }
+    };
+}
+
 export default defineConfig(async ({ mode }) => {
     const { default: pugTransformer } =
         await import("vite-plugin-pug-transformer");
@@ -31,6 +45,7 @@ export default defineConfig(async ({ mode }) => {
     return {
         clearScreen: false,
         plugins: [
+            indexHtmlMinifier(),
             pugTransformer({}),
             ejsTransformer({ debug: mode !== "production" }),
         ],

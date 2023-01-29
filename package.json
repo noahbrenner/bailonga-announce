@@ -15,10 +15,12 @@
   },
   "devDependencies": {
     "@types/ejs": "~3.1.1",
+    "@types/html-minifier-terser": "~7.0.0",
     "@types/node": "~18.11.18",
     "@types/pug": "~2.0.6",
     "autoprefixer": "~10.4.13",
     "ejs": "~3.1.8",
+    "html-minifier-terser": "~7.1.0",
     "postcss": "~8.4.21",
     "postcss-nesting": "~11.0.1",
     "pug": "~3.0.2",

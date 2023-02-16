@@ -44,6 +44,7 @@ export default defineConfig(async ({ mode }) => {
 
     return {
         clearScreen: false,
+        base: "./",
         plugins: [
             indexHtmlMinifier(),
             pugTransformer({}),

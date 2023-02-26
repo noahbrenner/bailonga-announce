@@ -1,4 +1,4 @@
-import autoprefixer from "autoprefixer"
+import autoprefixer from "autoprefixer";
 import { compile as compileEjs } from "ejs";
 import { minify } from "html-minifier-terser";
 import postcssNesting from "postcss-nesting";
@@ -34,13 +34,14 @@ function indexHtmlMinifier(): Plugin {
                 collapseWhitespace: true,
                 collapseBooleanAttributes: true,
             });
-        }
+        },
     };
 }
 
 export default defineConfig(async ({ mode }) => {
-    const { default: pugTransformer } =
-        await import("vite-plugin-pug-transformer");
+    const { default: pugTransformer } = await import(
+        "vite-plugin-pug-transformer"
+    );
 
     return {
         clearScreen: false,

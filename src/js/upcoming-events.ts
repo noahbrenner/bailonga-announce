@@ -1,11 +1,11 @@
-import * as ko from 'knockout';
+import * as ko from "knockout";
 
-import {observableDateString, ObservableDateString} from './date-observable';
-import {getNextEventISOString} from './utils/dates';
+import { observableDateString, ObservableDateString } from "./date-observable";
+import { getNextEventISOString } from "./utils/dates";
 
 class UpcomingEvent {
-    public date = observableDateString('');
-    public title = ko.observable('');
+    public date = observableDateString("");
+    public title = ko.observable("");
 
     constructor(
         public parent: EventObservableArray,
@@ -30,7 +30,7 @@ export function getEventObservableArray(fallbackDate: ObservableDateString) {
     function add(
         this: EventObservableArray,
         date = getNextEventISOString(this.getLatestDate()),
-        title = ''
+        title = ""
     ) {
         this.push(new UpcomingEvent(this, date, title));
     }
@@ -51,7 +51,7 @@ export function getEventObservableArray(fallbackDate: ObservableDateString) {
     const extensions = {
         add,
         getLatestDate,
-        sortByDate
+        sortByDate,
     };
 
     return Object.assign(baseObservable, extensions);

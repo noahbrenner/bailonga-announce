@@ -3,9 +3,14 @@
   "description": "Generate the weekly announcements for Bailonga",
   "private": true,
   "scripts": {
+    "prepare": "husky install",
     "build": "vite build",
     "start": "vite",
-    "test": "tsc --noEmit && tslint --project tsconfig.json src/**/*.ts"
+    "check-formatting": "prettier --check --ignore-path .gitignore '**/*.{ts,json,css}'",
+    "lint": "tsc --noEmit && tslint --project tsconfig.json src/**/*.ts"
+  },
+  "lint-staged": {
+    "*.{ts,json,css}": "prettier --write"
   },
   "engines": {
     "node": "18.x.x"
@@ -24,8 +29,11 @@
     "autoprefixer": "~10.4.13",
     "ejs": "~3.1.8",
     "html-minifier-terser": "~7.1.0",
+    "husky": "~8.0.3",
+    "lint-staged": "~13.1.2",
     "postcss": "~8.4.21",
     "postcss-nesting": "~11.0.1",
+    "prettier": "~2.8.4",
     "pug": "~3.0.2",
     "tslint": "~5.20.1",
     "typescript": "~4.0.2",

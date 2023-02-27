@@ -1,16 +1,21 @@
-import * as ko from 'knockout';
+import * as ko from "knockout";
 
-import bailonga from '../templates/bailonga.html.ejs';
-import etango from '../templates/etango.html.ejs';
-import eugeneTango from '../templates/eugenetango.html.ejs';
-import facebook from '../templates/facebook.txt.ejs';
-import mailchimp1 from '../templates/mailchimp-1.html.ejs';
-import mailchimp2 from '../templates/mailchimp-2.html.ejs';
-import mailchimp3 from '../templates/mailchimp-3.html.ejs';
-import { IScheduleItem, IState, IUpcomingEvent, Venue } from '../types/state';
-import {observableDateString} from './date-observable';
-import {getScheduleObservableArray} from './schedule-items';
-import {getEventObservableArray} from './upcoming-events';
+import bailonga from "../templates/bailonga.html.ejs";
+import etango from "../templates/etango.html.ejs";
+import eugeneTango from "../templates/eugenetango.html.ejs";
+import facebook from "../templates/facebook.txt.ejs";
+import mailchimp1 from "../templates/mailchimp-1.html.ejs";
+import mailchimp2 from "../templates/mailchimp-2.html.ejs";
+import mailchimp3 from "../templates/mailchimp-3.html.ejs";
+import type {
+    IScheduleItem,
+    IState,
+    IUpcomingEvent,
+    Venue,
+} from "../types/state";
+import { observableDateString } from "./date-observable";
+import { getScheduleObservableArray } from "./schedule-items";
+import { getEventObservableArray } from "./upcoming-events";
 import {
     formatUTCDate,
     getNextEventISOString,
@@ -18,7 +23,7 @@ import {
     isValidISODate,
     nthWeekdayOfMonth,
     WEEKDAY,
-} from './utils/dates';
+} from "./utils/dates";
 import {
     getArrayMember,
     getISODate,
@@ -26,7 +31,7 @@ import {
     getTimeString,
     isObject,
     isTimeString,
-} from './utils/validation';
+} from "./utils/validation";
 
 /**
  * Return a string of first name(s) extracted from a string of full name(s)
@@ -37,24 +42,24 @@ import {
 function getFirstName(fullNameStr: string) {
     const fullNames = fullNameStr.split(/\s*[&]\s*/);
     const firstNames = fullNames.map((name) => name.split(/\s+/)[0]);
-    return firstNames.join(' & ');
+    return firstNames.join(" & ");
 }
 
 function getTwelveHourTime(time: string) {
-    if (time === '') {
-        return '';
+    if (time === "") {
+        return "";
     }
 
-    const [rawHour, minute] = time.split(':');
-    const hour = (Number(rawHour) % 12) || 12;
+    const [rawHour, minute] = time.split(":");
+    const hour = Number(rawHour) % 12 || 12;
     return `${hour}:${minute}`;
 }
 
-interface ITemplateScheduleItem extends Omit<IScheduleItem, 'start' | 'end'> {
+interface ITemplateScheduleItem extends Omit<IScheduleItem, "start" | "end"> {
     time: string;
 }
 
-interface ITemplateLocals extends Omit<IState, 'venue' | 'scheduleItems'> {
+interface ITemplateLocals extends Omit<IState, "venue" | "scheduleItems"> {
     venue: string;
     venueAccessibility: string;
     scheduleItems: ITemplateScheduleItem[];
@@ -62,25 +67,25 @@ interface ITemplateLocals extends Omit<IState, 'venue' | 'scheduleItems'> {
 }
 
 class ViewModel {
-    private static LOCAL_STORAGE_KEY = 'bailonga-announce';
+    private static LOCAL_STORAGE_KEY = "bailonga-announce";
 
-    public title = ko.observable('');
-    public date = observableDateString('');
-    public cost = ko.observable('');
-    public venue = ko.observable<Venue>('Ballroom');
+    public title = ko.observable("");
+    public date = observableDateString("");
+    public cost = ko.observable("");
+    public venue = ko.observable<Venue>("Ballroom");
     public scheduleItems = getScheduleObservableArray();
-    public intro = ko.observable('');
-    public dj = ko.observable('');
-    public musicType = ko.observable('');
-    public teacherBeginner = ko.observable('');
-    public topicBeginner = ko.observable('');
-    public teacherIntermediate = ko.observable('');
-    public topicIntermediate = ko.observable('');
+    public intro = ko.observable("");
+    public dj = ko.observable("");
+    public musicType = ko.observable("");
+    public teacherBeginner = ko.observable("");
+    public topicBeginner = ko.observable("");
+    public teacherIntermediate = ko.observable("");
+    public topicIntermediate = ko.observable("");
     public upcomingEvents = getEventObservableArray(this.date);
-    public photoCredit = ko.observable('');
-    public photoCreditMailchimp = ko.observable('');
-    public facebookEventUrl = ko.observable('');
-    public facebookEventUrlRequiredPrefix = 'https://www.facebook.com/events/';
+    public photoCredit = ko.observable("");
+    public photoCreditMailchimp = ko.observable("");
+    public facebookEventUrl = ko.observable("");
+    public facebookEventUrlRequiredPrefix = "https://www.facebook.com/events/";
     public isFacebookEventUrlValid = ko.pureComputed(() => {
         const url = this.facebookEventUrl().trim();
         const requiredPrefix = this.facebookEventUrlRequiredPrefix;
@@ -88,23 +93,23 @@ class ViewModel {
         return url.slice(0, minLength) === requiredPrefix.slice(0, minLength);
     });
 
-    public venueOptions: readonly Venue[] = ['Ballroom', 'Colonial Room'];
+    public venueOptions: readonly Venue[] = ["Ballroom", "Colonial Room"];
 
     public musicTypeOptions: readonly string[] = [
-        '50/50 Alternative and Traditional',
-        '100% Traditional',
-        '100% Alternative',
-        'First 3/4 traditional, last 1/4 alternative',
-        'Tango/Blues-Fusion alternative mix'
+        "50/50 Alternative and Traditional",
+        "100% Traditional",
+        "100% Alternative",
+        "First 3/4 traditional, last 1/4 alternative",
+        "Tango/Blues-Fusion alternative mix",
         // TODO 'Other' (and add a text box)
     ];
 
     public topicBeginnerOptions: readonly string[] = [
-        'Week 1: From zero, the very basics.',
-        'Week 2: Musicality',
-        'Week 3: Molinete',
-        'Week 4: Cross System',
-        'Week 5: Bonus Topic TBA'
+        "Week 1: From zero, the very basics.",
+        "Week 2: Musicality",
+        "Week 3: Molinete",
+        "Week 4: Cross System",
+        "Week 5: Bonus Topic TBA",
     ];
 
     public bailonga = this.pureComputedTemplate(bailonga);
@@ -116,7 +121,7 @@ class ViewModel {
     public mailchimp3 = this.pureComputedTemplate(mailchimp3);
 
     public isPastEventDate = ko.computed(() => {
-        return this.date() !== '' && this.date() < getTodayISOString();
+        return this.date() !== "" && this.date() < getTodayISOString();
     });
 
     private serializedState = ko.pureComputed((): IState => {
@@ -129,7 +134,7 @@ class ViewModel {
             scheduleItems: this.scheduleItems().map((item) => ({
                 start: item.start(),
                 end: item.end(),
-                description: item.description().trim()
+                description: item.description().trim(),
             })),
             intro: this.intro().trim(),
             dj: this.dj().trim(),
@@ -140,12 +145,12 @@ class ViewModel {
             topicIntermediate: this.topicIntermediate().trim(),
             upcomingEvents: this.upcomingEvents().map((event) => ({
                 date: event.date(),
-                title: event.title().trim()
+                title: event.title().trim(),
             })),
             photoCredit: this.photoCredit().trim(),
             photoCreditMailchimp: this.photoCreditMailchimp().trim(),
-            facebookEventUrl: facebookEventUrl.includes('?')
-                ? facebookEventUrl.slice(0, facebookEventUrl.indexOf('?'))
+            facebookEventUrl: facebookEventUrl.includes("?")
+                ? facebookEventUrl.slice(0, facebookEventUrl.indexOf("?"))
                 : facebookEventUrl,
         };
     });
@@ -163,36 +168,40 @@ class ViewModel {
         } = state;
 
         const venueAccessibility =
-            'The Vet’s club’s ramp is on the front-right corner of the building.';
+            "The Vet’s club’s ramp is on the front-right corner of the building.";
         const ballroomAcessibility =
-            'There is an elevator directly to the right once inside the main entrance.';
+            "There is an elevator directly to the right once inside the main entrance.";
 
         return {
             ...state,
             date: formatUTCDate(new Date(date)),
             weekday: WEEKDAY,
-            venue: venue === 'Ballroom'
-                ? 'Upstairs Ballroom at the Vet’s Club'
-                : 'Colonial Room at the Vet’s Club',
-            venueAccessibility: venue === 'Colonial Room'
-                ? venueAccessibility
-                : [venueAccessibility, ballroomAcessibility].join(' '),
+            venue:
+                venue === "Ballroom"
+                    ? "Upstairs Ballroom at the Vet’s Club"
+                    : "Colonial Room at the Vet’s Club",
+            venueAccessibility:
+                venue === "Colonial Room"
+                    ? venueAccessibility
+                    : [venueAccessibility, ballroomAcessibility].join(" "),
             scheduleItems: scheduleItems.map(({ start, end, description }) => ({
-                description: description.replace('{dj}', getFirstName(dj)),
-                time: [start, end]
-                    .filter((time) => time !== '')
-                    .map(getTwelveHourTime)
-                    .join('–') + 'PM', // We're assuming PM for now
+                description: description.replace("{dj}", getFirstName(dj)),
+                time:
+                    [start, end]
+                        .filter((time) => time !== "")
+                        .map(getTwelveHourTime)
+                        .join("–") + "PM", // We're assuming PM for now
             })),
             upcomingEvents: upcomingEvents.map((event) => ({
                 date: formatUTCDate(new Date(event.date)),
                 title: event.title,
             })),
-            photoCreditMailchimp: photoCredit === photoCreditMailchimp
-                ? photoCreditMailchimp
-                : [photoCredit, photoCreditMailchimp]
-                    .filter((name) => name !== '')
-                    .join(', '),
+            photoCreditMailchimp:
+                photoCredit === photoCreditMailchimp
+                    ? photoCreditMailchimp
+                    : [photoCredit, photoCreditMailchimp]
+                          .filter((name) => name !== "")
+                          .join(", "),
         };
     });
 
@@ -229,7 +238,7 @@ class ViewModel {
     }
 
     public resetForm() {
-        if (window.confirm('Are you sure you want to reset the form?')) {
+        if (window.confirm("Are you sure you want to reset the form?")) {
             this.setState(this.getDefaultValues());
         }
     }
@@ -239,42 +248,42 @@ class ViewModel {
         return {
             title: `${WEEKDAY} Bailonga`,
             date: eventDate,
-            cost: '$7 – $10',
+            cost: "$7 – $10",
             venue: this.getDefaultVenue(new Date(eventDate)),
             scheduleItems: [
                 {
-                    start: '19:00',
-                    end: '',
-                    description: 'Beginning and Intermediate lessons'
+                    start: "19:00",
+                    end: "",
+                    description: "Beginning and Intermediate lessons",
                 },
                 {
-                    start: '19:45',
-                    end: '22:00',
-                    description: 'DJ {dj}'
+                    start: "19:45",
+                    end: "22:00",
+                    description: "DJ {dj}",
                 },
             ],
-            intro: '',
-            dj: '',
-            musicType: '',
-            teacherBeginner: '',
-            topicBeginner: '',
-            teacherIntermediate: '',
-            topicIntermediate: 'TBD',
+            intro: "",
+            dj: "",
+            musicType: "",
+            teacherBeginner: "",
+            topicBeginner: "",
+            teacherIntermediate: "",
+            topicIntermediate: "TBD",
             upcomingEvents: [],
-            photoCredit: '',
-            photoCreditMailchimp: 'Dave Musgrove',
-            facebookEventUrl: '',
+            photoCredit: "",
+            photoCreditMailchimp: "Dave Musgrove",
+            facebookEventUrl: "",
         };
     }
 
     private setState(newState: IState) {
         (Object.keys(newState) as Array<keyof IState>).forEach((key) => {
-            if (key === 'scheduleItems') {
+            if (key === "scheduleItems") {
                 this.scheduleItems([]);
                 newState[key].forEach(({ start, end, description }) => {
                     this.scheduleItems.add(start, end, description);
                 });
-            } else if (key === 'upcomingEvents') {
+            } else if (key === "upcomingEvents") {
                 this.upcomingEvents([]);
                 newState[key].forEach(({ date, title }) => {
                     this.upcomingEvents.add(date, title);
@@ -291,7 +300,10 @@ class ViewModel {
             const stateString = JSON.stringify(state);
             localStorage.setItem(ViewModel.LOCAL_STORAGE_KEY, stateString);
         } catch (error) {
-            console.error('Error saving state to localStorage:', error.message);
+            console.error(
+                "Error saving state to localStorage:",
+                error instanceof Error ? error.message : error
+            );
         }
     }
 
@@ -325,20 +337,22 @@ class ViewModel {
                 scheduleItems:
                     Array.isArray(stored.scheduleItems) &&
                     stored.scheduleItems.every(
-                        (item): item is {
+                        (
+                            item
+                        ): item is {
                             start: string;
                             end: unknown;
-                            description: string
+                            description: string;
                         } =>
                             isObject(item) &&
                             isTimeString(item.start) &&
-                            typeof item.description === 'string'
+                            typeof item.description === "string"
                     )
                         ? stored.scheduleItems.map((item) => ({
-                                start: getTimeString(item.start, ''),
-                                end: getTimeString(item.end, ''),
-                                description: item.description,
-                            }))
+                              start: getTimeString(item.start, ""),
+                              end: getTimeString(item.end, ""),
+                              description: item.description,
+                          }))
                         : fallback.scheduleItems,
                 intro: getString(stored.intro, fallback.intro),
                 dj: getString(stored.dj, fallback.dj),
@@ -365,14 +379,13 @@ class ViewModel {
                     fallback.topicIntermediate
                 ),
                 upcomingEvents: Array.isArray(stored.upcomingEvents)
-                    ? stored.upcomingEvents
-                        .filter(
-                            (event): event is IUpcomingEvent =>
-                                isObject(event) &&
-                                typeof event.date === 'string' &&
-                                isValidISODate(event.date) &&
-                                typeof event.title === 'string'
-                        )
+                    ? stored.upcomingEvents.filter(
+                          (event): event is IUpcomingEvent =>
+                              isObject(event) &&
+                              typeof event.date === "string" &&
+                              isValidISODate(event.date) &&
+                              typeof event.title === "string"
+                      )
                     : fallback.upcomingEvents,
                 photoCredit: getString(
                     stored.photoCredit,
@@ -388,15 +401,15 @@ class ViewModel {
                 ),
             };
         } catch (error) {
-            console.error(error.message);
+            console.error(error instanceof Error ? error.message : error);
             return fallback;
         }
     }
 
     private getDefaultVenue(eventDate: Date): Venue {
         return nthWeekdayOfMonth(eventDate) === 2
-            ? 'Colonial Room'
-            : 'Ballroom';
+            ? "Colonial Room"
+            : "Ballroom";
     }
 
     private pureComputedTemplate(templateFunction: (data: object) => string) {
@@ -406,8 +419,8 @@ class ViewModel {
     }
 }
 
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', () => {
+if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", () => {
         ko.applyBindings(new ViewModel());
     });
 } else {

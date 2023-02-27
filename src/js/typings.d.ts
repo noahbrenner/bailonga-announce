@@ -7,7 +7,7 @@
  * https://stackoverflow.com/questions/39040108/import-class-in-definition-file-d-ts
  */
 
-declare module '*.ejs' {
-    const templateFunction: import('ejs').TemplateFunction;
+declare module "*.ejs" {
+    const templateFunction: import("ejs").TemplateFunction;
     export default templateFunction;
 }

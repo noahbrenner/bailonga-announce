@@ -1,4 +1,4 @@
-export type Venue = 'Ballroom' | 'Colonial Room';
+export type Venue = "Ballroom" | "Colonial Room";
 
 export interface IScheduleItem {
     start: string;

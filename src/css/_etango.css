@@ -3,28 +3,20 @@
   font-family: Arial, Helvetica, sans-serif;
   font-size: 14px;
 
-  @nest
-  & h1,
-  & h2,
-  & h3,
-  & div {
+  @nest & h1, & h2, & h3, & div {
     margin: 14px 0;
   }
 
-  @nest
-  & h1,
-  & h2 {
+  @nest & h1, & h2 {
     font-size: 18px;
   }
 
-  @nest
-  & h3 {
+  @nest & h3 {
     font-size: 14px;
     color: #444;
   }
 
-  @nest
-  & hr {
+  @nest & hr {
     margin: 20px auto;
     border: none;
     width: 25%;
@@ -32,16 +24,12 @@
     background: #000;
   }
 
-  @nest
-  & div {
-
-    @nest
-    & p {
+  @nest & div {
+    @nest & p {
       margin: 0;
     }
 
-    @nest
-    & strong {
+    @nest & strong {
       color: #444;
     }
   }

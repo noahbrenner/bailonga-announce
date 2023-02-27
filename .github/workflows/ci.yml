@@ -21,8 +21,11 @@ jobs:
         env:
           HUSKY: 0 # Don't set up local git hooks
 
-      - name: Test
-        run: npm test
+      - name: Check formatting
+        run: npm run check-formatting
+
+      - name: Lint
+        run: npm run lint
 
       - name: Build
         run: npm run build

@@ -3,9 +3,14 @@
   "description": "Generate the weekly announcements for Bailonga",
   "private": true,
   "scripts": {
+    "prepare": "husky install",
     "build": "vite build",
     "start": "vite",
-    "test": "tsc --noEmit && tslint --project tsconfig.json src/**/*.ts"
+    "check-formatting": "prettier --check --ignore-path .gitignore '**/*.{ts,js,json,css}'",
+    "lint": "tsc --noEmit && eslint --ignore-path .gitignore ."
+  },
+  "lint-staged": {
+    "*.{ts,js,json,css}": "prettier --write"
   },
   "engines": {
     "node": "18.x.x"
@@ -21,15 +26,21 @@
     "@types/html-minifier-terser": "~7.0.0",
     "@types/node": "~18.11.18",
     "@types/pug": "~2.0.6",
+    "@typescript-eslint/eslint-plugin": "~5.53.0",
+    "@typescript-eslint/parser": "~5.53.0",
     "autoprefixer": "~10.4.13",
     "ejs": "~3.1.8",
+    "eslint": "~8.34.0",
+    "eslint-config-prettier": "~8.6.0",
+    "eslint-plugin-import": "~2.27.5",
     "html-minifier-terser": "~7.1.0",
+    "husky": "~8.0.3",
+    "lint-staged": "~13.1.2",
     "postcss": "~8.4.21",
     "postcss-nesting": "~11.0.1",
+    "prettier": "~2.8.4",
     "pug": "~3.0.2",
-    "tslint": "~5.20.1",
     "typescript": "~4.0.2",
-    "typescript-tslint-plugin": "~0.5.5",
     "vite": "~4.0.4",
     "vite-plugin-pug-transformer": "~1.0.3"
   },

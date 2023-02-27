@@ -7,14 +7,8 @@
     "noImplicitReturns": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "plugins": [{
-      "name": "typescript-tslint-plugin"
-    }],
     "strict": true,
     "target": "ES6"
   },
-  "include": [
-    "*",
-    "src/**/*"
-  ]
+  "include": ["*", ".*", "src/**/*"]
 }

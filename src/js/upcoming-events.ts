@@ -1,6 +1,9 @@
 import * as ko from "knockout";
 
-import { observableDateString, ObservableDateString } from "./date-observable";
+import {
+    observableDateString,
+    type ObservableDateString,
+} from "./date-observable";
 import { getNextEventISOString } from "./utils/dates";
 
 class UpcomingEvent {

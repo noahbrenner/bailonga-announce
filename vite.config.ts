@@ -2,7 +2,7 @@ import autoprefixer from "autoprefixer";
 import { compile as compileEjs } from "ejs";
 import { minify } from "html-minifier-terser";
 import postcssNesting from "postcss-nesting";
-import { createFilter, defineConfig, Plugin } from "vite";
+import { createFilter, defineConfig, type Plugin } from "vite";
 
 function ejsTransformer({ debug }: { debug: boolean }): Plugin {
     return {

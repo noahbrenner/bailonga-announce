@@ -37,7 +37,7 @@
     "husky": "~8.0.3",
     "lint-staged": "~13.1.2",
     "postcss": "~8.4.21",
-    "postcss-nesting": "~11.0.1",
+    "postcss-nesting": "~11.2.1",
     "prettier": "~2.8.4",
     "pug": "~3.0.2",
     "typescript": "~4.9.5",

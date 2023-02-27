@@ -40,7 +40,8 @@ label {
 input {
   display: block;
 
-  @nest &[type="text"], &[type="url"] {
+  &[type="text"],
+  &[type="url"] {
     width: 100%;
   }
 }
@@ -60,7 +61,7 @@ textarea {
 .output-pair {
   display: flex;
 
-  @nest & > * {
+  & > * {
     flex: 1 1;
   }
 }

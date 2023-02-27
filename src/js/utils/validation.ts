@@ -41,5 +41,5 @@ export function getArrayMember<T>(
     value: unknown,
     fallback: T
 ): T {
-    return array.includes(value as any) ? (value as T) : fallback;
+    return array.includes(value as T) ? (value as T) : fallback;
 }

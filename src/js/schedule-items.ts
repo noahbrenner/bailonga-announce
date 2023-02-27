@@ -61,9 +61,7 @@ export function getScheduleObservableArray() {
             minute = 0;
         }
 
-        const minuteStr = (minute < 10 ? "0" : "") + minute;
-
-        return `${hour}:${minuteStr}`;
+        return `${hour}:${String(minute).padStart(2, "0")}`;
     }
 
     function sortByStartTime(this: ScheduleObservableArray) {

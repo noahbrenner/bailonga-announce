@@ -7,7 +7,12 @@ import facebook from "../templates/facebook.txt.ejs";
 import mailchimp1 from "../templates/mailchimp-1.html.ejs";
 import mailchimp2 from "../templates/mailchimp-2.html.ejs";
 import mailchimp3 from "../templates/mailchimp-3.html.ejs";
-import { IScheduleItem, IState, IUpcomingEvent, Venue } from "../types/state";
+import type {
+    IScheduleItem,
+    IState,
+    IUpcomingEvent,
+    Venue,
+} from "../types/state";
 import { observableDateString } from "./date-observable";
 import { getScheduleObservableArray } from "./schedule-items";
 import { getEventObservableArray } from "./upcoming-events";
@@ -295,7 +300,10 @@ class ViewModel {
             const stateString = JSON.stringify(state);
             localStorage.setItem(ViewModel.LOCAL_STORAGE_KEY, stateString);
         } catch (error) {
-            console.error("Error saving state to localStorage:", error.message);
+            console.error(
+                "Error saving state to localStorage:",
+                error instanceof Error ? error.message : error
+            );
         }
     }
 
@@ -393,7 +401,7 @@ class ViewModel {
                 ),
             };
         } catch (error) {
-            console.error(error.message);
+            console.error(error instanceof Error ? error.message : error);
             return fallback;
         }
     }

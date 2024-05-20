@@ -17,6 +17,10 @@ body {
   padding: 0 3em 3em;
 }
 
+li + li {
+  margin-top: 0.5rem;
+}
+
 .main-heading {
   color: brown;
 }
@@ -43,6 +47,7 @@ input {
   &[type="text"],
   &[type="url"] {
     width: 100%;
+    min-width: 160px;
   }
 }
 
@@ -77,6 +82,7 @@ textarea {
 
 .flex-row {
   display: flex;
+  flex-wrap: wrap;
   align-items: flex-end;
   column-gap: 1em;
 }

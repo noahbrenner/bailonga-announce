@@ -63,6 +63,43 @@ textarea {
   overscroll-behavior-y: none;
 }
 
+@keyframes slide-down {
+  0% {
+    transform: translate(-50%, -100%);
+    /*transform: translate(-50%, 1%);*/
+  }
+  30% {
+    transform: translate(-50%, 0);
+    /*transform: translateY(-50%, 100%);*/
+  }
+  100% {
+    transform: translate(-50%, 0);
+  }
+}
+
+.copy-alert {
+  display: none;
+}
+
+.copy-alert.active {
+  display: block;
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, -100%);
+  border: 1px solid #12a;
+  border-radius: 5px;
+  padding: 0.5rem;
+  background: #e0f0ff;
+  animation: 1.5s ease-in-out 2 alternate slide-down;
+}
+
+.copy-alert span {
+  font-size: 1.25rem;
+  line-height: 1;
+  color: green;
+}
+
 .output-pair {
   display: flex;
 
@@ -76,6 +113,22 @@ textarea {
   padding: 5px;
   height: 150px;
   overflow-y: scroll;
+}
+
+.show-copy-button {
+  position: relative;
+}
+
+.show-copy-button > button:first-child {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  line-height: 1;
+  padding: 2px 5px 3px;
+}
+
+.show-copy-button > button:first-child:has(+ input) {
+  top: 1px; /* Don't overlap the bottom of a single-line text input field */
 }
 
 /* Utility classes */

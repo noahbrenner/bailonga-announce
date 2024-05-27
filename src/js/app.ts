@@ -450,12 +450,12 @@ class ViewModel {
             this.showCopyAlert(false);
             window.setTimeout(() => {
                 this.showCopyAlert(true);
-            }, 10);
+            }, 100);
 
             // Fully hide (display: none) after animation completes
             timeout = window.setTimeout(() => {
                 this.showCopyAlert(false);
-            }, 3000);
+            }, 3100);
         };
     })();
 }

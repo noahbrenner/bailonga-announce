@@ -16,6 +16,7 @@ import type {
 import { observableDateString } from "./date-observable";
 import { getScheduleObservableArray } from "./schedule-items";
 import { getEventObservableArray } from "./upcoming-events";
+import { copyElementContentsToClipboard } from "./utils/clipboard";
 import {
     formatUTCDate,
     getNextEventISOString,
@@ -112,6 +113,7 @@ class ViewModel {
         "Week 5: Bonus Topic TBA",
     ];
 
+    public showCopyAlert = ko.observable(false);
     public bailonga = this.pureComputedTemplate(bailonga);
     public etango = this.pureComputedTemplate(etango);
     public eugeneTango = this.pureComputedTemplate(eugeneTango);
@@ -226,6 +228,26 @@ class ViewModel {
                 () => this.storeState(state),
                 1000
             );
+        });
+
+        // Create and enable copy-to-clipboard buttons for output text/html
+        document.querySelectorAll(".show-copy-button").forEach((container) => {
+            const copyTarget = container.querySelector<
+                HTMLInputElement | HTMLTextAreaElement | HTMLDivElement
+            >("input, textarea, div");
+            if (!copyTarget) {
+                return;
+            }
+
+            const button = document.createElement("button");
+            button.innerText = "copy";
+            container.prepend(button);
+
+            button.addEventListener("click", () => {
+                copyElementContentsToClipboard(copyTarget)
+                    .then((didCopy) => didCopy && this.playCopyAnimation())
+                    .catch(console.error);
+            });
         });
     }
 
@@ -417,6 +439,25 @@ class ViewModel {
             return templateFunction(this.templateLocals()).trim();
         });
     }
+
+    private playCopyAnimation = (() => {
+        let timeout: number;
+        return () => {
+            console.log("Playing animation");
+            window.clearTimeout(timeout);
+
+            // Stop and restart animation
+            this.showCopyAlert(false);
+            window.setTimeout(() => {
+                this.showCopyAlert(true);
+            }, 10);
+
+            // Fully hide (display: none) after animation completes
+            timeout = window.setTimeout(() => {
+                this.showCopyAlert(false);
+            }, 3000);
+        };
+    })();
 }
 
 if (document.readyState === "loading") {

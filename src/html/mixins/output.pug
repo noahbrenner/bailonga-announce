@@ -1,24 +1,27 @@
 mixin outputText(koPropName)
-  textarea(
-    data-bind=`value: ${koPropName}`
-    readonly
-    spellcheck="false"
-  )&attributes(attributes)
+  div.show-copy-button
+    textarea(
+      data-bind=`value: ${koPropName}`
+      readonly
+      spellcheck="false"
+    )&attributes(attributes)
 
 mixin outputTextLine(koPropName)
-  input(
-    data-bind=`value: ${koPropName}`
-    type="text"
-    readonly
-    spellcheck="false"
-  )&attributes(attributes)
+  div.show-copy-button
+    input(
+      data-bind=`value: ${koPropName}`
+      type="text"
+      readonly
+      spellcheck="false"
+    )&attributes(attributes)
 
-mixin outputHtml(koPropName)
-  div(
-    data-bind=`html: ${koPropName}`
-  ).output-html&attributes(attributes)
+mixin outputHtml(koPropName, withCopyButton = true)
+  div(class=(withCopyButton ? "show-copy-button" : ""))
+    div(
+      data-bind=`html: ${koPropName}`
+    ).output-html&attributes(attributes)
 
 mixin outputHtmlSource(koPropName)
   div.output-pair
     +outputText(koPropName)&attributes(attributes)
-    +outputHtml(koPropName)&attributes(attributes)
+    +outputHtml(koPropName, false)&attributes(attributes)

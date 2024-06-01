@@ -13,6 +13,7 @@ import {
     type IUpcomingEvent,
     type Venue,
     VENUE_OPTIONS,
+    VENU_DESCRIPTION,
 } from "../types/state";
 import { observableDateString } from "./date-observable";
 import { getScheduleObservableArray } from "./schedule-items";
@@ -172,21 +173,18 @@ class ViewModel {
 
         const venueAccessibility =
             "The Vet’s club’s ramp is on the front-right corner of the building.";
-        const ballroomAcessibility =
+        const upstairsAcessibility =
             "There is an elevator directly to the right once inside the main entrance.";
 
         return {
             ...state,
             date: formatUTCDate(new Date(date)),
             weekday: WEEKDAY,
-            venue:
-                venue === "Ballroom"
-                    ? "Upstairs Ballroom at the Vet’s Club"
-                    : "Colonial Room at the Vet’s Club",
+            venue: VENU_DESCRIPTION[venue],
             venueAccessibility:
                 venue === "Colonial Room"
                     ? venueAccessibility
-                    : [venueAccessibility, ballroomAcessibility].join(" "),
+                    : [venueAccessibility, upstairsAcessibility].join(" "),
             scheduleItems: scheduleItems.map(({ start, end, description }) => ({
                 description: description.replace("{dj}", getFirstName(dj)),
                 time:

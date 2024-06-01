@@ -1,10 +1,16 @@
 export const VENUE_OPTIONS = [
     "Ballroom",
     "Colonial Room",
-    "Upstairs Studio to the Left",
+    "Upstairs Studio",
 ] as const;
 
 export type Venue = (typeof VENUE_OPTIONS)[number];
+
+export const VENU_DESCRIPTION: Record<Venue, string> = {
+    Ballroom: "Upstairs Ballroom at the Vet’s Club",
+    "Colonial Room": "Colonial Room at the Vet’s Club",
+    "Upstairs Studio": "Upstairs Studio to the Left at the Vet’s Club",
+};
 
 export interface IScheduleItem {
     start: string;

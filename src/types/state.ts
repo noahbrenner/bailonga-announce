@@ -1,4 +1,10 @@
-export type Venue = "Ballroom" | "Colonial Room";
+export const VENUE_OPTIONS = [
+    "Ballroom",
+    "Colonial Room",
+    "Upstairs Studio to the Left",
+] as const;
+
+export type Venue = (typeof VENUE_OPTIONS)[number];
 
 export interface IScheduleItem {
     start: string;

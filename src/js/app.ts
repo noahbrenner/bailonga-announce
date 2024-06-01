@@ -7,11 +7,13 @@ import facebook from "../templates/facebook.txt.ejs";
 import mailchimp1 from "../templates/mailchimp-1.html.ejs";
 import mailchimp2 from "../templates/mailchimp-2.html.ejs";
 import mailchimp3 from "../templates/mailchimp-3.html.ejs";
-import type {
-    IScheduleItem,
-    IState,
-    IUpcomingEvent,
-    Venue,
+import {
+    type IScheduleItem,
+    type IState,
+    type IUpcomingEvent,
+    type Venue,
+    VENUE_OPTIONS,
+    VENU_DESCRIPTION,
 } from "../types/state";
 import { observableDateString } from "./date-observable";
 import { getScheduleObservableArray } from "./schedule-items";
@@ -94,7 +96,7 @@ class ViewModel {
         return url.slice(0, minLength) === requiredPrefix.slice(0, minLength);
     });
 
-    public venueOptions: readonly Venue[] = ["Ballroom", "Colonial Room"];
+    public venueOptions: readonly Venue[] = VENUE_OPTIONS;
 
     public musicTypeOptions: readonly string[] = [
         "50/50 Alternative and Traditional",
@@ -171,21 +173,18 @@ class ViewModel {
 
         const venueAccessibility =
             "The Vet’s club’s ramp is on the front-right corner of the building.";
-        const ballroomAcessibility =
+        const upstairsAcessibility =
             "There is an elevator directly to the right once inside the main entrance.";
 
         return {
             ...state,
             date: formatUTCDate(new Date(date)),
             weekday: WEEKDAY,
-            venue:
-                venue === "Ballroom"
-                    ? "Upstairs Ballroom at the Vet’s Club"
-                    : "Colonial Room at the Vet’s Club",
+            venue: VENU_DESCRIPTION[venue],
             venueAccessibility:
                 venue === "Colonial Room"
                     ? venueAccessibility
-                    : [venueAccessibility, ballroomAcessibility].join(" "),
+                    : [venueAccessibility, upstairsAcessibility].join(" "),
             scheduleItems: scheduleItems.map(({ start, end, description }) => ({
                 description: description.replace("{dj}", getFirstName(dj)),
                 time:

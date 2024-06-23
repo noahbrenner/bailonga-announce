@@ -32,6 +32,7 @@ export interface IState {
     intro: string;
     dj: string;
     musicType: string;
+    customMusicType: string;
     teacherBeginner: string;
     topicBeginner: string;
     teacherIntermediate: string;

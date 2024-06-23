@@ -33,7 +33,12 @@ section
     +inputTextarea('intro')(spellcheck="true") Organizer's intro
     div.flex-row
       +inputText('dj').w-1-3 DJ
-      +inputSelect('musicType', 'musicTypeOptions') Music type
+      div.flex-row
+        +inputSelect('musicType', 'musicTypeOptions') Music type
+        +inputText('customMusicType')(
+          data-bind='visible: showCustomMusicType'
+          placeholder='Custom music type'
+        )
     div.flex-row
       +inputText('teacherIntermediate').w-1-3 Intermediate lesson teacher
       +inputText('topicIntermediate') Intermediate lesson topic

@@ -98,14 +98,19 @@ class ViewModel {
 
     public venueOptions: readonly Venue[] = VENUE_OPTIONS;
 
+    public OTHER_MUSIC_TYPE = "Other (enter manually)" as const;
     public musicTypeOptions: readonly string[] = [
         "50/50 Alternative and Traditional",
         "100% Traditional",
         "100% Alternative",
         "First 3/4 traditional, last 1/4 alternative",
         "Tango/Blues-Fusion alternative mix",
-        // TODO 'Other' (and add a text box)
+        this.OTHER_MUSIC_TYPE,
     ];
+    public customMusicType = ko.observable("");
+    public showCustomMusicType = ko.pureComputed(
+        () => this.musicType() === this.OTHER_MUSIC_TYPE
+    );
 
     public topicBeginnerOptions: readonly string[] = [
         "Week 1: From zero, the very basics.",
@@ -130,6 +135,7 @@ class ViewModel {
 
     private serializedState = ko.pureComputed((): IState => {
         const facebookEventUrl = this.facebookEventUrl().trim();
+        const musicType = this.musicType();
         return {
             title: this.title().trim(),
             date: this.date(),
@@ -142,7 +148,11 @@ class ViewModel {
             })),
             intro: this.intro().trim(),
             dj: this.dj().trim(),
-            musicType: this.musicType(),
+            musicType,
+            customMusicType:
+                musicType === this.OTHER_MUSIC_TYPE
+                    ? this.customMusicType()
+                    : "",
             teacherBeginner: this.teacherBeginner().trim(),
             topicBeginner: this.topicBeginner(),
             teacherIntermediate: this.teacherIntermediate().trim(),
@@ -166,6 +176,8 @@ class ViewModel {
             venue,
             dj,
             scheduleItems,
+            musicType,
+            customMusicType,
             upcomingEvents,
             photoCredit,
             photoCreditMailchimp,
@@ -193,6 +205,10 @@ class ViewModel {
                         .map(getTwelveHourTime)
                         .join("–") + "PM", // We're assuming PM for now
             })),
+            musicType:
+                musicType === this.OTHER_MUSIC_TYPE
+                    ? customMusicType
+                    : musicType,
             upcomingEvents: upcomingEvents.map((event) => ({
                 date: formatUTCDate(new Date(event.date)),
                 title: event.title,
@@ -213,6 +229,13 @@ class ViewModel {
             const weekIndex = nthWeekdayOfMonth(eventDate) - 1;
             this.topicBeginner(this.topicBeginnerOptions[weekIndex]);
             this.venue(this.getDefaultVenue(eventDate));
+        });
+
+        // Reset custom music type when a preset music type is selected
+        this.musicType.subscribe((newMusicType) => {
+            if (newMusicType && newMusicType !== this.OTHER_MUSIC_TYPE) {
+                this.customMusicType("");
+            }
         });
 
         // Initialize default values
@@ -286,6 +309,7 @@ class ViewModel {
             intro: "",
             dj: "",
             musicType: "",
+            customMusicType: "",
             teacherBeginner: "",
             topicBeginner: "",
             teacherIntermediate: "",
@@ -381,6 +405,10 @@ class ViewModel {
                     this.musicTypeOptions,
                     stored.musicType,
                     fallback.musicType
+                ),
+                customMusicType: getString(
+                    stored.customMusicType,
+                    fallback.customMusicType
                 ),
                 teacherBeginner: getString(
                     stored.teacherBeginner,

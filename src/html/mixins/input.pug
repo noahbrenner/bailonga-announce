@@ -1,5 +1,5 @@
 mixin inputText(koPropName, isForeach=false)
-  - const { class: labelClass, ...otherAttributes } = attributes
+  - const { class: labelClass, 'data-bind': dataBind, ...otherAttributes } = attributes
   label(
     for=isForeach ? undefined : koPropName
     data-bind=isForeach ? `attr: {for: '${koPropName}' + $index()}` : undefined
@@ -7,7 +7,7 @@ mixin inputText(koPropName, isForeach=false)
   )
     block
     input(
-      data-bind=`textInput: ${koPropName}`
+      data-bind=`textInput: ${koPropName}${dataBind ? `, ${dataBind}` : ''}`
         + (isForeach ? `, attr: {id: '${koPropName}' + $index()}` : '')
       id=isForeach ? undefined : koPropName
       type="text"

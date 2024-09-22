@@ -308,7 +308,7 @@ class ViewModel {
             ],
             intro: "",
             dj: "",
-            musicType: "",
+            musicType: this.musicTypeOptions[0],
             customMusicType: "",
             teacherBeginner: "",
             topicBeginner: "",

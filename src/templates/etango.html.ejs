@@ -11,26 +11,26 @@
   <li><%= item.time %> - <%= item.description %></li>
   <%_ } _%>
 </ul>
-<div>
-  <p><strong>Intermediate teacher:</strong> <%= locals.teacherIntermediate %></p>
-  <p><strong>Lesson topic:</strong> <%= locals.topicIntermediate %></p>
-  <p><strong>Beginner teacher:</strong> <%= locals.teacherBeginner %></p>
-  <p><strong>Lesson topic:</strong> <%= locals.topicBeginner %></p>
-</div>
-<div>
-  <p><strong>DJ:</strong> <%= locals.dj %></p>
-  <p><strong>Music:</strong> <%= locals.musicType %></p>
-  <p><strong>Confirm on Facebook:</strong> <%= locals.facebookEventUrl %></p>
-</div>
-<div>
-  <p><strong>Location:</strong> <%= locals.venue %>, 1626 Willamette Street Eugene, Oregon</p>
-  <p><strong>Cost:</strong> <%= locals.cost %> (Cash or check only)</p>
-  <p><strong>Volunteer:</strong> 30-minute desk shift gets you in free!</p>
-</div>
-<div>
-  <p><strong>Parking:</strong> To the left of Vet’s club building or nearby street parking.</p>
-  <p><strong>Accessibility:</strong> <%= locals.venueAccessibility %></p>
-</div>
+<p>
+  <div><strong>Intermediate teacher:</strong> <%= locals.teacherIntermediate %></div>
+  <div><strong>Lesson topic:</strong> <%= locals.topicIntermediate %></div>
+  <div><strong>Beginner teacher:</strong> <%= locals.teacherBeginner %></div>
+  <div><strong>Lesson topic:</strong> <%= locals.topicBeginner %></div>
+</p>
+<p>
+  <div><strong>DJ:</strong> <%= locals.dj %></div>
+  <div><strong>Music:</strong> <%= locals.musicType %></div>
+  <div><strong>Confirm on Facebook:</strong> <%= locals.facebookEventUrl %></div>
+</p>
+<p>
+  <div><strong>Location:</strong> <%= locals.venue %>, 1626 Willamette Street Eugene, Oregon</div>
+  <div><strong>Cost:</strong> <%= locals.cost %> (Cash or check only)</div>
+  <div><strong>Volunteer:</strong> 30-minute desk shift gets you in free!</div>
+</p>
+<p>
+  <div><strong>Parking:</strong> To the left of Vet’s club building or nearby street parking.</div>
+  <div><strong>Accessibility:</strong> <%= locals.venueAccessibility %></div>
+</p>
 <%_ if (locals.upcomingEvents.length !== 0) { _%>
 <hr>
 <h2>Upcoming Events:</h2>

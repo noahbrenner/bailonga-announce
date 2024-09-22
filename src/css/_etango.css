@@ -5,8 +5,7 @@
 
   & h1,
   & h2,
-  & h3,
-  & div {
+  & h3 {
     margin: 14px 0;
   }
 
@@ -28,13 +27,7 @@
     background: #000;
   }
 
-  & div {
-    & p {
-      margin: 0;
-    }
-
-    & strong {
-      color: #444;
-    }
+  & strong {
+    color: #444;
   }
 }

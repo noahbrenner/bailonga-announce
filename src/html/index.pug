@@ -60,7 +60,6 @@ section
     div.flex-row
       +inputText('photoCredit') Photo credit
       +inputText('photoCreditMailchimp') Mailchimp photo credit
-    +inputUrl('facebookEventUrl') Facebook event URL
     p(data-bind="hidden: isFacebookEventUrlValid").warning
       | This event URL may not be correct. An event URL usually starts with
       |  #[span(data-bind="text: facebookEventUrlRequiredPrefix")]
@@ -70,6 +69,8 @@ section
   h3 Facebook Event
   +outputTextLine('title')
   +outputText('facebook')
+
+  +inputUrl('facebookEventUrl') Facebook event URL
 
   h3 etango email
   +outputTextLine('title')

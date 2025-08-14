@@ -12,9 +12,6 @@
   "lint-staged": {
     "*.{ts,js,json,css}": "prettier --write"
   },
-  "engines": {
-    "node": "18.x.x"
-  },
   "browserslist": [
     "last 1 year"
   ],
@@ -47,5 +44,8 @@
   "author": "Noah Brenner",
   "license": "MIT",
   "repository": "github:noahbrenner/bailonga-announce",
-  "homepage": "https://noahbrenner.github.io/bailonga-announce"
+  "homepage": "https://noahbrenner.github.io/bailonga-announce",
+  "volta": {
+    "node": "18.20.8"
+  }
 }

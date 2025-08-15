@@ -41,7 +41,7 @@ section
         )
     div.flex-row
       +inputText('teacherIntermediate').w-1-3 Intermediate lesson teacher
-      +inputText('topicIntermediate') Intermediate lesson topic
+      +inputText('topicIntermediate')(required pattern="^.+$") Intermediate lesson topic
     div.flex-row
       +inputText('teacherBeginner').w-1-3 Beginner lesson teacher
       +inputSelect('topicBeginner', 'topicBeginnerOptions') Beginner lesson topic

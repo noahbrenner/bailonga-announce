@@ -313,7 +313,7 @@ class ViewModel {
             teacherBeginner: "",
             topicBeginner: "",
             teacherIntermediate: "",
-            topicIntermediate: "TBD",
+            topicIntermediate: "",
             upcomingEvents: [],
             photoCredit: "",
             photoCreditMailchimp: "Dave Musgrove",

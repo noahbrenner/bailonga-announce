@@ -40,6 +40,6 @@ export default defineConfig([
     files: ["eslint.config.mjs", "vite.config.ts"],
     rules: {
       "import/no-extraneous-dependencies": "off",
-    }
+    },
   },
 ]);

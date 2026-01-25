@@ -1,8 +1,7 @@
-import autoprefixer from "autoprefixer";
 import { compile as compileEjs } from "ejs";
 import { minify } from "html-minifier-terser";
-import postcssNesting from "postcss-nesting";
 import { createFilter, defineConfig, type Plugin } from "vite";
+import pugTransformer from "vite-plugin-pug-transformer";
 
 function ejsTransformer({ debug }: { debug: boolean }): Plugin {
     return {
@@ -38,23 +37,18 @@ function indexHtmlMinifier(): Plugin {
     };
 }
 
-export default defineConfig(async ({ mode }) => {
-    const { default: pugTransformer } = await import(
-        "vite-plugin-pug-transformer"
-    );
-
-    return {
-        clearScreen: false,
-        base: "./",
-        plugins: [
-            indexHtmlMinifier(),
-            pugTransformer({}),
-            ejsTransformer({ debug: mode !== "production" }),
-        ],
-        css: {
-            postcss: {
-                plugins: [postcssNesting, autoprefixer()],
-            },
-        },
-    };
-});
+export default defineConfig(({ mode }) => ({
+    clearScreen: false,
+    base: "./",
+    plugins: [
+        indexHtmlMinifier(),
+        pugTransformer({}),
+        ejsTransformer({ debug: mode !== "production" }),
+    ],
+    css: {
+        transformer: "lightningcss",
+    },
+    build: {
+        cssMinify: "lightningcss",
+    },
+}));

@@ -322,7 +322,7 @@ class ViewModel {
     }
 
     private setState(newState: IState) {
-        (Object.keys(newState) as Array<keyof IState>).forEach((key) => {
+        (Object.keys(newState) as (keyof IState)[]).forEach((key) => {
             if (key === "scheduleItems") {
                 this.scheduleItems([]);
                 newState[key].forEach(({ start, end, description }) => {

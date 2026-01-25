@@ -14,6 +14,10 @@ import {
     type Venue,
     VENUE_OPTIONS,
     VENU_DESCRIPTION,
+    ALL_FACEBOOK_GROUPS,
+    LOCAL_FACEBOOK_GROUPS,
+    REMOTE_FACEBOOK_GROUPS,
+    NON_TANGO_FACEBOOK_GROUPS,
 } from "../types/state";
 import { observableDateString } from "./date-observable";
 import { getScheduleObservableArray } from "./schedule-items";
@@ -27,6 +31,7 @@ import {
     nthWeekdayOfMonth,
     WEEKDAY,
 } from "./utils/dates";
+import { objectFromEntries } from "./utils/objects";
 import {
     getArrayMember,
     getISODate,
@@ -95,8 +100,20 @@ class ViewModel {
         const minLength = Math.min(url.length, requiredPrefix.length);
         return url.slice(0, minLength) === requiredPrefix.slice(0, minLength);
     });
+    public facebookGroupCheckboxState = objectFromEntries(
+        ALL_FACEBOOK_GROUPS.map((groupName) => [
+            groupName,
+            ko.observable(false),
+        ])
+    );
 
     public venueOptions: readonly Venue[] = VENUE_OPTIONS;
+    public localFacebookGroups = LOCAL_FACEBOOK_GROUPS;
+    public remoteFacebookGroups = REMOTE_FACEBOOK_GROUPS;
+    public nonTangoFacebookGroups = NON_TANGO_FACEBOOK_GROUPS;
+    public localFacebookGroupText = ko.observable("");
+    public remoteFacebookGroupText = ko.observable("");
+    public nonTangoFacebookGroupText = ko.observable("");
 
     public OTHER_MUSIC_TYPE = "Other (enter manually)" as const;
     public musicTypeOptions: readonly string[] = [
@@ -166,6 +183,12 @@ class ViewModel {
             facebookEventUrl: facebookEventUrl.includes("?")
                 ? facebookEventUrl.slice(0, facebookEventUrl.indexOf("?"))
                 : facebookEventUrl,
+            facebookGroupCheckboxState: objectFromEntries(
+                ALL_FACEBOOK_GROUPS.map((groupName) => [
+                    groupName,
+                    this.facebookGroupCheckboxState[groupName](),
+                ])
+            ),
         };
     });
 
@@ -318,6 +341,9 @@ class ViewModel {
             photoCredit: "",
             photoCreditMailchimp: "Dave Musgrove",
             facebookEventUrl: "",
+            facebookGroupCheckboxState: objectFromEntries(
+                ALL_FACEBOOK_GROUPS.map((groupName) => [groupName, false])
+            ),
         };
     }
 
@@ -332,6 +358,12 @@ class ViewModel {
                 this.upcomingEvents([]);
                 newState[key].forEach(({ date, title }) => {
                     this.upcomingEvents.add(date, title);
+                });
+            } else if (key === "facebookGroupCheckboxState") {
+                ALL_FACEBOOK_GROUPS.forEach((groupName) => {
+                    this.facebookGroupCheckboxState[groupName](
+                        newState.facebookGroupCheckboxState[groupName]
+                    );
                 });
             } else {
                 this[key](newState[key]);
@@ -447,6 +479,14 @@ class ViewModel {
                 facebookEventUrl: getString(
                     stored.facebookEventUrl,
                     fallback.facebookEventUrl
+                ),
+                facebookGroupCheckboxState: objectFromEntries(
+                    ALL_FACEBOOK_GROUPS.map((groupName) => [
+                        groupName,
+                        isObject(stored.facebookGroupCheckboxState) &&
+                            stored.facebookGroupCheckboxState[groupName] ===
+                                true,
+                    ])
                 ),
             };
         } catch (error) {

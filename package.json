@@ -6,11 +6,11 @@
     "prepare": "husky",
     "build": "vite build",
     "start": "vite",
-    "check-formatting": "prettier --check --ignore-path .gitignore '**/*.{ts,js,json,css}'",
+    "check-formatting": "prettier --check '**/*.{ts,js,mjs,json,css}'",
     "lint": "tsc --noEmit && eslint --max-warnings 0"
   },
   "lint-staged": {
-    "*.{ts,js,json,css}": "prettier --write"
+    "*.{ts,js,mjs,json,css}": "prettier --write"
   },
   "browserslist": [
     "last 1 year"
@@ -32,7 +32,7 @@
     "husky": "~9.1.7",
     "lightningcss": "~1.31.1",
     "lint-staged": "~16.2.7",
-    "prettier": "~2.8.4",
+    "prettier": "~3.8.1",
     "pug": "~3.0.2",
     "typescript": "~5.9.3",
     "typescript-eslint": "~8.53.1",

@@ -1,68 +1,68 @@
 const WEEKDAY_INDEX = 3;
 export const WEEKDAY = (
-    [
-        "Sunday",
-        "Monday",
-        "Tuesday",
-        "Wednesday",
-        "Thursday",
-        "Friday",
-        "Saturday",
-    ] as const
+  [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+  ] as const
 )[WEEKDAY_INDEX];
 
 const dateFormatter = new Intl.DateTimeFormat("en-us", {
-    month: "long",
-    day: "numeric",
-    timeZone: "UTC",
+  month: "long",
+  day: "numeric",
+  timeZone: "UTC",
 });
 
 /**
  * Return 'st', 'nd', 'rd', or 'th' to be appended to a given number
  */
 function getOrdinalIndicator(n: number) {
-    if (n > 10 && n <= 20) {
-        return "th";
-    }
+  if (n > 10 && n <= 20) {
+    return "th";
+  }
 
-    switch (n % 10) {
-        case 1:
-            return "st";
-        case 2:
-            return "nd";
-        case 3:
-            return "rd";
-        default:
-            return "th";
-    }
+  switch (n % 10) {
+    case 1:
+      return "st";
+    case 2:
+      return "nd";
+    case 3:
+      return "rd";
+    default:
+      return "th";
+  }
 }
 
 /**
  * Return a formatted date string, e.g. 'January 6th'
  */
 export function formatUTCDate(date: Date) {
-    return dateFormatter.format(date) + getOrdinalIndicator(date.getUTCDate());
+  return dateFormatter.format(date) + getOrdinalIndicator(date.getUTCDate());
 }
 
 /**
  * Return a new Date in UTC time with `localDate`'s year, month, and date
  */
 function localDateToUTCDate(localDate: Date) {
-    return new Date(
-        Date.UTC(
-            localDate.getFullYear(),
-            localDate.getMonth(),
-            localDate.getDate()
-        )
-    );
+  return new Date(
+    Date.UTC(
+      localDate.getFullYear(),
+      localDate.getMonth(),
+      localDate.getDate(),
+    ),
+  );
 }
 
 function getISOString(date: Date) {
-    return date.toISOString().slice(0, 10);
+  return date.toISOString().slice(0, 10);
 }
 
 export function isValidISODate(isoDate: string) {
-    return isoDate.length === 10 && getISOString(new Date(isoDate)) === isoDate;
+  return isoDate.length === 10 && getISOString(new Date(isoDate)) === isoDate;
 }
 
 /**
@@ -73,9 +73,9 @@ export function isValidISODate(isoDate: string) {
  * When searching backward, the return value is negative or 0
  */
 export function getDaysTillEvent(utcDate: Date, future = true) {
-    const weekOffset = future ? 7 : -7;
+  const weekOffset = future ? 7 : -7;
 
-    return (weekOffset + WEEKDAY_INDEX - utcDate.getUTCDay()) % weekOffset;
+  return (weekOffset + WEEKDAY_INDEX - utcDate.getUTCDay()) % weekOffset;
 }
 
 /**
@@ -85,15 +85,15 @@ export function getDaysTillEvent(utcDate: Date, future = true) {
  * > getISOStringWithOffset(new Date('2015-01-06'), -1); // => '2015-01-05'
  */
 export function getISOStringWithOffset(utcDate: Date, offset: number) {
-    return getISOString(
-        new Date(
-            Date.UTC(
-                utcDate.getUTCFullYear(),
-                utcDate.getUTCMonth(),
-                utcDate.getUTCDate() + offset
-            )
-        )
-    );
+  return getISOString(
+    new Date(
+      Date.UTC(
+        utcDate.getUTCFullYear(),
+        utcDate.getUTCMonth(),
+        utcDate.getUTCDate() + offset,
+      ),
+    ),
+  );
 }
 
 /**
@@ -109,21 +109,19 @@ export function getISOStringWithOffset(utcDate: Date, offset: number) {
  * If a `Date`: A Date object in *local* time, e.g. `new Date()`
  */
 export function getNextEventISOString(refDate: string | Date) {
-    const utcDate =
-        refDate instanceof Date
-            ? localDateToUTCDate(refDate)
-            : new Date(refDate);
+  const utcDate =
+    refDate instanceof Date ? localDateToUTCDate(refDate) : new Date(refDate);
 
-    // If refDate is itself the weekday of the event, we want the *next* week
-    const offset = getDaysTillEvent(utcDate) || 7;
+  // If refDate is itself the weekday of the event, we want the *next* week
+  const offset = getDaysTillEvent(utcDate) || 7;
 
-    return getISOStringWithOffset(utcDate, offset);
+  return getISOStringWithOffset(utcDate, offset);
 }
 
 export function getTodayISOString(now = new Date()) {
-    return getISOString(localDateToUTCDate(now));
+  return getISOString(localDateToUTCDate(now));
 }
 
 export function nthWeekdayOfMonth(date: Date) {
-    return Math.ceil(date.getUTCDate() / 7);
+  return Math.ceil(date.getUTCDate() / 7);
 }

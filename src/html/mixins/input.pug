@@ -14,15 +14,16 @@ mixin inputText(koPropName, isForeach=false)
       spellcheck="false"
     )&attributes(otherAttributes)
 
-mixin inputTextarea(koPropName)
+mixin inputTextarea(koPropName, withCopyButton = false)
   - const { class: labelClass, ...otherAttributes } = attributes
-  label(for=koPropName, class=labelClass)
+  label(for=koPropName class=labelClass)
     block
-    textarea(
-      data-bind=`textInput: ${koPropName}`
-      id=koPropName
-      spellcheck="false"
-    )&attributes(otherAttributes)
+    div(class=(withCopyButton ? "show-copy-button" : ""))
+      textarea(
+        data-bind=`textinput: ${kopropname}`
+        id=kopropname
+        spellcheck="false"
+      )&attributes(otherattributes)
 
 mixin inputUrl(koPropName, urlPattern)
   - const { class: labelClass, ...otherAttributes } = attributes
@@ -79,3 +80,16 @@ mixin inputSelect(koPropName, koOptionsName)
       data-bind=`value: ${koPropName}, options: ${koOptionsName}`
       id=koPropName
     )&attributes(otherAttributes)
+
+mixin facebookGroupCheckboxes(koGroupArrayName, koPostTextName)
+  fieldset.fb-group-checkboxes
+    legend
+      block
+    +inputTextarea(koPostTextName, true) Group post text
+    div(data-bind=`foreach: ${koGroupArrayName}`)
+      label
+        input(
+          type="checkbox"
+          data-bind="checked: $root.facebookGroupCheckboxState[$data]"
+        )
+        span(data-bind="text: $data")

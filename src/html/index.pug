@@ -72,6 +72,19 @@ section
 
   +inputUrl('facebookEventUrl') Facebook event URL
 
+  +facebookGroupCheckboxes(
+    'localFacebookGroups',
+    'localFacebookGroupText',
+  ) Local/Regular Facebook groups
+  +facebookGroupCheckboxes(
+    'remoteFacebookGroups',
+    'remoteFacebookGroupText'
+  ) Tango groups outside Eugene
+  +facebookGroupCheckboxes(
+    'nonTangoFacebookGroups',
+    'nonTangoFacebookGroupText',
+  ) Non-tango dance groups
+
   h3 etango email
   +outputTextLine('title')
   +outputHtml('etango')(tabindex="0").etango

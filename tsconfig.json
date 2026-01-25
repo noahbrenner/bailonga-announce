@@ -3,6 +3,8 @@
     "module": "ESNext",
     "moduleResolution": "node",
     "esModuleInterop": true,
+    "checkJs": true,
+    "skipLibCheck": true,
     "noFallthroughCasesInSwitch": true,
     "noImplicitReturns": true,
     "noUnusedLocals": true,

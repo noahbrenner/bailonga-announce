@@ -1,7 +1,5 @@
-import autoprefixer from "autoprefixer";
 import { compile as compileEjs } from "ejs";
 import { minify } from "html-minifier-terser";
-import postcssNesting from "postcss-nesting";
 import { createFilter, defineConfig, type Plugin } from "vite";
 import pugTransformer from "vite-plugin-pug-transformer";
 
@@ -48,8 +46,9 @@ export default defineConfig(({ mode }) => ({
         ejsTransformer({ debug: mode !== "production" }),
     ],
     css: {
-        postcss: {
-            plugins: [postcssNesting, autoprefixer()],
-        },
+        transformer: "lightningcss",
+    },
+    build: {
+        cssMinify: "lightningcss",
     },
 }));

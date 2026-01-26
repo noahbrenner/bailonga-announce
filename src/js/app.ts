@@ -271,6 +271,9 @@ class ViewModel {
 
     // By default, `localFacebookGroupText` equals `intro`. But break that
     // mirroring if `localFacebookGroupText` is modified directly.
+    if (this.localFacebookGroupText() !== this.intro()) {
+      this.localFacebookGroupTextModified = true;
+    }
     this.localFacebookGroupText.subscribe((text) => {
       if (text !== this.intro()) {
         this.localFacebookGroupTextModified = true;

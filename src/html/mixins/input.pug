@@ -20,8 +20,8 @@ mixin inputTextarea(koPropName, withCopyButton = false)
     block
     div(class=(withCopyButton ? "show-copy-button" : ""))
       textarea(
-        data-bind=`textinput: ${kopropname}`
-        id=kopropname
+        data-bind=`textinput: ${koPropName}`
+        id=koPropName
         spellcheck="false"
       )&attributes(otherattributes)
 

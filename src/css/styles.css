@@ -141,18 +141,23 @@ textarea {
 
 .show-copy-button {
   position: relative;
-}
 
-.show-copy-button > button:first-child {
-  position: absolute;
-  top: 0.5rem;
-  right: 0.5rem;
-  line-height: 1;
-  padding: 2px 5px 3px;
-}
+  & > button:first-child {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    line-height: 1;
+    padding: 2px 5px 3px;
 
-.show-copy-button > button:first-child:has(+ input) {
-  top: 1px; /* Don't overlap the bottom of a single-line text input field */
+    &:has(+ input) {
+      top: 1px; /* Don't overlap the bottom of a single-line text input field */
+    }
+  }
+
+  & textarea,
+  & input {
+    padding-right: 3.5rem; /* Don't allow copy button to cover text */
+  }
 }
 
 /* Utility classes */

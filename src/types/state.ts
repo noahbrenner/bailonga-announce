@@ -78,4 +78,7 @@ export interface IState {
   photoCreditMailchimp: string;
   facebookEventUrl: string;
   facebookGroupCheckboxState: FacebookGroupCheckboxState;
+  localFacebookGroupText: string;
+  remoteFacebookGroupText: string;
+  nonTangoFacebookGroupText: string;
 }

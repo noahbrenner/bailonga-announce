@@ -109,6 +109,7 @@ class ViewModel {
   public remoteFacebookGroups = REMOTE_FACEBOOK_GROUPS;
   public nonTangoFacebookGroups = NON_TANGO_FACEBOOK_GROUPS;
   public localFacebookGroupText = ko.observable("");
+  private localFacebookGroupTextModified = false;
   public remoteFacebookGroupText = ko.observable("");
   public nonTangoFacebookGroupText = ko.observable("");
 
@@ -184,6 +185,9 @@ class ViewModel {
           this.facebookGroupCheckboxState[groupName](),
         ]),
       ),
+      localFacebookGroupText: this.localFacebookGroupText(),
+      remoteFacebookGroupText: this.remoteFacebookGroupText(),
+      nonTangoFacebookGroupText: this.nonTangoFacebookGroupText(),
     };
   });
 
@@ -265,6 +269,22 @@ class ViewModel {
       debounceTimeout = window.setTimeout(() => this.storeState(state), 1000);
     });
 
+    // By default, `localFacebookGroupText` equals `intro`. But break that
+    // mirroring if `localFacebookGroupText` is modified directly.
+    if (this.localFacebookGroupText() !== this.intro()) {
+      this.localFacebookGroupTextModified = true;
+    }
+    this.localFacebookGroupText.subscribe((text) => {
+      if (text !== this.intro()) {
+        this.localFacebookGroupTextModified = true;
+      }
+    });
+    this.intro.subscribe((text) => {
+      if (!this.localFacebookGroupTextModified) {
+        this.localFacebookGroupText(text);
+      }
+    });
+
     // Create and enable copy-to-clipboard buttons for output text/html
     document.querySelectorAll(".show-copy-button").forEach((container) => {
       const copyTarget = container.querySelector<
@@ -297,6 +317,7 @@ class ViewModel {
   public resetForm() {
     if (window.confirm("Are you sure you want to reset the form?")) {
       this.setState(this.getDefaultValues());
+      this.localFacebookGroupTextModified = false;
     }
   }
 
@@ -334,6 +355,11 @@ class ViewModel {
       facebookGroupCheckboxState: objectFromEntries(
         ALL_FACEBOOK_GROUPS.map((groupName) => [groupName, false]),
       ),
+      localFacebookGroupText: "",
+      remoteFacebookGroupText:
+        "$7–10 covers both the lesson and the full dance that follows. Lessons start at 7PM, followed by open dancing at 7:45PM.",
+      nonTangoFacebookGroupText:
+        "$7–10 covers both the lesson and the full dance that follows. Lessons start at 7PM, followed by open dancing at 7:45PM.",
     };
   }
 
@@ -471,6 +497,18 @@ class ViewModel {
             isObject(stored.facebookGroupCheckboxState) &&
               stored.facebookGroupCheckboxState[groupName] === true,
           ]),
+        ),
+        localFacebookGroupText: getString(
+          stored.localFacebookGroupText,
+          fallback.localFacebookGroupText,
+        ),
+        remoteFacebookGroupText: getString(
+          stored.localFacebookGroupText,
+          fallback.localFacebookGroupText,
+        ),
+        nonTangoFacebookGroupText: getString(
+          stored.localFacebookGroupText,
+          fallback.localFacebookGroupText,
         ),
       };
     } catch (error) {

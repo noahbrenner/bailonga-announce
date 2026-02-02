@@ -1,7 +1,15 @@
 <%_ if (locals.intro !== '') { _%>
 <%- locals.intro %>
-
 <%_ } _%>
+
+—————————
+Reminders:
+<%_ for (const reminder of locals.introReminders) { _%>
+• <%- reminder %>
+<%_ } _%>
+
+New to our event? We are a friendly, casual, fun group of Argentine tango dancers who love to learn, experiment and dance to good music. On most nights, you’ll dance tango to a mixture of traditional, Nuevo and alternative (non-tango that’s fun to dance to) music and make sure to make it to our live music events and special guest instructors hosted multiple times a year. We would love to introduce you to Argentine Tango in Eugene, Oregon!
+
 This Week’s Event
 
 <%- locals.weekday %>, <%- locals.date %>

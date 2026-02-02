@@ -3,6 +3,13 @@
 <%_ for (const paragraph of locals.intro.split(/\n{2,}/)) { _%>
 <p><%= paragraph.trim() %></p>
 <%_ } _%>
+<hr />
+<strong>Reminders:</strong>
+<ul>
+  <%_ for (const reminder of locals.introReminders) { _%>
+  <li><%- reminder %></li>
+  <%_ } _%>
+</ul>
 <h2>This Week’s Event</h2>
 <h3><%= locals.weekday %>, <%= locals.date %></h3>
 <h3>Schedule:</h3>

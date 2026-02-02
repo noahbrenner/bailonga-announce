@@ -3,3 +3,9 @@
 <%_ for (const paragraph of locals.intro.split(/\n{2,}/).filter((str) => str)) { _%>
 <p style="color: #444444; font-family: open sans, helvetica neue, helvetica, arial, sans-serif"><%= paragraph.trim() %></p>
 <%_ } _%>
+<p><strong>Reminders:</strong></p>
+<ul>
+  <%_ for (const reminder of locals.introReminders) { _%>
+  <li><%- reminder %></li>
+  <%_ } _%>
+</ul>

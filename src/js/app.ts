@@ -71,6 +71,7 @@ interface ITemplateLocals extends Omit<IState, "venue" | "scheduleItems"> {
   venue: string;
   venueAccessibility: string;
   scheduleItems: ITemplateScheduleItem[];
+  introReminders: readonly string[];
   weekday: string;
 }
 
@@ -133,6 +134,14 @@ class ViewModel {
     "Week 3: Molinete",
     "Week 4: Cross System",
     "Week 5: Bonus Topic TBA",
+  ];
+
+  public introReminders: readonly string[] = [
+    "Masking is not required but encouraged, and there will always be masks and hand sanitizer available at the front desk.",
+    "Due to recent thefts at the Vet’s Club and in the parking lot, it’s recommended that you keep your valuables close by. You’re welcome to store them by the stage or behind the divider for extra security.",
+    "No street shoes, please — they can damage the floor. Please bring clean non-marking footwear such as dance shoes or sneakers. Thanks!",
+    "A 30-minute desk shift gets you in for free! First come first served to sign up for shifts, but there are virtually always open slots available.",
+    "Please avoid fragrances/perfumes. Some of us are allergic. Thank you!",
   ];
 
   public showCopyAlert = ko.observable(false);
@@ -214,6 +223,7 @@ class ViewModel {
       ...state,
       date: formatUTCDate(new Date(date)),
       weekday: WEEKDAY,
+      introReminders: this.introReminders,
       venue: VENU_DESCRIPTION[venue],
       venueAccessibility:
         venue === "Colonial Room"

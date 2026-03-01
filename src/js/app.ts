@@ -333,10 +333,11 @@ class ViewModel {
 
   private getDefaultValues(): IState {
     const eventDate = getNextEventISOString(new Date());
+    const cost = "$5–$10";
     return {
       title: `${WEEKDAY} Bailonga`,
       date: eventDate,
-      cost: "$7 – $10",
+      cost,
       venue: this.getDefaultVenue(new Date(eventDate)),
       scheduleItems: [
         {
@@ -366,10 +367,8 @@ class ViewModel {
         ALL_FACEBOOK_GROUPS.map((groupName) => [groupName, false]),
       ),
       localFacebookGroupText: "",
-      remoteFacebookGroupText:
-        "$7–10 covers both the lesson and the full dance that follows. Lessons start at 7PM, followed by open dancing at 7:45PM.",
-      nonTangoFacebookGroupText:
-        "$7–10 covers both the lesson and the full dance that follows. Lessons start at 7PM, followed by open dancing at 7:45PM.",
+      remoteFacebookGroupText: `${cost} covers both the lesson and the full dance that follows. Lessons start at 7PM, followed by open dancing at 7:45PM.`,
+      nonTangoFacebookGroupText: `${cost} covers both the lesson and the full dance that follows. Lessons start at 7PM, followed by open dancing at 7:45PM.`,
     };
   }
 
